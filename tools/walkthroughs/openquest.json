@@ -1,0 +1,29 @@
+{
+  "comment": "OpenQuest (openquest-escoria / -enhanced): the happy path, from the title screen to the end. Played by tools/compare/run.js (and player/?auto=..., player/autopilot.js). until: what the step has to cause (else it is played again: Zif walks away). The end: scumm_wait_click() and the game quits on that click.",
+  "steps": [
+    { "click": "title" },
+    { "verb": "look", "object": "plant" },
+    { "verb": "move", "object": "plant" },
+    { "verb": "talk", "object": "carol" },
+    { "choose": "May I move this plant?" },
+    { "choose": "As you were." },
+    { "verb": "move", "object": "plant" },
+    { "verb": "pickup", "object": "bullets" },
+    { "verb": "open", "object": "cabinet_drawer" },
+    { "verb": "pickup", "object": "cabinet_drawer" },
+    { "verb": "use", "item": "inv_bullets", "object": "inv_gun" },
+    { "verb": "smell", "object": "plate" },
+    { "verb": "use", "object": "plate" },
+    { "verb": "talk", "object": "commander_zif", "until": "chooser" },
+    { "choose": "I require your assistance with this opening mechanism." },
+    { "choose": "I'll continue my search." },
+    { "verb": "use", "object": "plate" },
+    { "verb": "walk", "object": "exit_to_secret_room" },
+    { "verb": "use", "item": "inv_card", "object": "key_slot" },
+    { "verb": "use", "object": "computer_terminal" },
+    { "verb": "use", "item": "inv_gun", "object": "node" },
+    { "verb": "give", "item": "inv_gun", "object": "commander_zif", "until": { "lost": "inv_gun" } },
+    { "waitInput": true },
+    { "click": "screen" }
+  ]
+}

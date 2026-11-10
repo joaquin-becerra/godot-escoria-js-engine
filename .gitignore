@@ -1,0 +1,7 @@
+out/
+node_modules/
+
+# Local development notes and generated reports
+PROYECTO.md
+NOTAS.md
+inventory/

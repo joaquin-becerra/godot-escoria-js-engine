@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Escoria JS</title>
+<style>
+  :root { color-scheme: dark; }
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { display: block; max-width: 100vw; max-height: 100vh; image-rendering: pixelated; cursor: crosshair; }
+  #msg { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; color: #aaa; font: 16px system-ui, sans-serif; pointer-events: none; }
+</style>
+</head>
+<body>
+<canvas id="screen"></canvas>
+<div id="msg">Loading…</div>
+<script type="module" src="player.js"></script>
+</body>
+</html>
