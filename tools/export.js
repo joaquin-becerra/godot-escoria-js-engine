@@ -156,7 +156,9 @@ function convertDoc(res, doc) {
 
 // ------------------------------------------------------------------ crawl
 
-const shipped = (r) => !r.startsWith("res://addons/") && !SKIP_DIRS.test(r.slice(6));
+// addons/ other than Escoria's (escoria-*) and test frameworks are the game's own
+const STOCK_ADDON = /^res:\/\/addons\/(escoria-|gdUnit4\/|gut\/)/;
+const shipped = (r) => !STOCK_ADDON.test(r) && !SKIP_DIRS.test(r.slice(6));
 const wanted = (r) => DATA_EXT.has(extOf(r)) || ASSET_EXT.has(extOf(r));
 const queue = all.filter((r) => shipped(r) && wanted(r) && !r.endsWith("/README.md"));
 const included = new Set();

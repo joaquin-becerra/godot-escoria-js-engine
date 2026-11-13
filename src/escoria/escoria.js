@@ -625,6 +625,7 @@ export class Escoria {
     this.timers.forEach((t) => t.ok());
     this.timers = [];
     this.ui.gameLoading?.();
+    this.hooks.gameReset?.(); // a game's own UI: hide_main_menu(), unpause_game()...
     this.globals.values = new Map(data.globals);
     this.roomStates = new Map(data.rooms.map(([room, objs]) => [room, new Map(objs)]));
     this.roomObject = null; // so changeScene doesn't overwrite the loaded states
@@ -675,6 +676,7 @@ export class Escoria {
     this.inputMode = "ALL";
     this.state = "DEFAULT";
     this.ui.gameLoading?.();
+    this.hooks.gameReset?.(); // a game's own UI: hide_main_menu(), unpause_game()...
     return this.runStartEvent("newgame");
   }
 
@@ -689,9 +691,17 @@ export class Escoria {
     return this.previousView || this.view;
   }
 
-  async changeScene(file, { loading = false } = {}) {
+  async changeScene(file, { loading = false, transitions = false } = {}) {
     this.inputMode = "NONE";
     this.events.setChangingScene(true);
+    // change_scene's automatic transitions (esc_room_manager.gd): the default
+    // transition "out" over the room that goes, "in" before the new one's :ready
+    // (each followed by wait 0.1). With "instant" they would only wait: skipped.
+    const auto = transitions && !loading ? this.game.setting("escoria/ui/default_transition", "instant") : "instant";
+    if (auto !== "instant") {
+      await this.transitions.transition(auto, "out");
+      await this.wait(0.1);
+    }
     if (this.globals.get(GLOBAL_FORCE_LAST_SCENE_NULL)) this.globals.set(GLOBAL_LAST_SCENE, null, true);
     else if (this.roomObject) this.globals.set(GLOBAL_LAST_SCENE, this.roomObject.globalId, true);
     this.saveRoomStates();
@@ -748,6 +758,10 @@ export class Escoria {
     this.globals.set(GLOBAL_CURRENT_SCENE, roomId, true);
     // :transition_in (the automatic transition itself comes later)
     this.events.queue({ kind: "Event", name: EV.TRANSITION_IN, target: null, flags: {}, flagBits: 0, objectGlobalId: "", body: { kind: "Block", statements: [] } });
+    if (auto !== "instant") {
+      await this.transitions.transition(auto, "in");
+      await this.wait(0.1);
+    }
     this.inputMode = "ALL";
     if (!loading && this.queueEvent(script, EV.READY)) {
       const rc = await this.events.waitFinished(EV.READY);

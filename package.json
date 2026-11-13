@@ -1,6 +1,6 @@
 {
   "name": "godot-escoria-js-engine",
-  "version": "0.0.1",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "description": "Plays Godot 4 + Escoria 2D adventures in the browser without Godot's runtime",

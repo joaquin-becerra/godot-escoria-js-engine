@@ -10,7 +10,9 @@
 // _calculate_time_to_disappear, show_chooser...) and the engine uses what
 // they leave in the node (text, size, position, the chooser's buttons).
 import { GdNode, GdObject, baseClass, wrapperOf } from "./nodes.js";
+import { Node } from "../scene.js";
 import { gdObject } from "./object.js";
+import { GdResource } from "./resources.js";
 import { Vector2, Color, fromEngine, GLOBALS } from "./values.js";
 import { STATE } from "../../escoria/actions.js";
 import { startTalking, stopTalking } from "../../escoria/commands/core.js";
@@ -23,6 +25,7 @@ export const FLOATING_SCRIPT = "res://addons/escoria-dialog-simple/types/floatin
 export const CHOOSER_SCENE = "res://addons/escoria-dialog-simple/chooser/simple.tscn";
 export const CHOOSER_SCRIPT = "res://addons/escoria-dialog-simple/chooser/simple.gd";
 
+const ACTION = Object.freeze({ BACKGROUND_CLICK: 0, ITEM_LEFT_CLICK: 1, ITEM_RIGHT_CLICK: 2, TRIGGER_IN: 3, TRIGGER_OUT: 4 });
 const ACTION_STATES = ["AWAITING_VERB_OR_ITEM", "AWAITING_ITEM", "AWAITING_TARGET_ITEM", "AWAITING_VERB", "AWAITING_VERB_CONFIRMATION", "COMPLETED"];
 const stripBBCode = (s) => String(s).replace(/\[[^\]]*\]/g, "");
 
@@ -96,6 +99,18 @@ export function makeEscoriaClasses(bridge) {
         m.arrived().then(() => this.signal("arrived").emit(ctx));
       }
       is_moving() { return !!this.__obj?.movable?.walking; }
+      // update_idle(): the idle of the direction it faces (its `animations` may have changed: crouch)
+      update_idle() {
+        const m = this.__obj?.movable;
+        if (!m) return;
+        const a = this.__node.props.animations;
+        const res = a && a.$res ? game.resource(a.$res) : a;
+        if (res && res.props) m.anims = res.props;
+        const idle = m.anims && m.anims.idles && m.anims.idles[m.lastDir ?? 0];
+        if (!idle) return;
+        m.play(idle.props.animation);
+        m.mirrored = !!idle.props.mirrored;
+      }
       set_direction(dir, wait = 0) { return this.__obj?.movable?.setDirection(dir, wait, esc); }
       stop_walking_now() { const m = this.__obj?.movable; if (m && m.walking) m.stop(m.position); }
       teleport(target) { const m = this.__obj?.movable; const p = target.global_position || target; if (m) m.teleportTo({ x: p.x, y: p.y }); }
@@ -108,6 +123,11 @@ export function makeEscoriaClasses(bridge) {
       get dialog_color() { return fromEngine(this.__node.props.dialog_color) || new Color(1, 1, 1, 1); }
       set dialog_color(c) { this.__node.props.dialog_color = c ? { type: "Color", args: [c.r, c.g, c.b, c.a] } : null; }
       get custom_data() { return (this.__node.props.custom_data ||= {}); }
+      // PackedStringArray exports (default []): the stored array, so append() sticks
+      get actions_requiring_target_object() { return (this.__node.props.actions_requiring_target_object ||= { type: "PackedStringArray", args: [] }).args; }
+      set actions_requiring_target_object(a) { this.__node.props.actions_requiring_target_object = { type: "PackedStringArray", args: [...(a || [])] }; }
+      get combine_when_selected_action_is_in() { return (this.__node.props.combine_when_selected_action_is_in ||= { type: "PackedStringArray", args: [] }).args; }
+      set combine_when_selected_action_is_in(a) { this.__node.props.combine_when_selected_action_is_in = { type: "PackedStringArray", args: [...(a || [])] }; }
     };
   const ESCItem = ESCItemMixin(baseClass("Area2D"));
   Object.defineProperty(ESCItem, "gdClass", { value: "ESCItem" });
@@ -140,14 +160,47 @@ export function makeEscoriaClasses(bridge) {
     ActionInputState,
     get current_action() { return esc.actions.currentAction || ""; },
     set current_action(a) { esc.actions.currentAction = a; },
-    get current_tool() { return objectWrapper(esc.actions.currentTool); },
     get current_target() { return objectWrapper(esc.actions.currentTarget); },
     get action_state() { return ActionInputState[esc.actions.state] ?? 0; },
     set action_state(v) { esc.actions.state = STATE[ACTION_STATES[v]] || esc.actions.state; },
     clear_current_action: () => esc.actions.clearCurrentAction?.(),
     clear_current_tool: () => esc.actions.clearCurrentTool?.(),
+    ACTION,
+    set_current_action: (a) => esc.actions.setCurrentAction(String(a ?? "")),
+    set_action_input_state: (v) => esc.actions.setState(STATE[ACTION_STATES[v]] || esc.actions.state),
+    is_object_actionable: (id) => { const o = esc.getObject(id); return !!o && o.active && o.interactive; },
+    /**
+     * do(action, params, can_interrupt): BACKGROUND_CLICK [walker id,
+     * Vector2 or object id, fast], ITEM_LEFT_CLICK / ITEM_RIGHT_CLICK [id,
+     * InputEvent] (right: the item's default action)
+     */
+    do(action, params = [], canInterrupt = false) {
+      const am = esc.actions;
+      const toEvent = (ev) => ({ position: ev && ev.position ? { x: ev.position.x, y: ev.position.y } : null, doubleClick: !!(ev && (ev.double_click ?? ev.doubleClick)) });
+      switch (action) {
+        case ACTION.BACKGROUND_CLICK: {
+          const t = params[1];
+          return am.backgroundClick(params[0], typeof t === "string" ? t : { x: t.x, y: t.y }, !!params[2], !!canInterrupt);
+        }
+        case ACTION.ITEM_LEFT_CLICK:
+          return am.itemClick(params[0], toEvent(params[1]), !!canInterrupt);
+        case ACTION.ITEM_RIGHT_CLICK: {
+          if (esc.state !== "DEFAULT") return;
+          if (canInterrupt) esc.events.interrupt([], false);
+          const o = esc.getObject(params[0]);
+          return o ? am.performInputEventOnObject(o, toEvent(params[1]), true) : undefined;
+        }
+        default:
+          esc.log(`action_manager.do(${action}): triggers aren't done this way here`, "warn");
+      }
+    },
   };
-  const ESCActionManager = { ActionInputState };
+  // current_tool = <object>: the engine's object of that id
+  Object.defineProperty(actionManager, "current_tool", {
+    get: () => objectWrapper(esc.actions.currentTool),
+    set: (o) => (esc.actions.currentTool = o ? esc.getObject(o.global_id) : null),
+  });
+  const ESCActionManager = { ActionInputState, ACTION };
 
   // ---------------------------------------------------------------- ESCTooltip: the sentence line
 
@@ -216,6 +269,10 @@ export function makeEscoriaClasses(bridge) {
       this.__field("_waiting_for_voice_audio", false);
       this.__field("_reading_speed_in_wpm", game.setting("escoria/dialog_simple/reading_speed_in_wpm", 200));
       this.__field("text_node", null);
+      this.__field("_is_speeding_up", false);
+      this.__field("is_paused", false);
+      // floating.gd's Tween3 types the line; the engine shows it whole
+      this.__field("tween", gdObject({ reset() {}, interpolate_property() {}, play() {}, stop() {}, resume() {}, is_running: () => false }));
     }
     get say_finished() { return this.signal("say_finished"); }
     get say_visible() { return this.signal("say_visible"); }
@@ -235,6 +292,7 @@ export function makeEscoriaClasses(bridge) {
       this.text = `[center][color=#${col.to_html(false)}]${this.tr(line)}[/color][center]`;
       // the engine places it unless the script does (size.x / position)
       this.__node.props.offset_left = this.__node.props.offset_right = 0;
+      this.__node.state.placedByScript = false;
       this._current_character?.start_talking();
     }
     get_parsed_text() { return stripBBCode(this.text ?? ""); }
@@ -320,6 +378,201 @@ export function makeEscoriaClasses(bridge) {
     _remove_avatar() {}
   }
 
+  // ---------------------------------------------------------------- markers for `is`
+
+  /** ESCDialogLocation (esc_dialog_location.gd): where speech goes; only `is` asks for it. */
+  const ESCDialogLocation = class extends baseClass("Marker2D") {};
+  Object.defineProperty(ESCDialogLocation, "gdClass", { value: "ESCDialogLocation" });
+  /** ESCDialogOption: the chooser's options (the engine makes them; `as` / `is` only). */
+  class ESCDialogOption extends GdObject {
+    static gdClass = "ESCDialogOption";
+  }
+
+  // ---------------------------------------------------------------- ESCGame: a game's own UI
+
+  /**
+   * ESCGame (esc_game.gd), the base of a game scene's script: Escoria calls
+   * its methods (ui/scripted_ui.js does here: element_focused,
+   * left_click_on_item, left_click_on_bg, inventory_item_focused...); these
+   * are the defaults a game's script doesn't override.
+   */
+  class ESCGame extends baseClass("Node2D") {
+    static gdClass = "ESCGame";
+    get main_menu() { return this.__export("main_menu", ""); }
+    get pause_menu() { return this.__export("pause_menu", ""); }
+    get tooltip_node() { return null; }
+    initialize_esc_game() {}
+    left_click_on_bg() {}
+    right_click_on_bg() {}
+    left_double_click_on_bg() {}
+    hovered_bg() {}
+    element_focused() {}
+    element_unfocused() {}
+    left_click_on_item() {}
+    right_click_on_item() {}
+    left_double_click_on_item() {}
+    left_click_on_inventory_item() {}
+    right_click_on_inventory_item() {}
+    left_double_click_on_inventory_item() {}
+    inventory_item_focused() {}
+    inventory_item_unfocused() {}
+    open_inventory() {}
+    close_inventory() {}
+    mousewheel_action() {}
+    hide_ui() {}
+    show_ui() {}
+    hide_main_menu() {}
+    show_main_menu() {}
+    pause_game() {}
+    unpause_game() {}
+    apply_custom_settings() {}
+    get_custom_data() { return {}; }
+    _on_event_done() {}
+    _on_action_finished() {}
+  }
+
+  // ---------------------------------------------------------------- the inventory (ESCInventory)
+
+  // the game scene's script (escoria.main.current_scene.game)
+  const gameScript = () => esc.hooks.gameScript?.() || null;
+
+  /**
+   * ESCInventoryButton (esc_inventory_button.gd): a TextureButton with the
+   * item's inventory textures; the mouse on it goes to the game's script
+   * (the inputs manager's part: inventory_item_focused, left_click_on_inventory_item...).
+   */
+  class ESCInventoryButton extends baseClass("TextureButton") {
+    static gdClass = "ESCInventoryButton";
+    constructor(item) {
+      super(new Node("ESCInventoryButton", "TextureButton"), bridge);
+      this.__field("global_id", item ? item.global_id : "");
+      if (item) {
+        this.texture_normal = item.texture_normal;
+        this.texture_hover = item.texture_hovered;
+      }
+      this.__node.props.stretch_mode = 4; // STRETCH_KEEP_ASPECT
+      const size = game.setting("escoria/ui/inventory_item_size", null);
+      if (size && size.args) {
+        this.__node.props.custom_minimum_size = { type: "Vector2", args: [size.args[0], size.args[1]] };
+        this.__node.props.ignore_texture_size = true;
+      }
+      this.mouse_entered.connect(bridge.Callable(this, "_on_inventory_item_mouse_enter"));
+      this.mouse_exited.connect(bridge.Callable(this, "_on_inventory_item_mouse_exit"));
+      this.gui_input.connect(bridge.Callable(this, "_on_inventory_item_gui_input"));
+    }
+    get mouse_left_inventory_item() { return this.signal("mouse_left_inventory_item"); }
+    get mouse_right_inventory_item() { return this.signal("mouse_right_inventory_item"); }
+    get mouse_double_left_inventory_item() { return this.signal("mouse_double_left_inventory_item"); }
+    get inventory_item_focused() { return this.signal("inventory_item_focused"); }
+    get inventory_item_unfocused() { return this.signal("inventory_item_unfocused"); }
+    _on_inventory_item_gui_input(event) {
+      if (!event || !event.is_pressed || !event.is_pressed() || event.button_index === undefined) return;
+      const id = this.global_id, g = gameScript();
+      if (event.button_index === 4 || event.button_index === 5) {
+        g?.mousewheel_action(event.button_index === 4 ? -1 : 1);
+        return bridge.viewport.set_input_as_handled();
+      }
+      const all = esc.inputMode === "ALL";
+      if (event.double_click) {
+        if (event.button_index === 1) {
+          this.signal("mouse_double_left_inventory_item").emit(id, event);
+          if (all) g?.left_double_click_on_inventory_item(id, event);
+        } else if (event.button_index === 2) {
+          this.signal("mouse_right_inventory_item").emit(id, event);
+          if (all) g?.right_click_on_inventory_item(id, event);
+        }
+        return;
+      }
+      if (event.button_index === 1) {
+        this.signal("mouse_left_inventory_item").emit(id, event);
+        g?.left_click_on_inventory_item(id, event);
+      } else if (event.button_index === 2) {
+        this.signal("mouse_right_inventory_item").emit(id, event);
+        if (all) g?.right_click_on_inventory_item(id, event);
+      }
+    }
+    _on_inventory_item_mouse_enter() {
+      this.signal("inventory_item_focused").emit(this.global_id);
+      gameScript()?.inventory_item_focused(this.global_id);
+    }
+    _on_inventory_item_mouse_exit() {
+      this.signal("inventory_item_unfocused").emit();
+      gameScript()?.inventory_item_unfocused();
+    }
+  }
+
+  /** ESCInventoryContainer (esc_inventory_container.gd): the node the buttons go in. */
+  class ESCInventoryContainer extends baseClass("Control") {
+    static gdClass = "ESCInventoryContainer";
+    is_empty() { return this.get_child_count() > 0; }
+    add_item(item) {
+      const b = new ESCInventoryButton(item);
+      this.add_child(b);
+      return b;
+    }
+    remove_item(item) {
+      for (const c of this.get_children()) {
+        if (c instanceof ESCInventoryButton && c.global_id === item.global_id) {
+          this.remove_child(c);
+          c.queue_free();
+        }
+      }
+    }
+    get_inventory_button(item) {
+      return this.get_children().find((c) => c.global_id === item.global_id) || null;
+    }
+  }
+
+  /**
+   * ESCInventory (inventory_ui.gd of escoria-core): keeps a button per item
+   * of the inventory in `inventory_ui_container` (the engine's inventory is
+   * globals i/<id>: it follows them each frame).
+   */
+  class ESCInventory extends baseClass("Control") {
+    static gdClass = "ESCInventory";
+    constructor(...a) {
+      super(...a);
+      this.__field("items_ids_in_inventory", {});
+    }
+    get inventory_ui_container() { return this.__export("inventory_ui_container", ""); }
+    _ready() {
+      if (!String(this.inventory_ui_container)) return esc.log("Inventory items container is empty.", "error");
+      this.__sync();
+      if (!this.__ticking) {
+        this.__ticking = true;
+        esc.tickers.push(() => !this.__freed && this.__sync());
+      }
+    }
+    __sync() {
+      const have = esc.inventory.items();
+      for (const id of Object.keys(this.items_ids_in_inventory)) if (!have.includes(id)) this.remove_item_by_id(id);
+      for (const id of have) if (!(id in this.items_ids_in_inventory)) this.add_new_item_by_id(id);
+    }
+    add_new_item_by_id(id) {
+      id = String(id).replace(/^i\//, "");
+      if (id in this.items_ids_in_inventory) return;
+      const o = esc.inventoryObject(id);
+      if (!o) return;
+      const p = o.node.props;
+      const item = gdObject({ global_id: id, texture_normal: GdResourceOf(p.inventory_texture), texture_hovered: GdResourceOf(p.inventory_texture_hovered || p.inventory_texture) });
+      const container = this.get_node(this.inventory_ui_container);
+      container.add_item(item);
+      this.items_ids_in_inventory[id] = item;
+    }
+    remove_item_by_id(id) {
+      const item = this.items_ids_in_inventory[id];
+      if (!item) return;
+      this.get_node(this.inventory_ui_container).remove_item(item);
+      delete this.items_ids_in_inventory[id];
+    }
+    clear() {
+      for (const id of Object.keys(this.items_ids_in_inventory)) this.remove_item_by_id(id);
+    }
+  }
+  const GdResourceOf = (r) => (r ? GdResource.wrap(r, bridge) : null);
+  // nodes with these Escoria scripts get these classes
+  Object.assign(GdNode.scriptClasses, { esc_dialog_location: ESCDialogLocation, esc_inventory_container: ESCInventoryContainer });
+
   // ---------------------------------------------------------------- the engine uses them
 
   // the script of a scene's root, if the game changed it (the converter does) and it is translated
@@ -367,13 +620,27 @@ export function makeEscoriaClasses(bridge) {
     layout(sp) {
       const d = sp.dialog;
       const w = d && d.size.x;
-      return w > 0 ? { w } : null;
+      if (!(w > 0)) return null;
+      const n = d.__node;
+      // a script that places it itself (sets position) and styles it (theme overrides)
+      const own = n.props["theme_override_fonts/normal_font"] ? n.props : null;
+      return {
+        w,
+        props: own,
+        text: own ? stripBBCode(d.text ?? "") : null,
+        pos: own && n.state.placedByScript ? d.position : null,
+        // the height the text takes (fit_content): what the script's next placement uses
+        setHeight: (h) => { if (own && Math.abs(d.size.y - h) > 0.5) d.size = new Vector2(w, h); },
+      };
     },
     finished(sp) {
       if (!sp.dialog) return;
-      sp.dialog._on_dialog_finished();
+      // the script may have ended it itself (a key that skips the line)
+      if (!sp.dialog._text_timing_finished) sp.dialog._on_dialog_finished();
       leave(sp.dialog);
     },
+    /** did the script end the line itself? */
+    ended: (sp) => !!(sp.dialog && sp.dialog._text_timing_finished),
   };
   // the chooser: the chooser scene's script; resolves with the chosen engine option
   ui.chooser = {
@@ -400,11 +667,11 @@ export function makeEscoriaClasses(bridge) {
 
   bridge.scriptBases = { [FLOATING_SCRIPT]: FloatingDialog, [CHOOSER_SCRIPT]: SimpleChooser };
   return {
-    classes: { ESCItem, ESCPlayer, ESCAnimationPlayer, ESCWalkContext, ESCScript, ESCActionManager, ESCTooltip, ESCDialogOptionsChooser },
+    classes: { ESCItem, ESCPlayer, ESCAnimationPlayer, ESCWalkContext, ESCScript, ESCActionManager, ESCTooltip, ESCDialogOptionsChooser, ESCDialogLocation, ESCDialogOption, ESCGame, ESCInventory, ESCInventoryButton, ESCInventoryContainer },
     escoria: { esc_compiler: escCompiler, action_manager: actionManager },
   };
 }
 
 /** Names the adapters define (for the translator's report). */
-export const ESCORIA_CLASS_NAMES = ["ESCItem", "ESCPlayer", "ESCAnimationPlayer", "ESCWalkContext", "ESCScript", "ESCActionManager", "ESCTooltip", "ESCDialogOptionsChooser"];
+export const ESCORIA_CLASS_NAMES = ["ESCItem", "ESCPlayer", "ESCAnimationPlayer", "ESCWalkContext", "ESCScript", "ESCActionManager", "ESCTooltip", "ESCDialogOptionsChooser", "ESCDialogLocation", "ESCDialogOption", "ESCGame", "ESCInventory", "ESCInventoryButton", "ESCInventoryContainer"];
 export const ESCORIA_SCRIPTS = [FLOATING_SCRIPT, CHOOSER_SCRIPT];

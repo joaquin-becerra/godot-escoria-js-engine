@@ -29,7 +29,9 @@ const outArg = process.argv.indexOf("--out");
 const portsDir = outArg > 0
   ? path.resolve(process.argv[outArg + 1])
   : path.join(path.dirname(new URL(import.meta.url).pathname), "..", "..", "out", path.basename(root), "js_ports");
-const TOOLING = /^(addons|tools|build|nbproject|original|ai_refs|js_ports)\//;
+// addons/ other than Escoria's own (escoria-*) and test frameworks are the
+// game's code (e.g. Superfluous Returnz's sr-ui-simplemouse): translated too
+const TOOLING = /^(addons\/(escoria-[^/]*|gdUnit4|gut)|tools|build|nbproject|original|ai_refs|js_ports)\//;
 
 const walk = (d, out = []) => {
   for (const e of fs.readdirSync(d, { withFileTypes: true })) {
@@ -105,7 +107,8 @@ const ownMembers = new Set();
 const collectMembers = (members) => {
   for (const m of members) {
     if (["Func", "Var", "Const", "Signal", "Enum"].includes(m.k) && m.name) ownMembers.add(m.name);
-    if (m.k === "Enum" && !m.name) for (const [v] of m.values) ownMembers.add(v);
+    // an enum's values (named enums too: State.IDLE is read as a member of State)
+    if (m.k === "Enum") for (const v of m.values) ownMembers.add(Array.isArray(v) ? v[0] : v.name ?? v);
     if (m.k === "Class") collectMembers(m.members);
   }
 };
@@ -189,6 +192,15 @@ const lines = [
     seen.add(e);
     const p = parentOf(e);
     if (p) visit(p);
+    // and the game's classes it uses (a constant can need one while loading,
+    // e.g. SosageLabel.Kind.PLAIN); cycles are left in the order they come
+    let js = "";
+    try {
+      js = fs.readFileSync(path.join(portsDir, "gd", e.rel), "utf8");
+    } catch {}
+    for (const m of js.matchAll(/gd\.cls\("([A-Za-z_0-9]+)"\)/g)) if (byName.has(m[1])) visit(byName.get(m[1]));
+    // and the scripts it preloads (const X = preload("res://x.gd"))
+    for (const m of js.matchAll(/gd\.preload\("(res:\/\/[^"]+\.gd)"\)/g)) if (byRes.has(m[1])) visit(byRes.get(m[1]));
     sorted.push(e);
   };
   entries.forEach(visit);

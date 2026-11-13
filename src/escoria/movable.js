@@ -1,6 +1,7 @@
 // ESCMovable (behaviors/esc_movable.gd): walking along a path, choosing the
 // walk / idle animation by direction, z_index by y, terrain scale and mirroring.
 import { vec2 } from "../godot/values.js";
+import { AnimPlayer } from "../godot/animation_player.js";
 
 const Z_MAX = 4096; // RenderingServer.CANVAS_ITEM_Z_MAX
 
@@ -11,6 +12,14 @@ export class Movable {
     this.terrain = terrain;
     this.anims = item.props.animations ? item.props.animations.props : null; // ESCAnimationResource
     this.sprite = item.children.find((c) => c.type === "AnimatedSprite2D") || null;
+    // no AnimatedSprite2D: animations come from an AnimationPlayer (as
+    // get_animation_player()) and get_sprite() is the last Sprite2D (mirroring)
+    if (!this.sprite) {
+      const path = item.props.animation_player_node;
+      const ap = path && path.args && path.args[0] ? item.getNode(path.args[0]) : [...item.children].reverse().find((c) => c.type === "AnimationPlayer");
+      this.animator = ap ? new AnimPlayer(ap) : null;
+      this.sprite = [...item.children].reverse().find((c) => c.type === "Sprite2D") || null;
+    } else this.animator = null;
     this.path = [];
     this.ofs = 0;
     this.walking = false;
@@ -67,7 +76,7 @@ export class Movable {
     }
     this.lastDir = dir;
     const idle = this.anims.idles[dir].props.animation;
-    if (this.sprite && this.sprite.state.animation !== idle) this.play(idle);
+    if (this.animator ? this.animator.current() !== idle : this.sprite && this.sprite.state.animation !== idle) this.play(idle);
     this.updateTerrain();
   }
 
@@ -89,8 +98,8 @@ export class Movable {
 
   // the direction whose idle animation is the one the sprite starts with
   initialDir() {
-    if (!this.anims || !this.sprite) return 0;
-    const cur = this.sprite.props.autoplay || this.sprite.props.animation;
+    if (!this.anims || !(this.animator || this.sprite)) return 0;
+    const cur = this.animator ? this.animator.current() : this.sprite.props.autoplay || this.sprite.props.animation;
     const i = (this.anims.idles || []).findIndex((a) => a.props.animation === cur);
     return i >= 0 ? i : 0;
   }
@@ -194,6 +203,10 @@ export class Movable {
   }
 
   play(name) {
+    if (this.animator) {
+      if (this.animator.current() === name && this.animator.isPlaying()) return;
+      return this.animator.play(name);
+    }
     const s = this.sprite;
     if (!s) return;
     if (s.state.animation === name && s.state.playing) return;

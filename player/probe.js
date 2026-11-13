@@ -9,6 +9,7 @@ import { collect } from "../src/godot/render.js";
 import { controlRect } from "../src/godot/controls.js";
 import { itemShapes } from "../src/escoria/ui/game_ui.js";
 import { apply } from "../src/godot/render.js";
+import { wrapperOf } from "../src/godot/bridge/nodes.js";
 
 export function installProbe(p) {
   const { esc, gameUI, canvas } = p;
@@ -56,6 +57,24 @@ export function installProbe(p) {
     return { x: r.x + r.w / 2, y: r.y + r.h / 2 };
   };
 
+  // visible controls of the game's own UI (scripted UIs: Superfluous Returnz'
+  // selector labels, phone menu buttons): {node, w (its script instance), x, y}
+  const controls = () =>
+    collect(esc.screenRoot, undefined, { allControls: true }).map((it) => {
+      const r = controlRect(it.node);
+      const c = apply(it.xf, { x: r.w / 2, y: r.h / 2 });
+      let w = null;
+      try { w = wrapperOf(it.node); } catch {}
+      return { node: it.node, w, x: c.x, y: c.y };
+    });
+  const textOf = (c) => {
+    const t = c.w && typeof c.w.text === "string" ? c.w.text : c.node.props.text;
+    return typeof t === "string" ? t : "";
+  };
+  // the last one drawn (on top)
+  const textPoint = (t) => controls().filter((c) => textOf(c) === t).pop() || null;
+  const inventoryButton = (id) => controls().filter((c) => c.w && c.w.global_id === id && c.node.type !== "Area2D").pop() || null;
+
   const plain = (v) => (v === undefined || typeof v === "function" ? null : JSON.parse(JSON.stringify(v ?? null)));
   window.__probe = {
     engine: "js",
@@ -80,7 +99,12 @@ export function installProbe(p) {
     where(t) {
       if (t.verb) return verbPoint(t.verb);
       if (t.option) return options().find((o) => o.text === t.option) || null;
-      if (t.object) return esc.inventory.has(t.object) ? inventoryPoint(t.object) : objectPoint(t.object);
+      if (t.text) { const c = textPoint(t.text); return c && { x: c.x, y: c.y }; }
+      if (t.object && esc.inventory.has(t.object)) {
+        const b = inventoryButton(t.object);
+        return b ? { x: b.x, y: b.y } : inventoryPoint(t.object);
+      }
+      if (t.object) return objectPoint(t.object);
       return null;
     },
     setSpeed(x) {

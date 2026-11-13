@@ -63,6 +63,8 @@ export const ESCORIA_SCRIPTS = {
   "addons/escoria-core/game/core-scripts/esc_player.gd": true,
   "addons/escoria-core/game/core-scripts/esc_exit.gd": true,
   "addons/escoria-core/game/core-scripts/esc_location.gd": true,
+  // ESCBackground: its clicks are the room's (the game UI takes them)
+  "addons/escoria-core/game/core-scripts/esc_background.gd": true,
   "addons/escoria-core/game/core-scripts/esc_dialog_location.gd": true,
   "addons/escoria-core/game/core-scripts/esc_interaction_location.gd": true,
   "addons/escoria-core/game/core-scripts/esc_terrain.gd": true,
@@ -95,7 +97,7 @@ export const ESCORIA_SCRIPTS = {
 export const DIALOG_MANAGERS = new Set(["res://addons/escoria-dialog-simple/esc_dialog_simple.gd"]);
 
 /** Transitions (setting escoria/ui/default_transition). */
-export const TRANSITIONS = new Set(["instant"]);
+export const TRANSITIONS = new Set(["instant", "fade_black", "fade_white", "curtain", "from_center", "shards"]);
 
 /** ESC events the engine never sends (the feature that sends them is missing). */
 export const EVENTS_NOT_SENT = {};

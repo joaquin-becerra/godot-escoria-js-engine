@@ -54,6 +54,7 @@ export class EscCamera {
     this.follow = null; // EscObject (movable) the camera follows
     this.tween = null;
     this.drag = true;
+    this.offset = { x: 0, y: 0 }; // Camera2D.offset (a game's shake)
   }
 
   // ---------------------------------------------------------------- limits
@@ -66,7 +67,23 @@ export class EscCamera {
       return false;
     }
     let r = all[id];
-    if (!r.w && !r.h) r = { x: 0, y: 0, w: this.W, h: this.H };
+    // an empty one: the ESCBackground's area (get_full_area_rect2()), the
+    // viewport if that is smaller
+    if (!r.w && !r.h) {
+      r = { x: 0, y: 0, w: this.W, h: this.H };
+      const room = this.esc.view && this.esc.view.room;
+      const bg = room && room.children.find((c) => c.scriptName === "esc_background");
+      if (bg) {
+        const tex = bg.props.texture && this.esc.game.texture(bg.props.texture);
+        const sc = bg.props.scale && bg.props.scale.args ? bg.props.scale.args : [1, 1];
+        const w = (tex ? tex.sw : (bg.props.offset_right ?? 0) - (bg.props.offset_left ?? 0)) * sc[0];
+        const h = (tex ? tex.sh : (bg.props.offset_bottom ?? 0) - (bg.props.offset_top ?? 0)) * sc[1];
+        const x = bg.props.offset_left ?? (bg.props.position && bg.props.position.args ? bg.props.position.args[0] : 0);
+        const y = bg.props.offset_top ?? (bg.props.position && bg.props.position.args ? bg.props.position.args[1] : 0);
+        // (Godot compares Vector2 x first, then y)
+        if (w > 0 && h > 0 && (w > this.W || (w === this.W && h >= this.H))) r = { x, y, w, h };
+      }
+    }
     this.limits = { left: r.x, right: r.x + r.w, top: r.y, bottom: r.y + r.h };
     this.limitId = id;
     return true;
@@ -240,7 +257,7 @@ export class EscCamera {
 
   /** The room -> screen transform for this frame. */
   transform() {
-    const c = this.screenCenter(), h = this.half(), z = this.zoom;
-    return [z, 0, 0, z, -(c.x - h.x) * z, -(c.y - h.y) * z];
+    const c = this.screenCenter(), h = this.half(), z = this.zoom, o = this.offset || { x: 0, y: 0 };
+    return [z, 0, 0, z, -(c.x + o.x - h.x) * z, -(c.y + o.y - h.y) * z];
   }
 }

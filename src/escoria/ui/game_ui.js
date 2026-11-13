@@ -627,7 +627,7 @@ export class GameUI {
           if (s.avatar) s.avatar.t = 0;
         }
       } else if (!s.byClickOnly) s.left -= dt;
-      if (s.left <= 0 || (s.cmd && s.cmd.interrupted)) this.endSpeech();
+      if (s.left <= 0 || (s.cmd && s.cmd.interrupted) || (s.dialog && this.hooks.dialog?.ended?.(s))) this.endSpeech();
     }
   }
 
@@ -638,11 +638,19 @@ export class GameUI {
     const dl = n.children.find((c) => c.scriptName === "esc_dialog_location");
     const p = apply(multiply(cam, globalTransform(dl || n)), { x: 0, y: 0 });
     let measure, lineH, drawLine;
+    const placed = sp.dialog && this.hooks.dialog.layout(sp); // the game's script placed it
     // the dialog theme as it is now (a game script can change its font)
     const th = this.esc.dialogTheme && this.esc.dialogTheme.props;
     const themeFont = th && resPath(th.default_font);
     let sf = themeFont ? this.game.resolveFont(themeFont, th.default_font_size || (this.speechFont && this.speechFont.size)) : this.speechFont && this.game.resolveFont(this.speechFont.res, this.speechFont.size);
     if (sf && th) sf = withOverrides(sf, th, "RichTextLabel/");
+    // the dialog node's own font, size and outline (theme overrides its script set)
+    const np = placed && placed.props;
+    const ownFont = np && resPath(np["theme_override_fonts/normal_font"]);
+    if (ownFont) {
+      const f = this.game.resolveFont(ownFont, np["theme_override_font_sizes/normal_font_size"] || 16);
+      if (f) sf = withOverrides(f, np, "theme_override_");
+    }
     if (sf) {
       const f = sf;
       measure = (s) => f.font.measure(s, f.size);
@@ -664,12 +672,14 @@ export class GameUI {
     // floating.gd: its label (floating.tscn's width) centered on the
     // ESCDialogLocation; without one, across the whole screen at the top
     const W = this.W, H = this.H, x = p.x;
-    const placed = sp.dialog && this.hooks.dialog.layout(sp); // the game's script placed it
     const sceneW = this.floatingWidth();
     const w = placed ? placed.w : !dl ? W : sceneW ? Math.min(sceneW, W) : Math.min(measure(sp.text) + 2, W);
-    const lines = wrapText(sp.text, w, measure);
+    // the script's text (its own line breaks), else the line said
+    const lines = placed && placed.text != null ? placed.text.split("\n").flatMap((l) => wrapText(l, w, measure)) : wrapText(sp.text, w, measure);
     const h = lines.length * lineH;
+    placed?.setHeight?.(h);
     let left = !dl && !placed ? 0 : x - w / 2, top = !dl && !placed ? 0 : p.y;
+    if (placed && placed.pos) [left, top] = [placed.pos.x, placed.pos.y];
     if (left < 0) left = 0;
     if (left + w > W) left -= left + w - W;
     if (top < 0) top = 0;

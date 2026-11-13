@@ -27,6 +27,20 @@ export function tokenize(src) {
   let depth = 0; // open brackets
   const indents = [0];
   let lineStart = true;
+  // multi-line lambdas inside brackets ("connect(func():<newline> body)"): the
+  // body counts indentation again (depth 0) until it dedents back to the line
+  // that opened it or a closing bracket ends it, as in GDScript
+  const lambdas = []; // [{depth, indents: indents.length, base: indentation of that line}]
+  let lambdaAt = -1; // depth where a "func" was seen inside brackets
+  const closeLambda = () => {
+    const L = lambdas.pop();
+    if (toks.length && toks[toks.length - 1].t !== "newline") push("newline", null);
+    while (indents.length > L.indents) {
+      indents.pop();
+      push("dedent", null);
+    }
+    depth = L.depth;
+  };
   const push = (t, v, l = line, c = col) => toks.push({ t, v, line: l, col: c });
   const err = (m) => {
     throw new GdSyntaxError(m, line, col);
@@ -56,6 +70,12 @@ export function tokenize(src) {
       }
       adv(j - i);
       lineStart = false;
+      let closed = false;
+      while (lambdas.length && width <= lambdas[lambdas.length - 1].base) {
+        closeLambda();
+        closed = true;
+      }
+      if (closed) continue; // back inside the brackets: this line continues them
       if (width > indents[indents.length - 1]) {
         indents.push(width);
         push("indent", null);
@@ -146,6 +166,7 @@ export function tokenize(src) {
     if (/[A-Za-z_À-￿]/.test(c)) {
       const m = /^[A-Za-z_0-9À-￿]+/.exec(src.slice(i, i + 256));
       push("name", m[0], l0, c0);
+      if (m[0] === "func" && depth > 0) lambdaAt = depth;
       adv(m[0].length);
       continue;
     }
@@ -191,11 +212,23 @@ export function tokenize(src) {
     }
     const op = OPS.find((o) => src.startsWith(o, i));
     if (!op) err(`unexpected character ${JSON.stringify(c)}`);
+    if (")]}".includes(op) && depth === 0 && lambdas.length) closeLambda();
     if ("([{".includes(op)) depth++;
     if (")]}".includes(op)) depth = Math.max(0, depth - 1);
     push("op", op, l0, c0);
     adv(op.length);
+    if (op === ":" && depth === lambdaAt) {
+      lambdaAt = -1;
+      let j = i;
+      while (src[j] === " " || src[j] === "\t" || src[j] === "\r") j++;
+      if (src[j] === "\n" || src[j] === "#") {
+        // the lambda's block starts on the next line
+        lambdas.push({ depth, indents: indents.length, base: indents[indents.length - 1] });
+        depth = 0;
+      }
+    }
   }
+  while (lambdas.length) closeLambda();
   if (toks.length && toks[toks.length - 1].t !== "newline") push("newline", null);
   while (indents.length > 1) {
     indents.pop();

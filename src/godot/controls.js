@@ -10,7 +10,7 @@ export const CONTROL_TYPES = new Set([
   "Control", "Label", "RichTextLabel", "Panel", "PanelContainer", "ColorRect", "TextureRect", "Button", "TextureButton", "CheckBox",
   "LineEdit", "TextEdit", "OptionButton", "HSlider", "VSlider", "VBoxContainer", "HBoxContainer", "GridContainer", "MarginContainer", "ScrollContainer", "CenterContainer",
 ]);
-export const DRAWN_CONTROLS = new Set(["Label", "Panel", "PanelContainer", "ColorRect", "TextureRect", "Button", "CheckBox", "LineEdit", "TextEdit", "OptionButton", "HSlider", "VSlider", "ScrollContainer"]);
+export const DRAWN_CONTROLS = new Set(["Label", "Panel", "PanelContainer", "ColorRect", "TextureRect", "Button", "TextureButton", "CheckBox", "LineEdit", "TextEdit", "OptionButton", "HSlider", "VSlider", "ScrollContainer"]);
 const CONTAINERS = new Set(["VBoxContainer", "HBoxContainer", "GridContainer", "MarginContainer", "CenterContainer", "PanelContainer", "ScrollContainer"]);
 
 /** UI state for drawing: the control under the mouse, the focused one, the one held down. */
@@ -131,10 +131,16 @@ export function minSize(n, width = 0) {
       break;
     }
     case "LineEdit": [cw, ch] = [60, measure(n, "Hg").h + 8]; break;
+    case "TextureButton": {
+      // its normal texture's size, unless ignore_texture_size
+      const tex = !n.props.ignore_texture_size && n.props.texture_normal && GAME && GAME.texture(n.props.texture_normal);
+      if (tex) [cw, ch] = [tex.sw, tex.sh];
+      break;
+    }
     case "TextureRect": {
       // EXPAND_KEEP_SIZE (0): the texture's size
-      const tex = !n.props.expand_mode && n.props.texture && GAME && GAME.texture(n.props.texture.$res);
-      if (tex) [cw, ch] = [tex.img.width, tex.img.height];
+      const tex = !n.props.expand_mode && n.props.texture && GAME && GAME.texture(n.props.texture);
+      if (tex) [cw, ch] = [tex.sw, tex.sh];
       break;
     }
     case "HBoxContainer": case "VBoxContainer": {
@@ -453,9 +459,16 @@ export function drawStyleBox(ctx, game, sb, x, y, w, h) {
   const p = sb.props;
   if (sb.type === "StyleBoxFlat") {
     const bl = p.border_width_left || 0, bt = p.border_width_top || 0, br = p.border_width_right || 0, bb = p.border_width_bottom || 0;
+    // corner_radius_*: rounded corners (at most half the shorter side, as Godot)
+    const lim = Math.min(w, h) / 2;
+    const rad = ["top_left", "top_right", "bottom_right", "bottom_left"].map((k) => Math.min(p[`corner_radius_${k}`] || 0, lim));
     if (p.draw_center !== false) {
       ctx.fillStyle = cssColor(p.bg_color || { type: "Color", args: [0.6, 0.6, 0.6, 1] });
-      ctx.fillRect(x, y, w, h);
+      if (rad.some((r) => r > 0) && ctx.roundRect) {
+        ctx.beginPath();
+        ctx.roundRect(x, y, w, h, rad);
+        ctx.fill();
+      } else ctx.fillRect(x, y, w, h);
     }
     if (bl || bt || br || bb) {
       ctx.fillStyle = cssColor(p.border_color || { type: "Color", args: [0.8, 0.8, 0.8, 1] });
@@ -502,12 +515,15 @@ export function drawControl(ctx, game, node) {
       drawStyleBox(ctx, game, p["theme_override_styles/panel"], 0, 0, r.w, r.h);
       break;
     case "TextureRect": {
-      const tex = p.texture && game.texture(p.texture.$res);
+      const tex = p.texture && game.texture(p.texture);
       if (!tex) break;
-      const w = r.w || tex.img.width, h = r.h || tex.img.height;
-      ctx.drawImage(tex.img, 0, 0, w, h);
+      const w = r.w || tex.sw, h = r.h || tex.sh;
+      ctx.drawImage(tex.img, tex.sx, tex.sy, tex.sw, tex.sh, 0, 0, w, h);
       break;
     }
+    case "TextureButton":
+      drawTextureButton(ctx, game, node, r);
+      break;
     case "Label":
       drawLabel(ctx, game, node, r);
       break;
@@ -598,6 +614,34 @@ function drawScrollbars(ctx, node, r) {
     const x = sc.maxX ? ((p.scroll_horizontal || 0) / sc.maxX) * (r.w - w) : 0;
     ctx.fillRect(x, r.h - SCROLLBAR + 3, w, SCROLLBAR - 5);
   }
+}
+
+// TextureButton: the texture of its state (normal if that one is missing),
+// placed by stretch_mode (SCALE 0, TILE 1, KEEP 2, KEEP_CENTERED 3,
+// KEEP_ASPECT 4, KEEP_ASPECT_CENTERED 5, KEEP_ASPECT_COVERED 6)
+function drawTextureButton(ctx, game, node, r) {
+  const p = node.props;
+  const pressed = (p.toggle_mode && p.button_pressed) || ui.down === node;
+  const hover = ui.hover === node;
+  const pick = p.disabled ? p.texture_disabled : pressed ? p.texture_pressed : hover ? p.texture_hover : null;
+  const tex = game.texture(pick || p.texture_normal);
+  if (!tex) return;
+  const mode = p.stretch_mode ?? 2;
+  let x = 0, y = 0, w = tex.sw, h = tex.sh;
+  if (mode === 0 || mode === 1) [w, h] = [r.w, r.h];
+  else if (mode === 3) [x, y] = [(r.w - w) / 2, (r.h - h) / 2];
+  else if (mode >= 4) {
+    const k = mode === 6 ? Math.max(r.w / tex.sw, r.h / tex.sh) : Math.min(r.w / tex.sw, r.h / tex.sh);
+    [w, h] = [tex.sw * k, tex.sh * k];
+    if (mode !== 4) [x, y] = [(r.w - w) / 2, (r.h - h) / 2];
+  }
+  if (p.flip_h || p.flip_v) {
+    ctx.save();
+    ctx.translate(p.flip_h ? r.w : 0, p.flip_v ? r.h : 0);
+    ctx.scale(p.flip_h ? -1 : 1, p.flip_v ? -1 : 1);
+  }
+  ctx.drawImage(tex.img, tex.sx, tex.sy, tex.sw, tex.sh, x, y, w, h);
+  if (p.flip_h || p.flip_v) ctx.restore();
 }
 
 function drawButton(ctx, game, node, r, real = node) {

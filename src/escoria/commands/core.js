@@ -166,7 +166,7 @@ export const CORE_COMMANDS = {
     validate: (esc, a) => (esc.game.files[a[0]] ? null : `scene doesn't exist: ${a[0]}`),
     run(esc, a) {
       // like Escoria: not awaited; :setup and :ready run as their own events
-      esc.changeScene(a[0]);
+      esc.changeScene(a[0], { transitions: a[1] !== false });
     },
   },
 
@@ -412,6 +412,14 @@ export const CORE_COMMANDS = {
     configure: () => desc(2, ["string", "any", "bool"], [null, null, false]),
     run(esc, a) {
       esc.globals.set(a[0], a[1], a[2]);
+    },
+  },
+
+  // rand_global(name, max): a random integer from 0 to max (both included)
+  rand_global: {
+    configure: () => desc(1, ["string", "int"], [null, 1]),
+    run(esc, a) {
+      esc.globals.set(a[0], Math.floor(Math.random() * (Math.trunc(a[1]) + 1)));
     },
   },
 

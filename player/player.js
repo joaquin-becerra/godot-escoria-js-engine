@@ -14,6 +14,10 @@ import { Menus } from "../src/escoria/ui/menus.js";
 import { SceneMenus } from "../src/escoria/ui/scene_menus.js";
 import { installProbe } from "./probe.js";
 
+// main.tscn layers/curtain: CanvasLayer 20
+const TRANSITION_LAYER = 20;
+let screenItems = [];
+
 const canvas = document.getElementById("screen");
 const ctx = canvas.getContext("2d");
 const params = new URLSearchParams(location.search);
@@ -169,14 +173,19 @@ function frame(t) {
     gameUI.drawSpeech(ctx, cam);
     gameUI.draw(ctx, mouse);
     draw(ctx, game, roomItems.filter((it) => it.layer > 1));
-    draw(ctx, game, collect(esc.screenRoot)); // spawn()ed scenes: on top, like Godot's /root
+    screenItems = collect(esc.screenRoot); // spawn()ed scenes: on top, like Godot's /root
+    draw(ctx, game, screenItems.filter((it) => it.layer <= TRANSITION_LAYER));
     drawPopup(ctx); // an open OptionButton list
     esc.frameDrawn();
   }
   if (esc.view && !ended) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     esc.transitions.draw(ctx, canvas.width, canvas.height); // layers/curtain (layer 20)
+    // CanvasLayers above the curtain (a game's end screen at layer 30)
+    const above = screenItems.filter((it) => it.layer > TRANSITION_LAYER);
+    if (above.length) draw(ctx, game, above);
   }
+  screenItems = [];
   requestAnimationFrame(frame);
 }
 

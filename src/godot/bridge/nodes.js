@@ -86,7 +86,8 @@ export class GdNode extends GdObject {
     return n;
   }
   get_node_or_null(path) {
-    path = String(path);
+    // a NodePath from a scene ({type: "NodePath", args: [path]}) or a string
+    path = path && typeof path === "object" && Array.isArray(path.args) ? String(path.args[0] ?? "") : String(path);
     let n;
     if (path.startsWith("%")) {
       // unique name: anywhere in the scene this node belongs to
@@ -132,6 +133,25 @@ export class GdNode extends GdObject {
   free() { this.queue_free(); }
   is_inside_tree() { return !!this.__node.parent || !!this.__node.sceneFile; }
   get_tree() { return this.__bridge.tree; }
+  // groups
+  add_to_group(g) { if (!this.__node.groups.includes(String(g))) this.__node.groups.push(String(g)); }
+  remove_from_group(g) { this.__node.groups = this.__node.groups.filter((x) => x !== String(g)); }
+  is_in_group(g) { return this.__node.groups.includes(String(g)); }
+  is_node_ready() { return !!this.__readyDone; }
+  get_process_delta_time() { return this.__bridge.delta ?? 1 / 60; }
+  get_physics_process_delta_time() { return this.__bridge.delta ?? 1 / 60; }
+  // the mouse in the canvas (the viewport's: a CanvasLayer's nodes; a room's are moved by its camera)
+  get_global_mouse_position() {
+    const m = this.__bridge.mouse || { x: 0, y: 0 };
+    const esc = this.__bridge.esc;
+    let n = this.__node;
+    while (n.parent) n = n.parent;
+    if (esc && esc.view && n === esc.view.room) {
+      const c = esc.camera;
+      return new Vector2((m.x - c[4]) / c[0], (m.y - c[5]) / c[3]);
+    }
+    return new Vector2(m.x, m.y);
+  }
   get_viewport() { return this.__bridge.viewport; }
   is_processing_input() { return this.__input !== false; }
   is_processing_unhandled_input() { return this.__input !== false; }
@@ -275,11 +295,20 @@ export class GdNode extends GdObject {
   get_window() { return this.__bridge.window; }
 
   // ---- metadata
-  set_meta(k, v) { (this.__node.state.meta ||= {})[k] = v; }
-  get_meta(k, def = null) { const m = this.__node.state.meta; return m && k in m ? m[k] : def; }
-  has_meta(k) { const m = this.__node.state.meta; return !!m && k in m; }
-  remove_meta(k) { if (this.__node.state.meta) delete this.__node.state.meta[k]; }
-  get_meta_list() { return Object.keys(this.__node.state.meta || {}); }
+  // state.meta starts with the scene's "metadata/<key>" properties
+  get __metaDict() {
+    const st = this.__node.state;
+    if (!st.meta) {
+      st.meta = {};
+      for (const [k, v] of Object.entries(this.__node.props)) if (k.startsWith("metadata/")) st.meta[k.slice(9)] = fromEngine(v);
+    }
+    return st.meta;
+  }
+  set_meta(k, v) { this.__metaDict[k] = v; }
+  get_meta(k, def = null) { const m = this.__metaDict; return k in m ? m[k] : def; }
+  has_meta(k) { return k in this.__metaDict; }
+  remove_meta(k) { delete this.__metaDict[k]; }
+  get_meta_list() { return Object.keys(this.__metaDict); }
 
   // ---- tweens
   create_tween() { return new GdTween(this.__bridge, this); }
@@ -402,6 +431,7 @@ class GdControl extends GdNode {
   get position() { const r = controlRect(this.__node); return new Vector2(r.x, r.y); }
   set position(v) {
     const r = controlRect(this.__node), p = this.__node.props;
+    this.__node.state.placedByScript = true; // (a floating dialog the script places: ui.dialog.layout)
     const dx = v.x - r.x, dy = v.y - r.y;
     Object.assign(p, { offset_left: (p.offset_left || 0) + dx, offset_top: (p.offset_top || 0) + dy, offset_right: (p.offset_right || 0) + dx, offset_bottom: (p.offset_bottom || 0) + dy });
   }
@@ -425,6 +455,11 @@ class GdControl extends GdNode {
   get_local_mouse_position() { const m = this.__bridge.mouse || { x: 0, y: 0 }; const g = this.global_position; return new Vector2(m.x - g.x, m.y - g.y); }
   get_global_rect() { const g = this.global_position, s = this.size; return new Rect2(g.x, g.y, s.x, s.y); }
   get_rect() { const p = this.position, s = this.size; return new Rect2(p.x, p.y, s.x, s.y); }
+  // reset_size(): back to its minimum size (containers: what their children need)
+  reset_size() {
+    const m = minSize(this.__node);
+    this.size = new Vector2(m.w, m.h);
+  }
   has_focus() { return false; }
   get custom_minimum_size() { return fromEngine(this.__node.props.custom_minimum_size) || new Vector2(); }
   set custom_minimum_size(v) { this.__node.props.custom_minimum_size = toEngine(new Vector2(v)); }

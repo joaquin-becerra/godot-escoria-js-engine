@@ -47,6 +47,7 @@ export function createBridge(esc) {
   Object.defineProperty(tree, "current_scene", { get: () => currentScene() });
   tree.quit = () => esc.quit();
   tree.get_nodes_in_group = (g) => [...treeNodes()].filter((n) => n.groups.includes(g)).map(wrap);
+  tree.get_first_node_in_group = (g) => { for (const n of treeNodes()) if (n.groups.includes(g)) return wrap(n); return null; };
   tree.call_group = (g, m, ...a) => tree.get_nodes_in_group(g).forEach((n) => typeof n[m] === "function" && n[m](...a));
   Object.defineProperty(tree, "node_added", { get: () => tree.signal("node_added") });
   Object.defineProperty(tree, "node_removed", { get: () => tree.signal("node_removed") });
@@ -81,6 +82,12 @@ export function createBridge(esc) {
     get_width: () => W,
     get_height: () => H,
   });
+  // the room's Camera2D: its offset (what a game's shake moves)
+  const camera2d = gdObject({
+    get offset() { const o = esc.cameraPlayer?.offset || { x: 0, y: 0 }; return new Vector2(o.x, o.y); },
+    set offset(v) { if (esc.cameraPlayer) esc.cameraPlayer.offset = { x: v.x, y: v.y }; },
+  });
+  viewport.get_camera_2d = () => (esc.view ? camera2d : null);
   viewport.get_visible_rect = () => new Rect2(0, 0, W, H);
   viewport.get_mouse_position = () => (bridge.mouse ? new Vector2(bridge.mouse.x, bridge.mouse.y) : new Vector2());
   bridge.viewport = viewport;
@@ -132,6 +139,8 @@ export function createBridge(esc) {
   bridge.tweens = new Set();
   bridge.players = new Set(); // AudioStreamPlayers playing (volume changes)
   esc.tickers.push((dt) => {
+    bridge.delta = dt;
+    bridge.processFrames = (bridge.processFrames || 0) + 1;
     for (const t of [...bridge.timers]) t.__tick(dt);
     for (const t of [...bridge.tweens]) t.__tick(dt);
     tree.signal("process_frame").emit();
@@ -234,6 +243,13 @@ export function createBridge(esc) {
     }
   };
   esc.hooks.scriptOf = (node) => wrap(node);
+  // values for the game scene's script (ui/scripted_ui.js): positions and click events
+  esc.hooks.vector2 = (x, y) => new Vector2(x, y);
+  esc.hooks.mouseButtonEvent = (p, button, double) => {
+    const ev = InputEventMouseButton.fromMouse({ x: p.x, y: p.y }, button === 2 ? 2 : button === 1 ? 3 : 1, true, !!double);
+    ev.position = new Vector2(p.x, p.y);
+    return ev;
+  };
   esc.hooks.nodeSignal = (node, name, args) => {
     // an OptionButton's list opens: the signal is its PopupMenu's
     if (name === "about_to_popup") return wrap(node).get_popup().emit_signal(name);
@@ -255,6 +271,8 @@ export function createBridge(esc) {
   /** load(path) / preload(path): the resource (a PackedScene, a Texture2D...), or null if it isn't exported. */
   bridge.load = (path) => {
     path = String(path);
+    // a script: its translated class (or the adapter of Escoria's)
+    if (path.endsWith(".gd")) return bridge.scripts[path] || bridge.scriptBases?.[path] || (esc.log(`load(): script ${path} isn't translated`, "warn"), null);
     if (!files.exists(path)) {
       esc.log(`load(): ${path} doesn't exist`, "warn");
       return null;
@@ -353,6 +371,9 @@ export function createBridge(esc) {
       esc.ui.applySettings?.(s);
     },
     save_settings() { esc.storageSet("settings", settingsObj()); },
+    // the game's own settings (saved with the others)
+    get custom_settings() { return (settingsObj().custom ||= {}); },
+    get_custom_setting(k, def = null) { const c = settingsObj().custom || {}; return k in c ? c[k] : def; },
     load_settings() { Object.assign(settingsObj(), esc.storageGet("settings") || {}); },
     get_settings: () => settingsObj(),
   };
@@ -403,7 +424,8 @@ export function createBridge(esc) {
       Object.defineProperty(r, "global_id", { get: () => esc.roomObject && esc.roomObject.globalId });
       Object.defineProperty(r, "player", { get: () => (esc.player ? wrap(esc.player.node) : null) });
       Object.defineProperty(r, "game", {
-        get: () => ({
+        // the game scene's own script (ui/scripted_ui.js), else game.gd's part the engine does
+        get: () => esc.hooks.gameScript?.() || ({
           hide_ui: () => esc.ui.setGuiVisible?.(false),
           show_ui: () => esc.ui.setGuiVisible?.(true),
           get tooltip_node() { return null; },
@@ -452,6 +474,13 @@ export function createBridge(esc) {
       is_channel_free: (c) => esc.events.isChannelFree(c),
       interrupt: () => esc.events.interrupt(),
       queue_event: (ev, force = false) => { if (ev) esc.events.queue(ev); return 0; },
+      // an event of a compiled script (esc_compiler.load_esc_file) by name
+      queue_event_from_esc(script, name, channel = "_front", block = false) {
+        const ev = script && script.get_event ? script.get_event(String(name)) : null;
+        if (!ev) return esc.log(`queue_event_from_esc: no :${name}`, "warn"), 1;
+        esc.events.queue(ev);
+        return 0;
+      },
       interrupt_channel: (c) => esc.events.interruptChannel(c),
       get_running_event: (ch = "_front") => {
         const ev = esc.events.runningEvent?.(ch);
@@ -461,6 +490,23 @@ export function createBridge(esc) {
       },
     },
     room_manager: { change_scene_to_file: (path) => esc.changeScene(path) },
+    save_manager: {
+      get save_enabled() { return !!esc.saveEnabled; },
+      set save_enabled(v) { esc.saveEnabled = truthy(v); },
+      // {slot: {name, date}}, the date as Time.get_datetime_dict_from_system()
+      get_saves_list() {
+        const out = new Map();
+        for (const [slot, s] of Object.entries(esc.listSaves())) {
+          const d = new Date(s.date);
+          out.set(+slot, { name: s.name, date: { year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate(), hour: d.getHours(), minute: d.getMinutes(), second: d.getSeconds() } });
+        }
+        return out;
+      },
+      save_game: (slot, name) => esc.saveGame(+slot, str(name)),
+      load_game: (slot) => esc.loadGame(+slot),
+    },
+    // set_game_paused(): the game's pause (its pause menu); the frontend's menus pause it already
+    set_game_paused: (p) => { esc.gamePaused = truthy(p); },
     settings_manager: settingsManager,
     new_game: () => esc.newGame(),
     quit: () => esc.quit(),
@@ -473,6 +519,7 @@ export function createBridge(esc) {
     get_node_or_null: (path) => { const n = esc.screenRoot.getNode(String(path)); return n ? wrap(n) : null; },
     get_node: (path) => { const n = esc.screenRoot.getNode(String(path)); return n ? wrap(n) : null; },
     get_tree: () => tree,
+    get_viewport: () => viewport,
   };
   bridge.escoria = escoria;
   bridge.objectWrapper = objectOf;
@@ -547,7 +594,7 @@ export function createBridge(esc) {
     if (C.prototype instanceof GdNode && "add_theme_color_override" in C.prototype) for (const [k, v] of Object.entries(CONTROL_CONSTS)) if (!(k in C)) Object.defineProperty(C, k, { value: v });
   }
   const singletons = {
-    Engine: { get time_scale() { return esc.timeScale; }, set time_scale(v) { esc.timeScale = Number(v) || 1; }, is_editor_hint: () => false, get_frames_drawn: () => 0, has_singleton: () => false, get_singleton: () => null },
+    Engine: { get time_scale() { return esc.timeScale; }, set time_scale(v) { esc.timeScale = Number(v) || 1; }, is_editor_hint: () => false, get_frames_drawn: () => frames, get_process_frames: () => bridge.processFrames || 0, get_physics_frames: () => bridge.processFrames || 0, has_singleton: () => false, get_singleton: () => null },
     Input: {
       is_action_pressed: () => false, is_action_just_pressed: () => false, is_key_pressed: () => false, is_mouse_button_pressed: () => false,
       get_mouse_position: () => (bridge.mouse ? new Vector2(bridge.mouse.x, bridge.mouse.y) : new Vector2()),
@@ -563,7 +610,7 @@ export function createBridge(esc) {
     RenderingServer: renderingServer,
     OS: { get_name: () => "Web", has_feature: (f) => f === "web", get_locale_language: () => ((typeof navigator !== "undefined" && navigator.language) || "en").split("-")[0], get_locale: () => (typeof navigator !== "undefined" && navigator.language) || "en" },
     Time: { get_ticks_msec: () => Math.floor(performance.now()), get_unix_time_from_system: () => Date.now() / 1000 },
-    ProjectSettings: { get_setting: (k, d = null) => getSetting(k, d), set_setting: setSetting, has_setting: (k) => getSetting(k) !== null, globalize_path: (p) => p, save: () => 0 },
+    ProjectSettings: { get_setting: (k, d = null) => getSetting(k, d), get: (k) => getSetting(k, null), set: (k, v) => setSetting(k, v), set_setting: setSetting, has_setting: (k) => getSetting(k) !== null, globalize_path: (p) => p, save: () => 0 },
     DisplayServer: {
       WINDOW_MODE_WINDOWED: 0, WINDOW_MODE_MINIMIZED: 1, WINDOW_MODE_MAXIMIZED: 2, WINDOW_MODE_FULLSCREEN: 3, WINDOW_MODE_EXCLUSIVE_FULLSCREEN: 4,
       window_get_mode: () => bridge.window.mode, window_set_mode: (m) => (bridge.window.mode = m),
@@ -645,6 +692,7 @@ export function createBridge(esc) {
 
 // properties of Godot's classes that are kept as the node's / resource's props
 const GODOT_PROPS = [
+  "anti_aliasing", "atlas", "region", "texture_normal", "texture_hover", "texture_pressed", "texture_disabled", "stretch_mode", "ignore_texture_size",
   "horizontal_alignment", "vertical_alignment", "autowrap_mode", "auto_translate_mode", "clip_text", "text_overrun_behavior", "uppercase",
   "visible_characters", "visible_ratio", "max_lines_visible", "lines_skipped", "label_settings", "fit_content", "scroll_active", "bbcode_enabled",
   "stretch_mode", "expand_mode", "flip_h", "flip_v", "texture", "texture_filter", "texture_repeat", "region_enabled", "region_rect", "centered", "offset",
@@ -670,7 +718,7 @@ export function SUPPORTED() {
   return {
     globals: new Set([...Object.keys(GLOBALS), "Callable"]),
     classes: new Set(["int", "float", "bool", "String", "StringName", "NodePath", "Array", "Dictionary", "Variant", "Vector2", "Vector2i", "Vector3", "Color", "Rect2", "Rect2i",
-      "Signal", "Callable", "Object", "RefCounted", ...ESCORIA_CLASS_NAMES, ...ESCORIA_SCRIPTS.map((s) => `${s} (extends)`), "ESCBaseCommand", "ESCCommandArgumentDescriptor", "ESCExecution", "ESCProjectSettingsManager", "ESCObjectManager",
+      "Signal", "Callable", "Object", "RefCounted", ...Object.keys(GLOBALS).filter((k) => /^[A-Z]/.test(k)), ...ESCORIA_CLASS_NAMES, ...ESCORIA_SCRIPTS.map((s) => `${s} (extends)`), "ESCBaseCommand", "ESCCommandArgumentDescriptor", "ESCExecution", "ESCProjectSettingsManager", "ESCObjectManager",
       "ConfigFile", "FileAccess", "DirAccess", "TextServer", "Tween", "CanvasItem", "Node", "Control",
       ...Object.keys(INPUT_CLASSES), ...Object.keys(RESOURCE_CLASSES), ...Object.keys(CLASSES), "*Command",
       "PROCESS_MODE_INHERIT", "PROCESS_MODE_PAUSABLE", "PROCESS_MODE_WHEN_PAUSED", "PROCESS_MODE_ALWAYS", "PROCESS_MODE_DISABLED"]),
@@ -685,6 +733,10 @@ export function SUPPORTED() {
       "escoria.add_child", "escoria.remove_child", "escoria.get_node_or_null", "escoria.get_node", "escoria.get_tree",
       "escoria.esc_compiler.load_esc_file", "escoria.event_manager.queue_event", "escoria.action_manager.current_action", "escoria.action_manager.current_tool",
       "escoria.action_manager.current_target", "escoria.action_manager.action_state", "escoria.action_manager.clear_current_action", "escoria.action_manager.clear_current_tool",
+      "escoria.action_manager.ACTION", "escoria.action_manager.do", "escoria.action_manager.set_current_action", "escoria.action_manager.set_action_input_state",
+      "escoria.action_manager.is_object_actionable", "escoria.set_game_paused", "escoria.event_manager.queue_event_from_esc",
+      "escoria.save_manager.save_enabled", "escoria.save_manager.get_saves_list", "escoria.save_manager.save_game", "escoria.save_manager.load_game",
+      "escoria.settings_manager.custom_settings", "escoria.settings_manager.get_custom_setting", "escoria.get_viewport",
     ]),
     scripts: new Set(ESCORIA_SCRIPTS),
     singletons: new Set(["Engine", "Input", "OS", "Time", "ProjectSettings", "TranslationServer", "DisplayServer", "AudioServer", "ResourceLoader", "FileAccess", "RenderingServer"]),
@@ -710,7 +762,11 @@ function escoriaApi() {
   const names = new Set(["dialog_location_node", "_current_character", "_current_line", "_text_timing_finished", "_waiting_for_voice_audio", "_reading_speed_in_wpm", "text_node",
     "current_action", "current_target", "current_prep", "current_target2", "waiting_for_target2", "color", "dialog", "_no_more_options", "option", "options", "is_valid",
     "get_timeout_option", "timeout", "avatar", "last_dir", "last_deg", "is_mirrored", "walk_destination", "target_object", "target_position", "fast", "dont_interact_on_arrival",
-    "origin", "get_global_transform_with_canvas", "get_global_transform", "events"]);
+    "origin", "get_global_transform_with_canvas", "get_global_transform", "events",
+    // the action manager's API (escoria.action_manager through a variable), the room camera, the speech player
+    "ACTION", "ActionInputState", "AWAITING_TARGET_ITEM", "ITEM_LEFT_CLICK", "ITEM_RIGHT_CLICK", "BACKGROUND_CLICK", "clear_current_action", "current_tool",
+    "set_action_input_state", "set_current_action", "is_object_actionable", "do", "pause", "resume", "get_camera_2d", "offset", "get_first_node_in_group",
+    "_is_speeding_up", "is_paused", "tween", "interpolate_property", "reset", "play"]);
   const src = makeEscoriaClasses.toString();
   for (const m of src.matchAll(/^\s{4,6}(?:get |set )?([_a-z][_a-z0-9]*)\(/gm)) names.add(m[1]);
   return names;

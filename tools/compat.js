@@ -263,7 +263,7 @@ for (const [file, doc] of Object.entries(json.files)) {
         const sup = supportOfScript(sc.$res);
         if (sup && sup.partial) add("partial", `${short(sc.$res)}: ${sup.partial}`, label);
         else if (!sup && !handles.includes(sc.$res)) {
-          add("script", sc.$res.startsWith("res://addons/") ? `${short(sc.$res)} (Escoria's, not implemented)` : `${short(sc.$res)} (the game's, not translated)`, label);
+          add("script", /^res:\/\/addons\/(escoria-|gdUnit4\/|gut\/)/.test(sc.$res) ? `${short(sc.$res)} (Escoria's, not implemented)` : `${short(sc.$res)} (the game's, not translated)`, label);
         }
       }
       // Escoria's node properties the engine never reads

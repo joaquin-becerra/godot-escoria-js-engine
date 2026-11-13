@@ -93,6 +93,7 @@ export class Rect2 {
     this.size = new Vector2(w, h);
   }
   get end() { return new Vector2(this.position.x + this.size.x, this.position.y + this.size.y); }
+  get_center() { return new Vector2(this.position.x + this.size.x / 2, this.position.y + this.size.y / 2); }
   has_point(p) { return p.x >= this.position.x && p.y >= this.position.y && p.x < this.end.x && p.y < this.end.y; }
 }
 
@@ -111,6 +112,8 @@ export function fromEngine(v) {
     if (v.type === "Color") return new Color(...v.args);
     if (v.type === "Rect2" || v.type === "Rect2i") return new Rect2(...v.args);
     if (v.type === "Vector3" || v.type === "Vector3i") return new Vector3(...v.args);
+    // Packed*Array / Array: the stored array itself (append() changes the property)
+    if (/^Packed\w+Array$|^Array$/.test(v.type)) return v.args;
   }
   if (resourceCodec && resourceCodec.is(v)) return resourceCodec.wrap(v);
   return v;
@@ -418,6 +421,13 @@ export const GLOBALS = {
   Rect2i: (...a) => new Rect2(...a.map((v) => (typeof v === "number" ? Math.trunc(v) : v))),
   Vector3: (x, y, z) => new Vector3(x, y, z),
   Array: (a = []) => [...a], Dictionary: (d = {}) => ({ ...d }),
+  // packed arrays are arrays here
+  PackedStringArray: (a = []) => [...a], PackedInt32Array: (a = []) => [...a], PackedInt64Array: (a = []) => [...a],
+  PackedFloat32Array: (a = []) => [...a], PackedFloat64Array: (a = []) => [...a], PackedVector2Array: (a = []) => [...a],
+  snappedf: (v, step) => (step ? Math.round(v / step) * step : v),
+  snappedi: (v, step) => (step ? Math.round(v / step) * step : Math.round(v)),
+  // Node notifications (_notification(what))
+  NOTIFICATION_READY: 13, NOTIFICATION_TRANSLATION_CHANGED: 2010,
 };
 const TYPE_OF = { null: 0, bool: 1, int: 2, float: 3, String: 4, Vector2: 5, Rect2: 7, Color: 20, Dictionary: 27, Array: 28 };
 for (const [k, v] of Object.entries({ TYPE_NIL: 0, TYPE_BOOL: 1, TYPE_INT: 2, TYPE_FLOAT: 3, TYPE_STRING: 4, TYPE_VECTOR2: 5, TYPE_RECT2: 7, TYPE_COLOR: 20, TYPE_OBJECT: 24, TYPE_DICTIONARY: 27, TYPE_ARRAY: 28 })) GLOBALS[k] = v;

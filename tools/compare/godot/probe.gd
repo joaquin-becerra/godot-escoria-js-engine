@@ -29,6 +29,7 @@ func _ready() -> void:
 				const d = this._d(); if (!d) return null;
 				if (t.verb) return d.verbs[t.verb] || null;
 				if (t.option) return d.options.find((o) => o.text === t.option) || null;
+				if (t.text) return d.texts.filter((o) => o.text === t.text).pop() || null;
 				if (t.object) return d.inventory[t.object] || d.objects[t.object] || null;
 				return null;
 			},
@@ -163,6 +164,7 @@ func _publish() -> void:
 	var verbs := {}
 	var inventory := {}
 	var options := []
+	var texts := []
 	var speech = null
 	var chooser := false
 	# the objects' points cost more: every 5th time
@@ -186,6 +188,11 @@ func _publish() -> void:
 					options.append(q)
 		elif n is BaseButton and _visible(n) and n.get_parent() and String(n.get_parent().name) in ["actions", "verbs_menu"]:
 			verbs[String(n.name)] = _screen(n, n.size / 2)
+		# a visible control with a text (scripted UIs: selector labels, menu buttons)
+		if n is Control and _visible(n) and "text" in n and n.text is String and n.text != "":
+			var q := _screen(n, n.size / 2)
+			q["text"] = n.text
+			texts.append(q)
 	# speech: a visible text in the dialog layer that is not the chooser
 	var dl = root.find_child("dialog_layer", true, false)
 	if dl:
@@ -242,6 +249,6 @@ func _publish() -> void:
 			"globals": globals,
 			"ended": false,
 		},
-		"verbs": verbs, "objects": objects, "inventory": inventory, "options": options,
+		"verbs": verbs, "objects": objects, "inventory": inventory, "options": options, "texts": texts,
 	}
 	_window.__probeData = JSON.stringify(data)

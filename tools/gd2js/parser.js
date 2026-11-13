@@ -302,7 +302,8 @@ export function parse(src) {
 
   function ternary() {
     let e = binary(0);
-    while (isName("if")) {
+    // a block lambda ends with a dedent: an `if` after it starts the next statement
+    while (isName("if") && toks[p - 1].t !== "dedent") {
       // a if cond else b (not at the start of a statement: `if` there is a statement)
       next();
       const cond = binary(0);

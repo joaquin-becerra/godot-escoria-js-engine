@@ -7,6 +7,7 @@
 //
 // Speech, the dialog chooser and the inventory items come from GameUI.
 import { GameUI, resPath } from "./game_ui.js";
+import { ScriptedGameUI, isScripted } from "./scripted_ui.js";
 import { STATE } from "../actions.js";
 import { cssColor } from "../../godot/values.js";
 
@@ -25,8 +26,9 @@ export function isSimpleMouse(game) {
   return !!script && script.endsWith(SCRIPT);
 }
 
-/** The game scene's UI: simplemouse's or the 9-verbs one. */
+/** The game scene's UI: the game's own (its script translated), simplemouse's or the 9-verbs one. */
 export function createGameUI(esc, width, height) {
+  if (isScripted(esc)) return ScriptedGameUI.create(esc, width, height);
   return isSimpleMouse(esc.game) ? SimpleMouseUI.create(esc, width, height) : GameUI.create(esc, width, height);
 }
 

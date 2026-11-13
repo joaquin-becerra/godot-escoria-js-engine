@@ -21,7 +21,11 @@ export function propsProxy(obj, props) {
     get(t, k, r) {
       if (typeof k === "symbol" || k in t) return Reflect.get(t, k, r);
       const p = props(t);
-      return p && k in p ? fromEngine(p[k]) : undefined;
+      if (!p || !(k in p)) return undefined;
+      const v = p[k];
+      // an array of sub-resources (ESCAnimationResource.idles...): its elements wrapped
+      if (Array.isArray(v) && v.some((e) => e && typeof e === "object" && (e.$res || (e.type && e.props)))) return v.map(fromEngine);
+      return fromEngine(v);
     },
     set(t, k, v, r) {
       if (typeof k === "symbol" || k in t || k.startsWith("__")) return Reflect.set(t, k, v, r);
@@ -78,8 +82,8 @@ export class GdResource extends GdObject {
     }
     return null;
   }
-  get resource_path() { return this.__raw.$res || ""; }
-  get resource_name() { return (this.__raw.$res || "").split("/").pop(); }
+  get resource_path() { return this.__raw.$res || this.__raw.path || ""; }
+  get resource_name() { return (this.__raw.$res || this.__raw.path || "").split("/").pop(); }
   duplicate() {
     const r = this.__raw.props ? { type: this.__raw.type, props: structuredClone(this.__raw.props) } : { ...this.__raw };
     return GdResource.wrap(r, this.__bridge);
@@ -285,9 +289,26 @@ class GdFont extends GdResource {
     const f = this.__resolve(size);
     return f ? f.font.lineHeightAt(f.size) : size * 1.3;
   }
+  get_ascent(size = 16) {
+    const f = this.__resolve(size);
+    return f && f.font.m ? f.font.m(f.size).ascent : size * 0.8;
+  }
+  get_descent(size = 16) {
+    const f = this.__resolve(size);
+    return f && f.font.m ? f.font.m(f.size).descent : size * 0.25;
+  }
   has_char(code) {
     const f = this.__resolve(16);
     return f ? f.font.has(String.fromCodePoint(code)) : true;
+  }
+}
+
+// AtlasTexture.new(): a region of `atlas` (the renderer cuts it: GameData.texture)
+class GdAtlasTexture extends GdTexture {
+  static gdClass = "AtlasTexture";
+  __size() {
+    const r = this.__props.region;
+    return r && r.args ? [r.args[2], r.args[3]] : super.__size();
   }
 }
 
@@ -298,7 +319,7 @@ class GdStyleBoxTexture extends GdStyleBox { static gdClass = "StyleBoxTexture";
 
 export const RESOURCE_CLASSES = {
   Resource: GdResource, PackedScene: GdPackedScene, Texture2D: GdTexture, CompressedTexture2D: GdTexture, ImageTexture: GdTexture,
-  AtlasTexture: GdTexture, AudioStream: GdAudioStream, AudioStreamOggVorbis: GdAudioStream, AudioStreamWAV: GdAudioStream,
+  AtlasTexture: GdAtlasTexture, AudioStream: GdAudioStream, AudioStreamOggVorbis: GdAudioStream, AudioStreamWAV: GdAudioStream,
   AudioStreamMP3: GdAudioStream, Font: GdFont, FontFile: GdFont, FontVariation: GdFont, SystemFont: GdFont,
   SpriteFrames: GdSpriteFrames, AnimationLibrary: GdAnimationLibrary, Animation: GdAnimation, Theme: GdTheme,
   Image: GdImage, Shader: GdShader, ShaderMaterial: GdShaderMaterial, CanvasItemMaterial: GdResource,

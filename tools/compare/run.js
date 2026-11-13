@@ -103,8 +103,12 @@ let speech = null, speechSince = 0, skipped = 0;
 const skipSpeech = async (s) => {
   if (s.speech !== speech) (speech = s.speech), (speechSince = Date.now());
   if (!speech || (Date.now() - speechSince) / 1000 < SKIP_AFTER) return;
-  const p = await toPage({ x: size.w / 2, y: size.h * 0.76 });
-  await page.mouse.click(p.x, p.y);
+  // walk.skipKey: a key skips the line (a click would walk where the game has no sentence line)
+  if (walk.skipKey) await page.keyboard.press(walk.skipKey);
+  else {
+    const p = await toPage({ x: size.w / 2, y: size.h * 0.76 });
+    await page.mouse.click(p.x, p.y);
+  }
   skipped++;
   speechSince = Date.now(); // the same line again (a repeated text): another click later
 };
@@ -151,7 +155,7 @@ const happened = (u, s, before) =>
   : fingerprint(s) !== before;
 
 async function run(step) {
-  const verbStep = step.verb || step.object;
+  const verbStep = step.verb || step.object || step.pick;
   if (!verbStep || step.until === false) return runOnce(step);
   for (let i = 1; ; i++) {
     const before = fingerprint(await state());
@@ -173,6 +177,53 @@ async function runOnce(step) {
   if (step.click) {
     if (step.click === "title") await sleep(2500);
     return click({ x: size.w / 2, y: size.h / 3 });
+  }
+  // walk.world: [w, h] of the game's coordinates; a click there (a keypad)
+  if (step.world) {
+    await waitFor((s) => !s.speech, "no speech", 60, 3);
+    await sleep(((step.before ?? 0.6) * 1000) / speed);
+    const [ww, wh] = walk.world;
+    return click({ x: (step.world[0] / ww) * size.w, y: (step.world[1] / wh) * size.h });
+  }
+  // a visible text of the game's UI (a menu button)
+  if (step.text) {
+    let q = null;
+    await waitFor(async () => (q = await probe("where", { text: step.text })), `text "${step.text}"`, 120);
+    return click(q);
+  }
+  // scripted UIs with a selector (Superfluous Returnz): click the object,
+  // then the selector's label `pick`, then (with `item`) the inventory item
+  if (step.pick) {
+    const ids = [step.object].filter(Boolean);
+    await waitFor(async (s) => s.idle && (!step.object || (await probe("where", { object: step.object }))), `being able to play with ${step.object}`, 300, 15);
+    const s0 = await state();
+    const inInv = s0.inventory.includes(step.object);
+    // off screen (a scrolling room): walk to that side first (a click on the floor)
+    for (let i = 0; !inInv && i < 4; i++) {
+      const q = await where({ object: step.object }, step.object);
+      if (q.x >= size.w * 0.03 && q.x <= size.w * 0.97) break;
+      await click({ x: q.x < 0 ? size.w * 0.08 : size.w * 0.92, y: size.h * (walk.floorY ?? 0.88) });
+      await waitFor((s) => s.idle, "walking to the side", 60, 5);
+    }
+    await click(await where({ object: step.object }, step.object), inInv ? null : step.object);
+    let q = null;
+    await waitFor(async () => (q = await probe("where", { text: step.pick })), `label "${step.pick}"`, 10, 2);
+    await sleep(150);
+    await click(q);
+    if (step.item) {
+      await sleep(700); // the inventory slides up
+      let qi = null;
+      await waitFor(async () => (qi = await probe("where", { object: step.item })), `inventory item ${step.item}`, 10, 3);
+      await click(qi);
+    }
+    await sleep(400);
+    return;
+  }
+  // an object clicked directly (an exit)
+  if (step.go) {
+    await waitFor(async (s) => s.idle && (await probe("where", { object: step.go })), `being able to go to ${step.go}`, 300, 15);
+    await click(await where({ object: step.go }, step.go), step.go);
+    return sleep(400);
   }
   if (step.choose) {
     await waitFor((s) => s.chooser && s.options.includes(step.choose), `option "${step.choose}"`, 120);
