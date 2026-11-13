@@ -6,8 +6,8 @@
 // tools/export.js puts them; the exporter runs this and writes their index.js).
 // --escoria: a project with Escoria as it comes (default ../escoria-demo-game):
 // the functions of the addons this project changed are listed, and whether
-// the project brings their JS side (the `patches` its
-// js_ports/escoria_patches.js exports: "<script>:<function>").
+// GEJE has their JS side (the `patches` its compat module for this game
+// exports, src/compat/: "<script>:<function>").
 //
 // For every .gd of the project (not addons/, not tooling folders):
 //   - <out>/gd/<path>.js     the translated module (tools/gd2js/emit.js)
@@ -23,6 +23,7 @@ import { emitModule } from "./emit.js";
 import { apiUsage } from "./api_usage.js";
 import { parseTextResource } from "../../src/godot/text_resource.js";
 import { SUPPORTED } from "../../src/godot/bridge/index.js";
+import { gamePatches } from "../game_patches.js";
 
 const root = path.resolve(process.argv[2] || ".");
 const outArg = process.argv.indexOf("--out");
@@ -261,14 +262,14 @@ if (fs.existsSync(path.join(stockRoot, "addons")) && stockRoot !== root) {
     if (changed.length) patched.push({ script: res(f), functions: changed });
   }
 }
-// the ones the project brings the JS side of (its js_ports/escoria_patches.js `patches`)
+// the ones GEJE has the JS side of for this game (src/compat/, tools/game_patches.js)
 let coveredPatches = [];
-const patchesFile = path.join(root, "js_ports", "escoria_patches.js");
-if (fs.existsSync(patchesFile)) {
+const gp = await gamePatches(root);
+if (gp) {
   try {
-    coveredPatches = (await import("file://" + patchesFile + `?p=${Date.now()}`)).patches || [];
+    coveredPatches = (await import("file://" + gp.module + `?p=${Date.now()}`)).patches || [];
   } catch (e) {
-    console.log(`couldn't read js_ports/escoria_patches.js: ${e.message}`);
+    console.log(`couldn't read ${path.relative(process.cwd(), gp.module)}: ${e.message}`);
   }
 }
 
@@ -295,7 +296,7 @@ if (patched.length) {
     for (const fn of p.functions) {
       const key = `${p.script}:${fn}`;
       const ok = coveredPatches.includes(key);
-      console.log(`  ${ok ? "✓" : "△"} ${key}${ok ? "" : "  <- no JS side in js_ports/escoria_patches.js"}`);
+      console.log(`  ${ok ? "✓" : "△"} ${key}${ok ? "" : "  <- no JS side in GEJE (src/compat/)"}`);
     }
   }
 }

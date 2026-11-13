@@ -81,7 +81,7 @@ async function start() {
   if (game.setting("rendering/textures/canvas_textures/default_texture_filter", 1) !== 0) canvas.style.imageRendering = "auto";
   esc = new Escoria(game, { log, ui });
   clearColor = cssColor(game.setting("rendering/environment/defaults/default_clear_color", { type: "Color", args: [0.3, 0.3, 0.3, 1] }));
-  await loadPorts(esc); // the game's own scripts (js_ports/), if it brings them
+  await loadPorts(esc); // the game's own scripts in JS (out/<game>/js_ports/, made by tools/export.js), if any
   gameUI = await createGameUI(esc, canvas.width, canvas.height);
   // the game's own menu scenes (translated scripts), else its ports' menus, else the engine's
   menus = SceneMenus.create(esc, gameUI.scene) || (await Menus.create(esc, gameUI.scene, canvas.width, canvas.height));

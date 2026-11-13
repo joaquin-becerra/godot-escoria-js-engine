@@ -33,7 +33,7 @@ for the Godot side, the Godot 4 editor (`godot` in the PATH, or `$GODOT`).
 ```
 node tools/inventory.js <godot project dir>   # what the project uses -> inventory/<name>.md
 node tools/export.js <godot project dir>      # game for the engine -> out/<name>/ (game.json + res/)
-                                              # (its GDScript translated to js_ports/ by tools/gd2js)
+                                              # (its GDScript translated to out/<name>/js_ports/ by tools/gd2js)
                                               # ends with tools/compat.js: can the engine play it?
 node tools/compat.js out/<name> [-v]          # compatibility report -> out/<name>/COMPATIBILITY.txt
 node tools/trace.js <exported game>           # plays its intro in Node, prints what was said and the globals
@@ -74,8 +74,9 @@ exported games keep their own license.
 
 - GDScript is not executed: the engine reimplements Godot's 2D nodes and
   Escoria's behaviour (including its ASHES script interpreter) in JavaScript.
-  A game's own GDScript is translated to JS by `tools/gd2js`; changes a game
-  makes to Escoria's addons need their JS side in the project's
-  `js_ports/escoria_patches.js`.
+  A game's own GDScript is translated to JS by `tools/gd2js`. Changes a game
+  makes to Escoria's addons need their JS side in GEJE (`src/compat/`, e.g.
+  `scumm2escoria.js` for games made by the converter, which marks them with a
+  `[scumm2escoria]` section in `project.godot`): games bring nothing for GEJE.
 - Godot and Escoria are MIT licensed; their notices for the code ported from
   them are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

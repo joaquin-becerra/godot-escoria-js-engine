@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- **Games bring nothing for GEJE.** The JS side of a game's changes to Escoria's addons now lives in GEJE (`src/compat/scumm2escoria.js`), not in the game's `js_ports/`.
+  - `tools/export.js` installs it for games made by scumm2escoria, which marks them with a `[scumm2escoria]` section in `project.godot`. That section also says what was patched for each game (`tools/game_patches.js`).
+  - Games converted before this change still work through their `js_ports/config.js`.
+- **Esc skips a cutscene** in any game with a `cutscene_skip` autoload (OpenQuest Enhanced's), before the pause menu opens.
+
 ## 1.1 — 2026-11-12
 
 This version runs the **[Superfluous Returnz demo](https://github.com/joaquin-becerra/superfluous-returnz-demo)** (Godot 4.7 + Escoria), a game with its own scripted interface instead of one of Escoria's stock UIs. The whole prologue plays in the browser, from New game to the end screen.
