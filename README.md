@@ -4,6 +4,11 @@ A lightweight JavaScript engine that plays 2D point & click adventures made with
 [Godot 4](https://godotengine.org) + [Escoria](https://github.com/godot-escoria)
 in the browser, without Godot's WebAssembly runtime.
 
+It is much lighter: Godot 4's official web export ships a ~39.5 MB engine
+(`index.wasm`, ~10 MB gzipped) before the game itself, while the whole GEJE
+engine is ~0.6 MB of plain JavaScript (~180 KB gzipped), about 60 times
+smaller, so there is much less to download before a game can start.
+
 ```
 Godot + Escoria project  ──►  exporter (Node)  ──►  game.json + assets  ──►  JS engine (browser)
 (.tscn .tres .esc ...)
@@ -15,6 +20,23 @@ an enhanced version of it, and the complete
 [Escoria demo game](https://github.com/godot-escoria/escoria-demo-game).
 Other games may use parts of Godot or Escoria the engine doesn't have yet:
 `tools/compat.js` tells which.
+
+## 🎮 Play the demos online
+
+> **[▶ joaquin-becerra.github.io/godot-escoria-js-engine](https://joaquin-becerra.github.io/godot-escoria-js-engine/)**
+>
+> Five complete Godot + Escoria games, running in the browser on this engine:
+> nothing to install, they play right away on desktop.
+
+| Demo | What it is | |
+|---|---|---|
+| **OpenQuest** | Michael Sheail's demo adventure, converted from its ScummC port by scumm2escoria | [▶ Play](https://joaquin-becerra.github.io/godot-escoria-js-engine/player/?game=openquest-escoria) |
+| **OpenQuest Enhanced** | OpenQuest improved by hand: HD art (F10 switches it with the pixel art), five languages, music, a new ending | [▶ Play](https://joaquin-becerra.github.io/godot-escoria-js-engine/player/?game=openquest-escoria-enhanced) |
+| **Road** | ScummC's example game, converted by scumm2escoria | [▶ Play](https://joaquin-becerra.github.io/godot-escoria-js-engine/player/?game=road-escoria) |
+| **Escoria demo** | Escoria's own showcase game, room by room | [▶ Play](https://joaquin-becerra.github.io/godot-escoria-js-engine/player/?game=escoria-demo-game) |
+| **Superfluous Returnz (demo)** | The first chapter of Gee's game, ported from the Sosage engine | [▶ Play](https://joaquin-becerra.github.io/godot-escoria-js-engine/player/?game=superfluous-returnz-demo) |
+
+The site lists the credits and the license of each game.
 
 ## Quick start
 
@@ -52,6 +74,7 @@ Player options (query string): `game=<name>` (the folder in `geje-builds/`),
 
 ## Links
 
+- [Online demos](https://joaquin-becerra.github.io/godot-escoria-js-engine/)
 - [Godot Engine](https://godotengine.org)
 - [Escoria](https://github.com/godot-escoria)
 
