@@ -37,8 +37,8 @@ export async function loadRoom(game, file) {
       n.props.z_index = Math.min(Math.round(p.y), 4096);
     }
   }
-  await game.loadImagesIn(room.props);
-  for (const n of room.walk()) await game.loadImagesIn(n.props);
+  // all at once: one node after another meant one download after another
+  await game.loadImagesIn([room.props, ...[...room.walk()].map((n) => n.props)]);
   // esc_room.gd: camera_limits defaults to [Rect2()] (the viewport at 0,0)
   const limits = (room.props.camera_limits || [{ type: "Rect2", args: [0, 0, 0, 0] }]).map(rect2);
   return { room, player, limits };

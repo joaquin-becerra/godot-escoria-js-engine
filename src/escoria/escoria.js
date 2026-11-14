@@ -839,7 +839,7 @@ export class Escoria {
   /** spawn(): a scene added to the root (screen space, above the room, under the UI), kept across rooms. */
   async spawn(id, file, active = true, at = null) {
     const node = instantiate(this.game, file);
-    for (const n of node.walk()) await this.game.loadImagesIn(n.props);
+    await this.game.loadImagesIn([...node.walk()].map((n) => n.props));
     if (at) node.props.position = { type: "Vector2", args: [at.x, at.y] };
     this.screenRoot.add(node);
     const obj = new EscObject(this, id, node);

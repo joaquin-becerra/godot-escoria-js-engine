@@ -1,6 +1,6 @@
 // Exports a Godot + Escoria project for the JS engine.
 //
-//   node tools/export.js <godot project dir> [out dir] [--keep-wav]
+//   node tools/export.js <godot project dir> [out dir] [--keep-wav] [--webp[=quality]]
 //
 // Output (default geje-builds/<project dir name>/):
 //   game.json   settings, every scene/resource as JSON, the ASHES scripts,
@@ -12,6 +12,13 @@
 // installed; else they are copied as they are). game.json's `remap` says
 // which res:// path is now which file ("res://x.wav" -> "res://x.ogg"); the
 // scripts keep naming the .wav. --keep-wav skips the conversion.
+//
+// Pictures: --webp (or --webp=<quality>, default 85) converts the .png files
+// to WebP (cwebp, else ffmpeg's libwebp) through the same `remap`: lossy at
+// that quality, but lossless for the pictures read pixel by pixel or that
+// must stay sharp (bitmap font pages, transition masks, terrain scales and
+// lightmaps). A picture whose WebP isn't smaller stays a .png. The project
+// is never touched: only the build changes.
 //
 // Ports (the game's own code in JS, see src/escoria/ports.js), in
 // geje-builds/<game>/js_ports/index.js, which game.json's `ports` points at: the
@@ -45,6 +52,12 @@ const root = path.resolve(positional[0] || ".");
 const name = path.basename(root);
 const out = path.resolve(positional[1] || path.join(here, "..", "geje-builds", name));
 const VORBIS_QUALITY = 3; // ffmpeg -q:a for libvorbis (0..10; ~3 is plenty for game sounds)
+const webpArg = args.find((a) => a === "--webp" || a.startsWith("--webp="));
+const WEBP_QUALITY = webpArg && webpArg.includes("=") ? Number(webpArg.split("=")[1]) : 85;
+const has = (cmd, a, test) => { const r = spawnSync(cmd, a, { encoding: "utf8" }); return !r.error && test(r.stdout + r.stderr); };
+const webpEncoder = !webpArg ? null
+  : has("cwebp", ["-version"], (o) => /\d/.test(o)) ? "cwebp"
+  : has("ffmpeg", ["-hide_banner", "-encoders"], (o) => o.includes("libwebp")) ? "ffmpeg" : null;
 const ffmpeg = !keepWav && spawnSync("ffmpeg", ["-hide_banner", "-encoders"], { encoding: "utf8" }).stdout?.includes("libvorbis");
 
 const SKIP_DIRS = /^(tools|build|nbproject|original|ai_refs)\//; // tooling, never shipped
@@ -168,6 +181,9 @@ const missing = new Map(); // referenced but not found -> referenced from
 const files = {};
 const scripts = {};
 const assets = [];
+// pictures a --webp build keeps lossless: bitmap font pages, transition masks,
+// terrain scales/lightmaps (read pixel by pixel)
+const exactPixels = new Set(TRANSITION_FILES);
 
 function need(r, from) {
   if (!r || typeof r !== "string" || !r.startsWith("res://")) return;
@@ -245,7 +261,10 @@ while (queue.length) {
     if (e === "fnt") {
       // BMFont: its page images
       const dir = r.slice(0, r.lastIndexOf("/") + 1);
-      for (const m of fs.readFileSync(toAbs(r), "utf8").matchAll(/^page id=\d+ file="([^"]+)"/gm)) need(dir + m[1], r);
+      for (const m of fs.readFileSync(toAbs(r), "utf8").matchAll(/^page id=\d+ file="([^"]+)"/gm)) {
+        need(dir + m[1], r);
+        exactPixels.add(dir + m[1]);
+      }
     }
   }
 }
@@ -332,8 +351,63 @@ if (fs.existsSync(out)) {
 let bytes = 0;
 let wavBytes = 0, oggBytes = 0;
 const remap = {}; // res path in the project -> res path of the exported file
+// terrain textures: the `scales` / `lightmap` props of any node
+{
+  const seen = new Set();
+  const walk = (v) => {
+    if (!v || typeof v !== "object" || seen.has(v)) return;
+    seen.add(v);
+    for (const [k, x] of Object.entries(v)) {
+      if ((k === "scales" || k === "lightmap") && x && typeof x.$res === "string") exactPixels.add(x.$res);
+      walk(x);
+    }
+  };
+  walk(files);
+}
+// does a PNG have alpha? (color type 4/6, or a tRNS chunk)
+function pngAlpha(file) {
+  const b = fs.readFileSync(file);
+  if (b[25] === 4 || b[25] === 6) return true;
+  for (let i = 8; i + 8 <= b.length; ) {
+    const len = b.readUInt32BE(i), type = b.toString("ascii", i + 4, i + 8);
+    if (type === "tRNS") return true;
+    if (type === "IDAT" || type === "IEND") return false;
+    i += 12 + len;
+  }
+  return false;
+}
+function encodeWebp(src, dst, lossless) {
+  const a = webpEncoder === "cwebp"
+    ? ["cwebp", ["-quiet", "-m", "6", ...(lossless ? ["-lossless", "-z", "9"] : ["-q", String(WEBP_QUALITY), "-alpha_q", "100", "-sharp_yuv"]), src, "-o", dst]]
+    : ["ffmpeg", ["-y", "-loglevel", "error", "-i", src, "-c:v", "libwebp", "-compression_level", "6",
+        ...(lossless ? ["-lossless", "1", "-pix_fmt", "bgra"] : ["-lossless", "0", "-quality", String(WEBP_QUALITY), "-pix_fmt", pngAlpha(src) ? "yuva420p" : "yuv420p"]), dst]];
+  const r = spawnSync(a[0], a[1], { encoding: "utf8" });
+  return r.status === 0 && fs.existsSync(dst) ? null : (r.stderr || "").trim() || "failed";
+}
+let pngBytes = 0, webpBytes = 0, webpCount = 0, webpLossless = 0, webpKept = 0;
 for (const r of assets) {
   let target = r;
+  if (webpEncoder && extOf(r) === "png") {
+    const lossless = exactPixels.has(r);
+    const webp = r.slice(0, -4) + ".webp";
+    const dst = path.join(out, "res", webp.slice(6));
+    fs.mkdirSync(path.dirname(dst), { recursive: true });
+    const err = encodeWebp(toAbs(r), dst, lossless);
+    const before = fs.statSync(toAbs(r)).size;
+    if (err || fs.statSync(dst).size >= before) {
+      if (err) console.log(`  couldn't convert ${r} to webp: ${err}; the png goes as is`);
+      fs.rmSync(dst, { force: true });
+      webpKept++;
+    } else {
+      remap[r] = webp;
+      pngBytes += before;
+      webpBytes += fs.statSync(dst).size;
+      webpCount++;
+      if (lossless) webpLossless++;
+      bytes += fs.statSync(dst).size;
+      continue;
+    }
+  }
   if (ffmpeg && extOf(r) === "wav") target = r.slice(0, -4) + ".ogg";
   const dst = path.join(out, "res", target.slice(6));
   fs.mkdirSync(path.dirname(dst), { recursive: true });
@@ -471,7 +545,9 @@ if (uncovered.length) {
   for (const r of uncovered) console.log(`    ${r}`);
 }
 if (Object.keys(translations).length) console.log(`  traducciones: ${Object.entries(translations).map(([l, t]) => `${l} ${Object.keys(t).length}`).join(", ")}`);
-if (Object.keys(remap).length) console.log(`  sonidos: ${Object.keys(remap).length} wav a ogg, ${(wavBytes / 1024).toFixed(0)} KB -> ${(oggBytes / 1024).toFixed(0)} KB`);
+if (webpArg && !webpEncoder) console.log("  --webp: no cwebp nor ffmpeg with libwebp, the pngs go as they are");
+if (webpCount) console.log(`  imágenes: ${webpCount} png a webp (q ${WEBP_QUALITY}; ${webpLossless} sin pérdida), ${(pngBytes / 1024).toFixed(0)} KB -> ${(webpBytes / 1024).toFixed(0)} KB${webpKept ? `; ${webpKept} quedan png (no achicaban)` : ""}`);
+if (wavBytes) console.log(`  sonidos: ${Object.keys(remap).filter((r) => extOf(r) === "wav").length} wav a ogg, ${(wavBytes / 1024).toFixed(0)} KB -> ${(oggBytes / 1024).toFixed(0)} KB`);
 else if (!keepWav && assets.some((r) => extOf(r) === "wav")) console.log("  sounds: no ffmpeg with libvorbis, the wavs go as they are");
 console.log(`  from addons/: ${fromAddons} files`);
 if (missing.size) {

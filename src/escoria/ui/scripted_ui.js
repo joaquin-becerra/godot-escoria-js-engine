@@ -31,16 +31,18 @@ export class ScriptedGameUI extends GameUI {
   async load() {
     const file = this.game.setting("escoria/ui/game_scene", "");
     this.scene = instantiate(this.game, file);
+    const loads = []; // in parallel
     for (const n of this.scene.walk()) {
-      await this.game.loadImagesIn(n.props);
+      loads.push(this.game.loadImagesIn(n.props));
       for (const k of ["theme_override_fonts/font", "theme_override_fonts/normal_font"]) {
         const f = resPath(n.props[k]);
-        if (f) await this.game.loadFont(f).catch(() => null);
+        if (f) loads.push(this.game.loadFont(f).catch(() => null));
       }
       const th = n.props.theme && n.props.theme.$res ? this.game.resource(n.props.theme.$res) : n.props.theme;
       const df = th && th.props && resPath(th.props.default_font);
-      if (df) await this.game.loadFont(df).catch(() => null);
+      if (df) loads.push(this.game.loadFont(df).catch(() => null));
     }
+    await Promise.all(loads);
     // the dialog player's theme: the dialog scenes take it
     const dp = this.scene.find((n) => n.scriptName === "esc_dialog_player");
     this.esc.dialogTheme = (dp && dp.props.theme) || null;

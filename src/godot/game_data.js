@@ -241,18 +241,32 @@ export class GameData {
     await Promise.all([...paths].filter((p) => !this.images.has(p)).map((p) => this.loadImage(p)));
   }
 
+  /** How many pictures and fonts are still downloading. */
+  downloading() {
+    let n = this.pendingImages ? this.pendingImages.size : 0;
+    for (const f of this.fonts.values()) if (f instanceof Promise) n++;
+    return n;
+  }
+
   loadImage(res) {
-    return new Promise((ok) => {
+    // one download per picture, even when several loads ask for it at once
+    this.pendingImages ||= new Map();
+    if (this.pendingImages.has(res)) return this.pendingImages.get(res);
+    const p = new Promise((ok) => {
       const img = new Image();
       img.onload = () => {
         this.images.set(res, img);
+        this.pendingImages.delete(res);
         ok(img);
       };
       img.onerror = () => {
         console.warn("couldn't load", res);
+        this.pendingImages.delete(res);
         ok(null);
       };
       img.src = this.url(res);
     });
+    this.pendingImages.set(res, p);
+    return p;
   }
 }

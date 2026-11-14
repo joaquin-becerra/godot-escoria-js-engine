@@ -320,7 +320,7 @@ export class Menus {
     this.backup = { ...this.draft };
     this.screen = "options";
     const game = this.esc.game;
-    this.flags = game.locales().map((lang) => ({ lang, res: `${FLAGS}${lang}.png` })).filter((f) => game.exported.has(f.res));
+    this.flags = game.locales().map((lang) => ({ lang, res: `${FLAGS}${lang}.png` })).filter((f) => game.has(f.res));
     for (const f of this.flags) if (!game.image(f.res)) game.loadImage(f.res);
   }
 

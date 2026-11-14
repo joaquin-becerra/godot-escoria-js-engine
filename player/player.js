@@ -101,7 +101,7 @@ async function start() {
   };
   const lang = menus.settings.lang && locales.includes(menus.settings.lang) ? menus.settings.lang : browserLang();
   if (lang) game.locale = lang;
-  document.getElementById("msg").remove();
+  loadingShown(false);
   requestAnimationFrame(frame);
   // ?room=res://...tscn (a shortcut for testing): the start script's state
   // commands (globals, names...), then that room, instead of :init
@@ -191,7 +191,25 @@ const afterFrame = [];
 // manual: the frames come from a test driver (geje.record(): a fixed step of
 // game time per frame, whatever the real time), not from the browser's clock
 let manual = false;
+// the spinner (index.html #msg): from the start until the game is ready, and
+// then whenever pictures or fonts have been downloading for a while (a room
+// whose pictures haven't arrived yet would be black)
+let downloadingSince = 0;
+function loadingShown(on) {
+  const m = document.getElementById("msg");
+  if (!m) return;
+  m.classList.toggle("hidden", !on);
+  m.classList.add("over"); // after the first load: over the game, dimming it
+}
+function updateLoading(t) {
+  if (!game.downloading()) {
+    if (downloadingSince) loadingShown(false);
+    downloadingSince = 0;
+  } else if (!downloadingSince) downloadingSince = t;
+  else if (t - downloadingSince > 300) loadingShown(true);
+}
 function frame(t) {
+  updateLoading(t);
   const dt = last ? Math.min((t - last) / 1000, 0.1) : 0;
   last = t;
   if (!manual) step(dt);
@@ -381,6 +399,9 @@ function onKeyUp(e) {
 
 start().catch((e) => {
   const m = document.getElementById("msg");
-  if (m) m.textContent = "Error: " + e.message;
+  if (m) {
+    m.className = "error";
+    m.querySelector(".text").textContent = "Error: " + e.message;
+  }
   console.error(e);
 });

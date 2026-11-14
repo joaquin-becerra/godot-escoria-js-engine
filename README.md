@@ -48,7 +48,10 @@ node tools/serve.js                           # then open http://localhost:8090/
 ## Tools
 
 Node.js 20+. The engine and the tools have no dependencies; `ffmpeg` (with
-libvorbis) is optional, to turn `.wav` sounds into `.ogg` when exporting.
+libvorbis) is optional, to turn `.wav` sounds into `.ogg` when exporting;
+`export.js --webp[=quality]` (default 85) turns the `.png` pictures into WebP
+(with `cwebp`, or `ffmpeg` with libwebp), lossless for font pages, transition
+masks and terrain maps. The project itself is never changed.
 `tools/compare` also needs `npm install` (Playwright), a Chrome/Chromium and,
 for the Godot side, the Godot 4 editor (`godot` in the PATH, or `$GODOT`).
 

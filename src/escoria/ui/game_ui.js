@@ -54,13 +54,15 @@ export class GameUI {
     const file = this.game.setting("escoria/ui/game_scene", "");
     if (!this.game.files[file]) return this.esc.log(`game scene ${file} wasn't exported`, "warn");
     this.scene = instantiate(this.game, file);
+    const loads = []; // in parallel
     for (const n of this.scene.walk()) {
-      await this.game.loadImagesIn(n.props);
+      loads.push(this.game.loadImagesIn(n.props));
       for (const k of ["theme_override_fonts/font", "theme_override_fonts/normal_font"]) {
         const f = resPath(n.props[k]);
-        if (f) await this.game.loadFont(f).catch(() => null); // drawn without it if it can't load
+        if (f) loads.push(this.game.loadFont(f).catch(() => null)); // drawn without it if it can't load
       }
     }
+    await Promise.all(loads);
     this.verbsMenu = this.scene.find((n) => n.scriptName === "verbs_menu");
     this.tooltip = this.scene.find((n) => n.type === "RichTextLabel" && /tooltip|sentence/.test(n.scriptName + n.name));
     this.uiRoot = this.scene.getNode("ui/Control");
