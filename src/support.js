@@ -29,6 +29,12 @@ export const NODES = {
   GPUParticles2D: "on the CPU: no turbulence, attractors or collisions",
   ParallaxBackground: true, ParallaxLayer: true,
 };
+// a NODES note that only applies when the node sets one of these properties
+// (a Polygon2D of plain color is fully drawn)
+export const PARTIAL_IF = {
+  Polygon2D: ["texture"],
+  Line2D: ["texture", "gradient"],
+};
 
 /**
  * Node types that never show anything nor do anything in a game (editor

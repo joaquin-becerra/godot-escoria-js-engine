@@ -8,9 +8,9 @@ import { drawShaded, hasShader } from "./shaders.js";
 
 export const CONTROL_TYPES = new Set([
   "Control", "Label", "RichTextLabel", "Panel", "PanelContainer", "ColorRect", "TextureRect", "Button", "TextureButton", "CheckBox",
-  "LineEdit", "TextEdit", "OptionButton", "HSlider", "VSlider", "VBoxContainer", "HBoxContainer", "GridContainer", "MarginContainer", "ScrollContainer", "CenterContainer",
+  "LineEdit", "TextEdit", "OptionButton", "HSlider", "VSlider", "TextureProgressBar", "VBoxContainer", "HBoxContainer", "GridContainer", "MarginContainer", "ScrollContainer", "CenterContainer",
 ]);
-export const DRAWN_CONTROLS = new Set(["Label", "Panel", "PanelContainer", "ColorRect", "TextureRect", "Button", "TextureButton", "CheckBox", "LineEdit", "TextEdit", "OptionButton", "HSlider", "VSlider", "ScrollContainer"]);
+export const DRAWN_CONTROLS = new Set(["Label", "Panel", "PanelContainer", "ColorRect", "TextureRect", "Button", "TextureButton", "CheckBox", "LineEdit", "TextEdit", "OptionButton", "HSlider", "VSlider", "TextureProgressBar", "ScrollContainer"]);
 const CONTAINERS = new Set(["VBoxContainer", "HBoxContainer", "GridContainer", "MarginContainer", "CenterContainer", "PanelContainer", "ScrollContainer"]);
 
 /** UI state for drawing: the control under the mouse, the focused one, the one held down. */
@@ -134,6 +134,13 @@ export function minSize(n, width = 0) {
     case "TextureButton": {
       // its normal texture's size, unless ignore_texture_size
       const tex = !n.props.ignore_texture_size && n.props.texture_normal && GAME && GAME.texture(n.props.texture_normal);
+      if (tex) [cw, ch] = [tex.sw, tex.sh];
+      break;
+    }
+    case "TextureProgressBar": {
+      // its textures' size, unless nine_patch_stretch
+      const p = n.props;
+      const tex = !p.nine_patch_stretch && GAME && GAME.texture(p.texture_under || p.texture_progress || p.texture_over);
       if (tex) [cw, ch] = [tex.sw, tex.sh];
       break;
     }
@@ -346,7 +353,7 @@ export function scrollBy(n, dx, dy) {
 /** Range (HSlider, VSlider): its value set within min / max and rounded to the step. */
 export function setRangeValue(n, v) {
   const p = n.props;
-  const min = p.min_value ?? 0, max = p.max_value ?? 100, step = p.step ?? 1;
+  const min = p.min_value ?? 0, max = p.max_value ?? 100, step = p.step ?? (n.type === "HSlider" || n.type === "VSlider" ? 1 : 0.01);
   if (step > 0) v = min + Math.round((v - min) / step) * step;
   v = Math.min(max, Math.max(min, v));
   if (p.rounded) v = Math.round(v);
@@ -451,7 +458,7 @@ const DEFAULT_FILTER = { OptionButton: 0, HSlider: 0, VSlider: 0, Label: 2, Cont
 export function mouseFilter(n) {
   return n.props.mouse_filter ?? DEFAULT_FILTER[n.type] ?? 0;
 }
-export const INTERACTIVE = new Set(["Button", "CheckBox", "TextureButton", "LineEdit", "TextEdit", "OptionButton", "HSlider", "VSlider", "ScrollContainer"]);
+export const INTERACTIVE = new Set(["Button", "CheckBox", "TextureButton", "LineEdit", "TextEdit", "OptionButton", "HSlider", "VSlider", "TextureProgressBar", "ScrollContainer"]);
 
 /** StyleBoxFlat: background and borders. */
 export function drawStyleBox(ctx, game, sb, x, y, w, h) {
@@ -545,7 +552,57 @@ export function drawControl(ctx, game, node) {
     case "ScrollContainer":
       drawScrollbars(ctx, node, r);
       break;
+    case "TextureProgressBar":
+      drawProgress(ctx, game, node, r);
+      break;
   }
+}
+
+// TextureProgressBar: texture_under, the part of texture_progress the value
+// fills (fill_mode 0 left to right, 1 right to left, 2 top to bottom, 3 bottom
+// to top; the radial and bilinear modes are drawn as 0), texture_over; each
+// tinted. nine_patch_stretch: the textures fill the control (stretched as a
+// whole, without the stretch margins); else at their size, at the top left.
+function drawProgress(ctx, game, node, r) {
+  const p = node.props;
+  const min = p.min_value ?? 0, max = p.max_value ?? 100;
+  const ratio = max > min ? Math.min(1, Math.max(0, ((p.value ?? 0) - min) / (max - min))) : 0;
+  const layer = (t, tint, part) => {
+    const tex = t && game.texture(t);
+    if (!tex) return;
+    const w = p.nine_patch_stretch ? r.w : tex.sw, h = p.nine_patch_stretch ? r.h : tex.sh;
+    let [sx, sy, sw, sh, x, y, dw, dh] = [0, 0, tex.sw, tex.sh, 0, 0, w, h];
+    if (part !== undefined) {
+      const mode = p.fill_mode ?? 0;
+      if (mode === 1) [sx, sw, x, dw] = [tex.sw * (1 - part), tex.sw * part, w * (1 - part), w * part];
+      else if (mode === 2) [sh, dh] = [tex.sh * part, h * part];
+      else if (mode === 3) [sy, sh, y, dh] = [tex.sh * (1 - part), tex.sh * part, h * (1 - part), h * part];
+      else [sw, dw] = [tex.sw * part, w * part];
+      if (!(sw > 0 && sh > 0)) return;
+    }
+    const c = tint ? color(tint) : null;
+    const alpha = ctx.globalAlpha;
+    if (c) ctx.globalAlpha = alpha * c.a;
+    const tinted = c && (c.r < 1 || c.g < 1 || c.b < 1);
+    if (tinted) {
+      // multiply by the tint, inside the texture's own shape
+      const tmp = document.createElement("canvas");
+      tmp.width = Math.max(1, Math.ceil(dw));
+      tmp.height = Math.max(1, Math.ceil(dh));
+      const tc = tmp.getContext("2d");
+      tc.drawImage(tex.img, tex.sx + sx, tex.sy + sy, sw, sh, 0, 0, tmp.width, tmp.height);
+      tc.globalCompositeOperation = "multiply";
+      tc.fillStyle = `rgb(${c.r * 255},${c.g * 255},${c.b * 255})`;
+      tc.fillRect(0, 0, tmp.width, tmp.height);
+      tc.globalCompositeOperation = "destination-in";
+      tc.drawImage(tex.img, tex.sx + sx, tex.sy + sy, sw, sh, 0, 0, tmp.width, tmp.height);
+      ctx.drawImage(tmp, x, y, dw, dh);
+    } else ctx.drawImage(tex.img, tex.sx + sx, tex.sy + sy, sw, sh, x, y, dw, dh);
+    ctx.globalAlpha = alpha;
+  };
+  layer(p.texture_under, p.tint_under);
+  if (ratio > 0) layer(p.texture_progress, p.tint_progress, ratio);
+  layer(p.texture_over, p.tint_over);
 }
 
 function drawOption(ctx, game, node, r) {

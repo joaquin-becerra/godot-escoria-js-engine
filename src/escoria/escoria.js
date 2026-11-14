@@ -29,6 +29,9 @@ import { EscCamera } from "./camera.js";
 
 export { RC, CHANNEL_FRONT, EV };
 
+/** Timers end when what's left is under this (seconds): float rounding of frame steps. */
+export const TIME_EPSILON = 1e-6;
+
 const GLOBAL_LAST_SCENE = "ESC_LAST_SCENE";
 const GLOBAL_CURRENT_SCENE = "ESC_CURRENT_SCENE";
 const GLOBAL_FORCE_LAST_SCENE_NULL = "FORCE_LAST_SCENE_NULL";
@@ -176,6 +179,7 @@ export class Escoria {
     this.saveEnabled = true; // save_manager.save_enabled (events with NO_SAVE turn it off)
     this.loading = false;
     this.timers = [];
+    this.runningCommands = new Set(); // names of the commands running (runCommand)
     this.tickers = []; // game-specific per-frame updates (roaming...)
     this.keyHandlers = []; // (KeyboardEvent) => true if used (ports: F10...)
     this.nodeScripts = {}; // .gd path -> (esc, node) => {update?(dt), dispose?()}: scripts of room nodes
@@ -267,11 +271,15 @@ export class Escoria {
       return RC.ERROR;
     }
     this.log(`  ${cmd.name}(${args.map((a) => JSON.stringify(a)).join(", ")})`, "command");
+    // the commands running now (several channels may run at once): for tools (the test's probe)
+    this.runningCommands.add(cmd.name);
     try {
       return (await impl.run(this, args, cmd)) ?? RC.OK;
     } catch (e) {
       this.log(`${cmd.name}: error de JS: ${e.stack || e}`, "error");
       return RC.ERROR;
+    } finally {
+      this.runningCommands.delete(cmd.name);
     }
   }
 
@@ -596,8 +604,16 @@ export class Escoria {
   /** save_game(): globals, inventory, objects of every room visited, the room. */
   saveGame(slot, name) {
     if (!this.saveEnabled) return this.log("saving is disabled now", "warn"), false;
+    const data = this.saveData(name);
+    const ok = this.storageSet(`save_${String(slot).padStart(3, "0")}`, data);
+    if (ok) this.log(`game saved in slot ${slot}: ${name}`, "event");
+    return ok;
+  }
+
+  /** What a saved game holds (save_game() without writing it anywhere; also the debug tools' snapshots). */
+  saveData(name = "") {
     this.saveRoomStates(true);
-    const data = {
+    return {
       format: 1,
       name,
       date: new Date().toISOString(),
@@ -609,9 +625,6 @@ export class Escoria {
       terrain: this.terrain && this.terrain.active ? this.terrain.active.name : null, // terrain_navpolys
       scheduled: this.events.scheduled.map((s) => ({ event: s.event.name, object: s.event.objectGlobalId, file: s.event.token?.file, timeout: s.timeout })),
     };
-    const ok = this.storageSet(`save_${String(slot).padStart(3, "0")}`, data);
-    if (ok) this.log(`game saved in slot ${slot}: ${name}`, "event");
-    return ok;
   }
 
   /** load_game(): change to the saved room without :setup / :ready, then restore everything. */
@@ -619,6 +632,11 @@ export class Escoria {
     const data = this.storageGet(`save_${String(slot).padStart(3, "0")}`);
     if (!data) return this.log(`no saved game in slot ${slot}`, "error");
     this.log(`loading saved game ${slot}: ${data.name}`, "event");
+    return this.loadData(data);
+  }
+
+  /** Restores what saveData() gave. */
+  async loadData(data) {
     this.loading = true;
     this.state = "LOADING";
     this.events.interrupt();
@@ -855,7 +873,9 @@ export class Escoria {
     this.events.tick(dt);
     for (const t of [...this.timers]) {
       t.left -= dt;
-      if (t.left <= 0 || (t.cmd && t.cmd.interrupted)) {
+      // (a margin for rounding: 0.3 s at 30 fps is 9 frames of 1/30, whose sum
+      // stays a hair under 0.3; without it every wait took a frame more)
+      if (t.left <= TIME_EPSILON || (t.cmd && t.cmd.interrupted)) {
         this.timers.splice(this.timers.indexOf(t), 1);
         t.ok();
       }

@@ -12,9 +12,10 @@ export class TTFont {
   static async load(game, res) {
     let file = res, weight = 400, spacing = 0, size = 16;
     if (res.endsWith(".tres")) {
-      // FontVariation (base_font) or a FontFile resource (font_data, size)
+      // FontVariation (base_font) or a FontFile resource (font_data, size);
+      // a FontFile with no data of its own draws with its first fallback
       const v = game.resource(res).props;
-      file = (v.base_font || v.font_data || {}).$res;
+      file = (v.base_font || v.font_data || (v.fallbacks || [])[0] || {}).$res;
       if (v.size) size = v.size;
       const vo = v.variation_opentype || {};
       if (vo[WGHT] !== undefined) weight = vo[WGHT];

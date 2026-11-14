@@ -2,6 +2,53 @@
 // Resolves sub-resources and .tres resources, and loads images.
 
 import { setGame } from "./controls.js";
+import { gradientSampler } from "./particles.js";
+import { vec2 } from "./values.js";
+
+const gradientImages = new WeakMap(); // GradientTexture resource -> canvas
+
+/**
+ * GradientTexture1D / GradientTexture2D as a canvas: its gradient along a
+ * line (fill 0, from fill_from to fill_to, in UV), around a center (1
+ * radial, 2 square); 1D: left to right. Outside the line it holds the ends
+ * (repeat 0) or repeats (1) / mirrors (2).
+ */
+function gradientImage(t) {
+  let c = gradientImages.get(t);
+  if (c) return c;
+  const p = t.props || {};
+  const is2D = t.type === "GradientTexture2D";
+  const w = Math.max(1, p.width ?? (is2D ? 64 : 256)), h = Math.max(1, is2D ? p.height ?? 64 : 1);
+  const at = gradientSampler(p.gradient) || (() => ({ r: 1, g: 1, b: 1, a: 1 }));
+  c = document.createElement("canvas");
+  c.width = w;
+  c.height = h;
+  const cx = c.getContext("2d");
+  const img = cx.createImageData(w, h);
+  const from = is2D ? vec2(p.fill_from) : { x: 0, y: 0 };
+  const to = is2D ? (p.fill_to ? vec2(p.fill_to) : { x: 1, y: 0 }) : { x: 1, y: 0 };
+  const dx = to.x - from.x, dy = to.y - from.y, len2 = dx * dx + dy * dy || 1, len = Math.sqrt(len2);
+  const fill = is2D ? p.fill ?? 0 : 0, rep = is2D ? p.repeat ?? 0 : 0;
+  for (let y = 0; y < h; y++)
+    for (let x = 0; x < w; x++) {
+      const u = (x + 0.5) / w, v = (y + 0.5) / h;
+      let k;
+      if (fill === 1) k = Math.hypot(u - from.x, v - from.y) / len;
+      else if (fill === 2) k = Math.max(Math.abs(u - from.x), Math.abs(v - from.y)) / Math.max(Math.abs(dx), Math.abs(dy), 1e-6);
+      else k = ((u - from.x) * dx + (v - from.y) * dy) / len2;
+      if (rep === 1) k -= Math.floor(k);
+      else if (rep === 2) k = 1 - Math.abs((k % 2 + 2) % 2 - 1);
+      k = Math.min(1, Math.max(0, k));
+      const col = at(k), i = (y * w + x) * 4;
+      img.data[i] = col.r * 255;
+      img.data[i + 1] = col.g * 255;
+      img.data[i + 2] = col.b * 255;
+      img.data[i + 3] = col.a * 255;
+    }
+  cx.putImageData(img, 0, 0);
+  gradientImages.set(t, c);
+  return c;
+}
 
 export class GameData {
   /** @param base URL of the export folder (the one holding game.json) */
@@ -104,6 +151,10 @@ export class GameData {
         for (i = 0; i < n - 1 && x >= durs[i]; i++) x -= durs[i];
       }
       return this.texture(p[`frame_${i}/texture`]);
+    }
+    if (t.type === "GradientTexture1D" || t.type === "GradientTexture2D") {
+      const img = gradientImage(t);
+      return { img, sx: 0, sy: 0, sw: img.width, sh: img.height };
     }
     if (t.type === "AtlasTexture") {
       const base = this.texture(t.props.atlas);

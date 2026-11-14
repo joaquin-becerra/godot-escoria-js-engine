@@ -46,14 +46,23 @@ function mix(a, b, t) {
 }
 
 /**
- * Applies an animation at time `time` (seconds): "value" tracks. Continuous
+ * Applies an animation at time `time` (seconds): "value" tracks (the
+ * discrete ones only if a key lies between `from` and `time`). Continuous
  * tracks (update 0) with numbers / vectors / colors are interpolated between
  * their keys (interp: 0 nearest, 1 linear, 2 cubic, taken as linear; each
  * key's transition is an ease() curve); the rest take the last key at or
  * before `time`. Paths are relative to the player's root node (its parent by
  * default).
  */
-export function applyAnimation(player, anim, time = 0) {
+export function applyAnimation(player, anim, time = 0, from = null, wrapped = false) {
+  // discrete tracks (update 1) set their value when the playhead reaches a
+  // key, as in Godot, not every frame: a script may change that property in
+  // between (from: where the playhead was; null on play / seek: all of them)
+  const crossed = (times) => {
+    if (from === null) return true;
+    const back = !wrapped && time < from;
+    return times.some((k) => (wrapped ? (back ? k < from || k >= time : k > from || k <= time + 1e-6) : back ? k >= time && k < from : k > from && k <= time + 1e-6));
+  };
   const root = player.getNode(nodePath(player.props.root_node) || "..");
   for (const tr of tracks(anim)) {
     if (tr.enabled === false) continue;
@@ -67,6 +76,7 @@ export function applyAnimation(player, anim, time = 0) {
     if (!target || !prop) continue;
     const times = list(tr.keys.times);
     const values = tr.keys.values;
+    if (tr.keys.update === 1 && !crossed(times)) continue;
     let i = -1;
     while (i + 1 < times.length && times[i + 1] <= time + 1e-6) i++;
     if (i < 0) i = 0;

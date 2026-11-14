@@ -111,13 +111,13 @@ const ui = {
 // ------------------------------------------------------------------ start
 
 async function start() {
-  const exports = await fetch("../out/exports.json").then((r) => (r.ok ? r.json() : [])).catch(() => []);
+  const exports = await fetch("../geje-builds/exports.json").then((r) => (r.ok ? r.json() : [])).catch(() => []);
   const gameName = params.get("game") || (exports.includes("openquest-escoria") ? "openquest-escoria" : exports[0]);
   for (const e of exports) $("game").add(new Option(e, e, false, e === gameName));
   $("game").onchange = () => go({ game: $("game").value });
   if (!gameName) throw new Error("No exported games: run tools/export.js");
 
-  game = await GameData.load(`../out/${gameName}/`);
+  game = await GameData.load(`../geje-builds/${gameName}/`);
   canvas.width = game.setting("display/window/size/viewport_width", 1152);
   canvas.height = game.setting("display/window/size/viewport_height", 648);
   const nearest = game.setting("rendering/textures/canvas_textures/default_texture_filter", 1) === 0;

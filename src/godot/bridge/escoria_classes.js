@@ -112,6 +112,8 @@ export function makeEscoriaClasses(bridge) {
         m.mirrored = !!idle.props.mirrored;
       }
       set_direction(dir, wait = 0) { return this.__obj?.movable?.setDirection(dir, wait, esc); }
+      // esc_item.gd set_angle(deg, wait): _movable.set_angle (deg as the set_angle command passes it)
+      set_angle(deg, wait = 0) { return this.__obj?.movable?.setAngle(Number(deg), wait, esc); }
       stop_walking_now() { const m = this.__obj?.movable; if (m && m.walking) m.stop(m.position); }
       teleport(target) { const m = this.__obj?.movable; const p = target.global_position || target; if (m) m.teleportTo({ x: p.x, y: p.y }); }
       teleport_to(p) { this.__obj?.movable?.teleportTo({ x: p.x, y: p.y }); }

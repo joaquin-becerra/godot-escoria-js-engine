@@ -1,5 +1,5 @@
 // Plays a walkthrough by itself (for testing, and to record a video of it):
-//   player/?game=...&auto=../tools/walkthroughs/x.json[&speed=2][&record=name]
+//   player/?game=...&auto=../geje-test/x.json[&speed=2][&record=name]
 //
 // The steps click like a player does (the mouse goes there, then press,
 // release and click through the player's input path):

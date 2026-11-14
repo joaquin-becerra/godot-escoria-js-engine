@@ -2,7 +2,7 @@
 //
 //   node tools/export.js <godot project dir> [out dir] [--keep-wav]
 //
-// Output (default out/<project dir name>/):
+// Output (default geje-builds/<project dir name>/):
 //   game.json   settings, every scene/resource as JSON, the ASHES scripts,
 //               import options and the uid table
 //   res/...     the assets (images, sounds, fonts) at their res:// paths:
@@ -14,7 +14,7 @@
 // scripts keep naming the .wav. --keep-wav skips the conversion.
 //
 // Ports (the game's own code in JS, see src/escoria/ports.js), in
-// out/<game>/js_ports/index.js, which game.json's `ports` points at: the
+// geje-builds/<game>/js_ports/index.js, which game.json's `ports` points at: the
 // project's GDScript translated by tools/gd2js/translate.js (js_ports/gd/, its
 // report in gd/REPORT.txt), plus the JS side of the project's patches to
 // Escoria's addons, which GEJE brings (src/compat/, chosen by
@@ -24,7 +24,7 @@
 // (their `handles`): the engine ignores those scripts.
 //
 // At the end it runs tools/compat.js: whether the engine can play the game
-// (what it uses that the engine doesn't support), in out/<game>/COMPATIBILITY.txt.
+// (what it uses that the engine doesn't support), in geje-builds/<game>/COMPATIBILITY.txt.
 //
 // What goes in: every file of the game (outside addons/ and tooling folders),
 // plus whatever those files reference inside addons/ (scenes, images, fonts),
@@ -43,7 +43,7 @@ const keepWav = args.includes("--keep-wav");
 const positional = args.filter((a) => !a.startsWith("--"));
 const root = path.resolve(positional[0] || ".");
 const name = path.basename(root);
-const out = path.resolve(positional[1] || path.join(here, "..", "out", name));
+const out = path.resolve(positional[1] || path.join(here, "..", "geje-builds", name));
 const VORBIS_QUALITY = 3; // ffmpeg -q:a for libvorbis (0..10; ~3 is plenty for game sounds)
 const ffmpeg = !keepWav && spawnSync("ffmpeg", ["-hide_banner", "-encoders"], { encoding: "utf8" }).stdout?.includes("libvorbis");
 
@@ -174,8 +174,15 @@ function need(r, from) {
   r = r.replace(/[?#].*$/, "");
   if (extOf(r) === "gd") return;
   if (!exists.has(r)) {
-    // a folder (e.g. ui/inventory_items_path) or a file the game builds at runtime
-    if (!all.some((a) => a.startsWith(r.endsWith("/") ? r : r + "/"))) missing.set(r, from);
+    // a folder (e.g. ui/inventory_items_path; maybe empty but for a .gdkeep)
+    // or a file the game builds at runtime
+    if (all.some((a) => a.startsWith(r.endsWith("/") ? r : r + "/"))) return;
+    if (fs.existsSync(path.join(root, r.slice(6)))) return;
+    // Escoria's own defaults in project.godot that its addons don't ship
+    // (ui/dialogs_chooser, ui/default_dialog_scene -> ui_library/dialogs/,
+    // gone from escoria-core; the official demo has them too): nothing uses them
+    if (from === "project.godot" && STOCK_ADDON.test(r)) return;
+    missing.set(r, from);
     return;
   }
   if (!included.has(r) && wanted(r)) queue.push(r);
@@ -205,8 +212,10 @@ for (const r of TRANSITION_FILES) if (exists.has(r)) need(r, "transitions");
 }
 // the language flags of Escoria's options menu (options.gd loads flags/<locale>.png)
 for (const r of all.filter((r) => r.startsWith("res://addons/escoria-core/ui_library/menus/options/flags/") && r.endsWith(".png"))) need(r, "options");
+// (not the comment lines: a doc comment's example path is no reference)
 for (const r of all.filter((r) => shipped(r) && extOf(r) === "gd")) {
-  for (const x of resLiterals(fs.readFileSync(toAbs(r), "utf8"))) need(x, r);
+  const code = fs.readFileSync(toAbs(r), "utf8").replace(/^\s*#.*$/gm, "");
+  for (const x of resLiterals(code)) need(x, r);
 }
 
 const parseErrors = [];

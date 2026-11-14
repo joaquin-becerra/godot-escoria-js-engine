@@ -3,10 +3,10 @@
 // what the engine supports (src/support.js, the engine's commands and the
 // node properties its code reads). tools/export.js runs it at the end.
 //
-//   node tools/compat.js out/<game> [-v]
+//   node tools/compat.js geje-builds/<game> [-v]
 //
 // Prints a verdict and a summary, and writes the whole list to
-// out/<game>/COMPATIBILITY.txt. -v prints the whole list too.
+// geje-builds/<game>/COMPATIBILITY.txt. -v prints the whole list too.
 //
 // Verdict:
 //   PLAYABLE                nothing missing
@@ -27,7 +27,7 @@ const args = process.argv.slice(2);
 const verbose = args.includes("-v");
 const gameDir = path.resolve(args.find((a) => !a.startsWith("-")) || "");
 if (!fs.existsSync(path.join(gameDir, "game.json"))) {
-  console.log("usage: node tools/compat.js out/<game> [-v]");
+  console.log("usage: node tools/compat.js geje-builds/<game> [-v]");
   process.exit(1);
 }
 
@@ -250,7 +250,8 @@ for (const [file, doc] of Object.entries(json.files)) {
     if (n.type && !whole) {
       const sup = S.NODES[n.type];
       if (sup === undefined) { if (!S.HARMLESS_NODES.has(n.type)) add("node", n.type, label); }
-      else if (typeof sup === "string") add("partial", `${n.type}: ${sup}`, label);
+      else if (typeof sup === "string" && (!S.PARTIAL_IF[n.type] || S.PARTIAL_IF[n.type].some((k) => n.props[k])))
+        add("partial", `${n.type}: ${sup}`, label);
       if (n.type === "CollisionShape2D") {
         const shape = n.props.shape && n.props.shape.$sub && doc.sub && doc.sub[n.props.shape.$sub];
         if (shape && !["RectangleShape2D", "CircleShape2D", "CapsuleShape2D"].includes(shape.type)) add("partial", `CollisionShape2D with ${shape.type}: the mouse doesn't find it`, label);

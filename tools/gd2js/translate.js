@@ -2,7 +2,7 @@
 //
 //   node tools/gd2js/translate.js <godot project dir> [--out <dir>] [--escoria <stock dir>]
 //
-// --out: where the ports go (default out/<project dir name>/js_ports/, where
+// --out: where the ports go (default geje-builds/<project dir name>/js_ports/, where
 // tools/export.js puts them; the exporter runs this and writes their index.js).
 // --escoria: a project with Escoria as it comes (default ../escoria-demo-game):
 // the functions of the addons this project changed are listed, and whether
@@ -29,7 +29,7 @@ const root = path.resolve(process.argv[2] || ".");
 const outArg = process.argv.indexOf("--out");
 const portsDir = outArg > 0
   ? path.resolve(process.argv[outArg + 1])
-  : path.join(path.dirname(new URL(import.meta.url).pathname), "..", "..", "out", path.basename(root), "js_ports");
+  : path.join(path.dirname(new URL(import.meta.url).pathname), "..", "..", "geje-builds", path.basename(root), "js_ports");
 // addons/ other than Escoria's own (escoria-*) and test frameworks are the
 // game's code (e.g. Superfluous Returnz's sr-ui-simplemouse): translated too
 const TOOLING = /^(addons\/(escoria-[^/]*|gdUnit4|gut)|tools|build|nbproject|original|ai_refs|js_ports)\//;

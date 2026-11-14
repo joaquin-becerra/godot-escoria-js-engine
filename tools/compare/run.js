@@ -3,7 +3,7 @@
 // evidence: a video, a screenshot and the game's state after each step, and
 // the console. Both pages give window.__probe (player/probe.js, probe.gd).
 //
-//   node tools/compare/run.js --engine js|godot --url URL --walk tools/walkthroughs/x.json
+//   node tools/compare/run.js --engine js|godot --url URL --walk geje-test/x.json
 //        [--out out/compare/x] [--speed 1] [--headed]
 //
 // Output in <out>/<engine>/: video.webm, NN.png, steps.jsonl, console.log, result.json

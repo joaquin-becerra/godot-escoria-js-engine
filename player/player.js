@@ -72,22 +72,35 @@ function roomTransform() {
 }
 
 async function start() {
-  const exports = await fetch("../out/exports.json").then((r) => (r.ok ? r.json() : [])).catch(() => []);
+  const exports = await fetch("../geje-builds/exports.json").then((r) => (r.ok ? r.json() : [])).catch(() => []);
   const name = params.get("game") || (exports.includes("openquest-escoria") ? "openquest-escoria" : exports[0]);
-  game = await GameData.load(`../out/${name}/`);
+  game = await GameData.load(`../geje-builds/${name}/`);
   document.title = game.json.name || name;
   canvas.width = game.setting("display/window/size/viewport_width", 1152);
   canvas.height = game.setting("display/window/size/viewport_height", 648);
   if (game.setting("rendering/textures/canvas_textures/default_texture_filter", 1) !== 0) canvas.style.imageRendering = "auto";
   esc = new Escoria(game, { log, ui });
   clearColor = cssColor(game.setting("rendering/environment/defaults/default_clear_color", { type: "Color", args: [0.3, 0.3, 0.3, 1] }));
-  await loadPorts(esc); // the game's own scripts in JS (out/<game>/js_ports/, made by tools/export.js), if any
+  await loadPorts(esc); // the game's own scripts in JS (geje-builds/<game>/js_ports/, made by tools/export.js), if any
   gameUI = await createGameUI(esc, canvas.width, canvas.height);
   // the game's own menu scenes (translated scripts), else its ports' menus, else the engine's
   menus = SceneMenus.create(esc, gameUI.scene) || (await Menus.create(esc, gameUI.scene, canvas.width, canvas.height));
   esc.menus = menus;
   esc.settings = menus.settings;
-  if (menus.settings.lang && game.locales().includes(menus.settings.lang)) game.locale = menus.settings.lang;
+  // the language: the one the player chose in Options (saved), else the browser's
+  // if the game has it (es-AR -> es), else the project's (escoria/main/text_lang)
+  const locales = game.locales();
+  const browserLang = () => {
+    for (const l of navigator.languages || [navigator.language]) {
+      if (!l) continue;
+      const exact = locales.find((x) => x.toLowerCase() === l.toLowerCase().replace("-", "_"));
+      const short = locales.find((x) => x.split(/[_-]/)[0].toLowerCase() === l.split("-")[0].toLowerCase());
+      if (exact || short) return exact || short;
+    }
+    return null;
+  };
+  const lang = menus.settings.lang && locales.includes(menus.settings.lang) ? menus.settings.lang : browserLang();
+  if (lang) game.locale = lang;
   document.getElementById("msg").remove();
   requestAnimationFrame(frame);
   // ?room=res://...tscn (a shortcut for testing): the start script's state
@@ -103,7 +116,10 @@ async function start() {
     esc.changeScene(room);
   } else esc.runStartEvent("init");
   // window.__probe for tools/compare (an outside driver with the real mouse)
-  installProbe({ esc, gameUI, canvas, cam: () => ({ x: -esc.camera[4] / esc.camera[0], y: -esc.camera[5] / esc.camera[3] }), ended: () => ended });
+  installProbe({ esc, gameUI, canvas, cam: () => ({ x: -esc.camera[4] / esc.camera[0], y: -esc.camera[5] / esc.camera[3] }), ended: () => ended, waitingClick: () => clickWaiters.length > 0 });
+  // the walkthrough test from the console: geje.run(); &debug=1: its panel (player/geje_test.js)
+  const { installGejeTest } = await import("./geje_test.js");
+  installGejeTest({ esc, gameUI, canvas, game, gameName: name, input: driverInput, debug: params.has("debug") && params.get("debug") !== "0" });
   // ?auto=walkthrough.json: plays it by itself (testing, videos: player/autopilot.js)
   if (params.get("auto")) {
     const { runAutopilot } = await import("./autopilot.js");
@@ -111,36 +127,79 @@ async function start() {
       esc, gameUI, canvas, params,
       cam: () => ({ x: -esc.camera[4] / esc.camera[0], y: -esc.camera[5] / esc.camera[3] }),
       ended: () => ended,
-      // the mouse goes to s (hover), then press / release / click as the player's handlers do
-      hover(s) {
-        mouse = s;
-        esc.input({ kind: "mouse_motion", x: s.x, y: s.y });
-        if (esc.controls.move(s)) gameUI.pointerMove(null, null);
-        else gameUI.pointerMove(s, roomPoint(s));
-      },
-      click(s, button = 0) {
-        if (ended) return;
-        if (menus.open) {
-          menus.pointerDown(s, button);
-          menus.pointerUp(s, button);
-          return;
-        }
-        menuClick = false;
-        swallowed = press(s, button, false);
-        release(s, button);
-        click({ __point: s }, button, false);
-      },
+      hover: driverInput.hover,
+      click: driverInput.click,
     });
   }
 }
+
+// Input from a test driver (autopilot.js, geje_test.js), in canvas pixels:
+// what the handlers below do with the real mouse and keyboard
+const driverInput = {
+  // the mouse goes to s (hover)
+  hover(s) {
+    mouse = s;
+    if (menus.open) return menus.pointerMove(s);
+    if (!esc.view) return;
+    esc.input({ kind: "mouse_motion", x: s.x, y: s.y });
+    if (esc.controls.move(s)) gameUI.pointerMove(null, null);
+    else gameUI.pointerMove(s, roomPoint(s));
+  },
+  // press, release and click there
+  click(s, button = 0) {
+    if (ended) return;
+    if (menus.open) {
+      menus.pointerDown(s, button);
+      menus.pointerUp(s, button);
+      return;
+    }
+    menuClick = false;
+    swallowed = press(s, button, false);
+    release(s, button);
+    click({ __point: s }, button, false);
+  },
+  // the mouse wheel (dy > 0: down)
+  wheel(dy) {
+    const s = mouse || { x: canvas.width / 2, y: canvas.height / 2 };
+    if (menus.open) menus.wheel(dy, s);
+    else if (esc.view) esc.controls.wheel(s, dy) || gameUI.wheel?.(dy);
+  },
+  // manual frames (on: the browser's clock no longer moves the game)
+  setManual(on) {
+    manual = !!on;
+  },
+  step: (dt) => step(dt),
+  // what the last frame drew; f() after every frame
+  drawn: () => lastDrawn,
+  afterFrame: (f) => afterFrame.push(f),
+  // a key pressed and released (e.key: " ", "Escape"...)
+  key(k) {
+    const e = { key: k, repeat: false, shiftKey: false, ctrlKey: false, altKey: false, metaKey: false, preventDefault() {} };
+    onKeyDown(e);
+    onKeyUp(e);
+  },
+};
 
 let last = 0;
 let lastCursor = "";
 // what shows where nothing is drawn: rendering/environment/defaults/default_clear_color (Godot: 0.3 gray)
 let clearColor = "#4d4d4d";
+// what the last frame drew (render.js collect() items) and who wants to know
+// when a frame is done (the test's checks, player/checks.js)
+let lastDrawn = [];
+const afterFrame = [];
+// manual: the frames come from a test driver (geje.record(): a fixed step of
+// game time per frame, whatever the real time), not from the browser's clock
+let manual = false;
 function frame(t) {
   const dt = last ? Math.min((t - last) / 1000, 0.1) : 0;
   last = t;
+  if (!manual) step(dt);
+  requestAnimationFrame(frame);
+}
+/** One frame: the game advances dt seconds (scaled by its time scale), then it is drawn. */
+function step(dt) {
+  lastDrawn = [];
   // the main menu doesn't pause the game (show_menu("main") + wait + hide_menu)
   if (!menus.paused && (!menus.open || esc.view)) {
     gameUI.update(dt);
@@ -176,6 +235,7 @@ function frame(t) {
     screenItems = collect(esc.screenRoot); // spawn()ed scenes: on top, like Godot's /root
     draw(ctx, game, screenItems.filter((it) => it.layer <= TRANSITION_LAYER));
     drawPopup(ctx); // an open OptionButton list
+    lastDrawn = [...roomItems, ...screenItems];
     esc.frameDrawn();
   }
   if (esc.view && !ended) {
@@ -186,7 +246,7 @@ function frame(t) {
     if (above.length) draw(ctx, game, above);
   }
   screenItems = [];
-  requestAnimationFrame(frame);
+  for (const f of afterFrame) f();
 }
 
 // ------------------------------------------------------------------ input
@@ -299,7 +359,9 @@ canvas.addEventListener("wheel", (e) => {
     menus.wheel(e.deltaY, screenPoint(e));
   } else if (esc && esc.view && (esc.controls.wheel(screenPoint(e), e.deltaY) || gameUI.wheel?.(e.deltaY))) e.preventDefault();
 }, { passive: false });
-window.addEventListener("keydown", (e) => {
+window.addEventListener("keydown", (e) => onKeyDown(e));
+window.addEventListener("keyup", (e) => onKeyUp(e));
+function onKeyDown(e) {
   if (!menus || !esc.view || ended) return;
   if (!menus.open) {
     const raw = keyEvent(e, true);
@@ -309,13 +371,13 @@ window.addEventListener("keydown", (e) => {
     if (esc.key(e)) return e.preventDefault();
   }
   if (menus.open ? menus.key(e) : e.key === "Escape" && (menus.showPause(), true)) e.preventDefault();
-});
-window.addEventListener("keyup", (e) => {
+}
+function onKeyUp(e) {
   if (menus && esc && esc.view && !ended && !menus.open) {
     const raw = keyEvent(e, false);
     if (!esc.input(raw)) esc.unhandledInput(raw);
   }
-});
+}
 
 start().catch((e) => {
   const m = document.getElementById("msg");

@@ -774,12 +774,17 @@ class GdRange extends GdControl {
   set min_value(v) { this.__node.props.min_value = +v; }
   get max_value() { return this.__node.props.max_value ?? 100; }
   set max_value(v) { this.__node.props.max_value = +v; }
-  get step() { return this.__node.props.step ?? 1; }
+  get step() { return this.__node.props.step ?? (this.__node.type === "HSlider" || this.__node.type === "VSlider" ? 1 : 0.01); }
   set step(v) { this.__node.props.step = +v; }
   get ratio() { return this.max_value > this.min_value ? (this.value - this.min_value) / (this.max_value - this.min_value) : 0; }
   set ratio(r) { this.value = this.min_value + r * (this.max_value - this.min_value); }
   get editable() { return this.__node.props.editable !== false; }
   set editable(v) { this.__node.props.editable = !!v; }
+}
+
+/** TextureProgressBar: a Range drawn with textures (src/godot/controls.js). */
+class GdTextureProgressBar extends GdRange {
+  static gdClass = "TextureProgressBar";
 }
 
 /** OptionButton: the items, the selected one (select() from a script doesn't emit item_selected). */
@@ -889,7 +894,7 @@ class GdTimer extends GdNode {
   __tick(dt) {
     if (!this.__running) return;
     this.time_left -= dt;
-    if (this.time_left <= 0) {
+    if (this.time_left <= 1e-6) { // rounding of the frame steps (escoria.js TIME_EPSILON)
       if (this.one_shot) this.stop();
       else this.time_left += this.wait_time;
       this.signal("timeout").emit();
@@ -912,7 +917,7 @@ export const CLASSES = {
   VBoxContainer: GdControl, HBoxContainer: GdControl, GridContainer: GdControl, MarginContainer: GdControl, ScrollContainer: GdControl,
   TextEdit: GdControl, CenterContainer: GdControl,
   AudioStreamPlayer: GdAudioStreamPlayer, AudioStreamPlayer2D: GdAudioStreamPlayer, PopupMenu: GdPopupMenu,
-  HSlider: GdRange, VSlider: GdRange, OptionButton: GdOptionButton, ScrollContainer: GdScrollContainer,
+  HSlider: GdRange, VSlider: GdRange, TextureProgressBar: GdTextureProgressBar, OptionButton: GdOptionButton, ScrollContainer: GdScrollContainer,
 };
 // each class answers to its Godot name (is_class, `is`, get_class)
 for (const [name, Cls] of Object.entries(CLASSES)) if (!Object.hasOwn(Cls, "gdClass")) Object.defineProperty(Cls, "gdClass", { value: name });

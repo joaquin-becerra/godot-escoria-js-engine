@@ -19,7 +19,7 @@ Other games may use parts of Godot or Escoria the engine doesn't have yet:
 ## Quick start
 
 ```
-node tools/export.js ../my-escoria-game       # -> out/my-escoria-game/
+node tools/export.js ../my-escoria-game       # -> geje-builds/my-escoria-game/
 node tools/serve.js                           # then open http://localhost:8090/player/?game=my-escoria-game
 ```
 
@@ -32,17 +32,19 @@ for the Godot side, the Godot 4 editor (`godot` in the PATH, or `$GODOT`).
 
 ```
 node tools/inventory.js <godot project dir>   # what the project uses -> inventory/<name>.md
-node tools/export.js <godot project dir>      # game for the engine -> out/<name>/ (game.json + res/)
-                                              # (its GDScript translated to out/<name>/js_ports/ by tools/gd2js)
+node tools/export.js <godot project dir>      # game for the engine -> geje-builds/<name>/ (game.json + res/)
+                                              # (its GDScript translated to geje-builds/<name>/js_ports/ by tools/gd2js)
                                               # ends with tools/compat.js: can the engine play it?
-node tools/compat.js out/<name> [-v]          # compatibility report -> out/<name>/COMPATIBILITY.txt
+node tools/compat.js geje-builds/<name> [-v]          # compatibility report -> geje-builds/<name>/COMPATIBILITY.txt
 node tools/trace.js <exported game>           # plays its intro in Node, prints what was said and the globals
 node tools/serve.js                           # http://localhost:8090/player/ (play), /viewer/ (debug)
-node tools/compare/run.js --engine js|godot ...  # plays a walkthrough (tools/walkthroughs/) in either engine
+npm test                                      # fast regression test of every game (tools/geje-test/, geje-test/games.json)
+# in the player's page console: geje.run()     # plays the game's walkthrough at 4x, visibly (player/geje_test.js)
+node tools/compare/run.js --engine js|godot ...  # plays a walkthrough (geje-test/) in either engine
 node tools/compare/diff.js <out dir>          # compares both runs: state per step, side-by-side video
 ```
 
-Player options (query string): `game=<name>` (the folder in `out/`),
+Player options (query string): `game=<name>` (the folder in `geje-builds/`),
 `room=res://...tscn` and `set=global=1,other=0` to start in a room for testing,
 `auto=<walkthrough.json>` to play a walkthrough by itself and
 `record=<name>` to record it (`tools/serve.js` saves it in `out/videos/`, or in

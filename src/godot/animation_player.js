@@ -97,16 +97,17 @@ export function advancePlayer(node, dt) {
   const anim = animations(node)[st.current];
   if (!anim) return (st.playing = false);
   const loop = (anim.props.loop_mode ?? 0) !== 0;
+  const from = st.time;
   st.time += st.backwards ? -dt : dt;
-  let done = false;
+  let done = false, wrapped = false;
   if (st.time > st.length || st.time < 0) {
-    if (loop) st.time = ((st.time % st.length) + st.length) % st.length;
+    if (loop) (st.time = ((st.time % st.length) + st.length) % st.length), (wrapped = true);
     else {
       st.time = Math.max(0, Math.min(st.time, st.length));
       done = true;
     }
   }
-  applyAnimation(node, anim, st.time);
+  applyAnimation(node, anim, st.time, from, wrapped);
   if (done) {
     st.playing = false;
     const cbs = st.onFinished || [];

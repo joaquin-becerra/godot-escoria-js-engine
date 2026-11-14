@@ -1,7 +1,7 @@
 // Compiles every .esc script of an export with the JS ASHES compiler and
 // reports errors (and a summary of events per script).
 //
-//   node tools/check_esc.js out/<game>/game.json [-v]
+//   node tools/check_esc.js geje-builds/<game>/game.json [-v]
 import fs from "node:fs";
 import { compile } from "../src/escoria/ashes/compiler.js";
 

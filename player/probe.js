@@ -1,9 +1,10 @@
 // window.__probe: what an outside driver (tools/compare/run.js) needs to play
 // the game with the real mouse and to compare it with Godot's web build
 // (the same API is given there by the probe.gd autoload):
-//   state()       -> {room, idle, chooser, options, speech, inventory, globals, ended}
+//   state()       -> {room, idle, chooser, options, speech, inventory, globals, ended, waitingClick}
 //   where(target) -> {x, y} in canvas pixels, or null
 //                    target: {verb} | {object} (room object or inventory item) | {option: text}
+//                            | {text} | {textStart} (a visible text, or one that starts so)
 //   setSpeed(x)   -> the game's time scale
 import { collect } from "../src/godot/render.js";
 import { controlRect } from "../src/godot/controls.js";
@@ -47,7 +48,8 @@ export function installProbe(p) {
     gameUI.syncInventory();
     const i = gameUI.invOrder.indexOf(id);
     if (i < 0) return null;
-    const box = gameUI.rect(gameUI.invScroll), c = gameUI.gridCell(i);
+    // simplemouse: the sliding panel's items box (it has no invScroll rect)
+    const box = gameUI.itemsBox ? gameUI.itemsBox() : gameUI.rect(gameUI.invScroll), c = gameUI.gridCell(i);
     return { x: box.x + c.x + c.w / 2, y: box.y + c.y - gameUI.scrollY + c.h / 2 };
   };
   const verbPoint = (v) => {
@@ -72,7 +74,15 @@ export function installProbe(p) {
     return typeof t === "string" ? t : "";
   };
   // the last one drawn (on top)
-  const textPoint = (t) => controls().filter((c) => textOf(c) === t).pop() || null;
+  const textPoint = (t) => {
+    // the engine-drawn Escoria menus (src/escoria/ui/menus.js) have no controls: their buttons
+    const m = esc.menus;
+    if (m && m.open && Array.isArray(m.buttons)) {
+      const b = m.buttons.filter((b) => b.label === t && !b.disabled).pop();
+      if (b) return { x: b.x + b.w / 2, y: b.y + b.h / 2 };
+    }
+    return controls().filter((c) => textOf(c) === t).pop() || null;
+  };
   const inventoryButton = (id) => controls().filter((c) => c.w && c.w.global_id === id && c.node.type !== "Area2D").pop() || null;
 
   const plain = (v) => (v === undefined || typeof v === "function" ? null : JSON.parse(JSON.stringify(v ?? null)));
@@ -94,12 +104,17 @@ export function installProbe(p) {
         inventory: esc.inventory.items().sort(),
         globals,
         ended: p.ended(),
+        // the game waits for a click (the player's: an end screen, a
+        // waitClick; or a command of the game's that does, scumm_wait_click())
+        waitingClick: !!(p.waitingClick && p.waitingClick()) || [...(esc.runningCommands || [])].some((c) => /wait_?click/i.test(c)),
       };
     },
     where(t) {
       if (t.verb) return verbPoint(t.verb);
       if (t.option) return options().find((o) => o.text === t.option) || null;
       if (t.text) { const c = textPoint(t.text); return c && { x: c.x, y: c.y }; }
+      // a visible text that starts so (a long one, an end screen)
+      if (t.textStart) { const c = controls().filter((c) => textOf(c).startsWith(t.textStart)).pop(); return c ? { x: c.x, y: c.y } : null; }
       if (t.object && esc.inventory.has(t.object)) {
         const b = inventoryButton(t.object);
         return b ? { x: b.x, y: b.y } : inventoryPoint(t.object);

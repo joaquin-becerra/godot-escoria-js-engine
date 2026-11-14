@@ -5,7 +5,7 @@
 //
 //   node tools/trace.js <exported game> [clicks]
 //
-// <exported game> is a folder name in out/ (e.g. openquest-escoria). It
+// <exported game> is a folder name in geje-builds/ (e.g. openquest-escoria). It
 // starts the game from :init, clicks the title screen's exit, then "clicks"
 // (ends the speech) [clicks] times, 0.6 s apart (default 40).
 import fs from "node:fs";
@@ -15,10 +15,10 @@ import { fileURLToPath } from "node:url";
 const base = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const [name, nClicks = "40"] = process.argv.slice(2);
 if (!name) {
-  console.log("usage: node tools/trace.js <exported game in out/> [clicks]");
+  console.log("usage: node tools/trace.js <exported game in geje-builds/> [clicks]");
   process.exit(1);
 }
-const gameDir = path.join(base, "out", name);
+const gameDir = path.join(base, "geje-builds", name);
 
 // the little of the browser the engine touches without drawing
 globalThis.localStorage = { getItem: () => null, setItem() {}, removeItem() {} };
