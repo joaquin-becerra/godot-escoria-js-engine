@@ -243,13 +243,13 @@ export async function openGame(name, { log = () => {} } = {}) {
       draw(ctx, game, screenItems.filter((it) => it.layer <= TRANSITION_LAYER));
       drawPopup(ctx);
       drawn = [...roomItems, ...screenItems];
-      esc.frameDrawn();
     }
     if (esc.view && !ended) {
       esc.transitions.draw(ctx, canvas.width, canvas.height);
       const above = screenItems.filter((it) => it.layer > TRANSITION_LAYER);
       if (above.length) draw(ctx, game, above);
     }
+    esc.frameDrawn(); // every frame, as in Godot (see player.js)
     for (const f of tickers) f(dt);
   };
 

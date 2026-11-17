@@ -1,11 +1,46 @@
 # Changelog
 
-## Unreleased
+## 1.2 — 2026-11-16
 
+Sharper graphics, and games made for phones play on phones: GEJE now brings the JS side of the [Escoria Mobile](https://github.com/joaquin-becerra/escoria-mobile-addon) addon. OpenQuest Enhanced 1.1 is the first game that uses it.
+
+### Player
+
+- **Sharp picture.** The player's canvas now has the screen's real pixels (its size on the page × `devicePixelRatio`) and fills the window keeping the game's shape. The game still draws in its own units (e.g. 1280x800) through a base scale, like Godot's `canvas_items` stretch. Before, everything was drawn at the game size and the browser stretched the canvas: HD art was scaled twice and looked jagged and blurry next to Godot's web export. Every game gets it, with no new export.
+- **`frame_post_draw` every frame.** The player and the headless test now emit it on every frame, as Godot does, even with no room on screen. OpenQuest Enhanced's start script waits for it before its first room, and the screen stayed black.
+- **Esc skips a cutscene** in any game with a `cutscene_skip` autoload (OpenQuest Enhanced's), before the pause menu opens.
+
+### Escoria Mobile, JS side
+
+`src/compat/escoria_mobile/`: games that have the addon get the same touch support as in Godot, with the same `escoria/mobile/*` settings. Games without it play with the mouse as before.
+
+- **Gestures**:
+  - the first tap on an item shows it and the second tap acts;
+  - a tap on the floor walks and a double tap runs;
+  - a long press is a right click;
+  - a drag moves the cursor, and a drag released on a button clicks it.
+- **Phone layout** (`layout/room_height`, `layout/bottom_panel`):
+  - the room fills the screen;
+  - on phones the panel becomes a drawer that opens with a tab or with the first tap on an item, so you can tap the object first and then the verb;
+  - on tablets the panel stays docked under the room;
+  - menus come back in the full design;
+  - a game's dialog chooser slides up over a translucent backdrop.
+- **HUD**: a gear that opens the pause menu (like Esc) and a star that highlights the room's interactive items for a few seconds. Corner, size, colors and icons come from `hud_buttons/*` and `style/*`.
+- **Web**: the first touch puts the page in fullscreen and locks it to landscape where the browser allows it. While the screen is in portrait, a "turn your phone" hint covers the game. Settings: `web/fullscreen_on_first_touch`, `web/landscape`.
+
+### Engine
+
+- **Verb buttons are hit-tested at the click's position** (`GameUI.clickPanel`). Before, the button under the mouse came from the last frame drawn, so a tap with no hover before it could pick another verb.
 - **Games bring nothing for GEJE.** The JS side of a game's changes to Escoria's addons now lives in GEJE (`src/compat/scumm2escoria.js`), not in the game's `js_ports/`.
   - `tools/export.js` installs it for games made by scumm2escoria, which marks them with a `[scumm2escoria]` section in `project.godot`. That section also says what was patched for each game (`tools/game_patches.js`).
   - Games converted before this change still work through their `js_ports/config.js`.
-- **Esc skips a cutscene** in any game with a `cutscene_skip` autoload (OpenQuest Enhanced's), before the pause menu opens.
+
+### Tools
+
+- **Faster rebuilds.** `tools/export.js` keeps every converted file (PNG to WebP, WAV to Ogg) in a cache, `~/.cache/geje/convert/` (or `$GEJE_CACHE/convert/`).
+  - Each entry is named by a hash of the source file and the conversion settings, so a rebuild only converts new or changed files and copies the rest.
+  - `--no-cache` converts everything again.
+  - The export prints how many files were reused and how many were converted.
 
 ## 1.1 — 2026-11-12
 

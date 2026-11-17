@@ -88,7 +88,7 @@ export function installProbe(p) {
   const plain = (v) => (v === undefined || typeof v === "function" ? null : JSON.parse(JSON.stringify(v ?? null)));
   window.__probe = {
     engine: "js",
-    size: () => ({ w: canvas.width, h: canvas.height }),
+    size: () => ({ w: canvas.gameSize.w, h: canvas.gameSize.h }),
     state() {
       const globals = {};
       for (const [k, v] of esc.globals.values) if (!esc.globals.reserved.has(k)) globals[k] = plain(v);

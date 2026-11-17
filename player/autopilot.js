@@ -129,7 +129,7 @@ export async function runAutopilot(p) {
     }
     if (step.click) {
       if (step.click === "title") await sleep(2500);
-      return clickAt({ x: canvas.width / 2, y: canvas.height / 3 });
+      return clickAt({ x: canvas.gameSize.w / 2, y: canvas.gameSize.h / 3 });
     }
     await waitFor(idle, `being able to play (step ${n})`, 180, 15);
     const vp = verbPoint(step.verb);

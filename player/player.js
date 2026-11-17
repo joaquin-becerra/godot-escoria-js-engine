@@ -13,6 +13,7 @@ import { createGameUI } from "../src/escoria/ui/simplemouse_ui.js";
 import { Menus } from "../src/escoria/ui/menus.js";
 import { SceneMenus } from "../src/escoria/ui/scene_menus.js";
 import { installProbe } from "./probe.js";
+import { installMobile } from "../src/compat/escoria_mobile/index.js";
 
 // main.tscn layers/curtain: CanvasLayer 20
 const TRANSITION_LAYER = 20;
@@ -20,6 +21,57 @@ let screenItems = [];
 
 const canvas = document.getElementById("screen");
 const ctx = canvas.getContext("2d");
+
+// The game's own size (the project's viewport, e.g. 1280x800): everything is
+// drawn and every position is in these units. The canvas itself has the
+// screen's real pixels (its CSS size x devicePixelRatio), like Godot's
+// "canvas_items" stretch: each sprite is scaled once, straight to the screen,
+// instead of drawn at the game size and then stretched by the browser (blurry
+// and jagged). ctx.setTransform/getTransform work in game units (the scale to
+// the screen is added/removed); ctx.__device has the real ones.
+const view = { w: 1, h: 1, sx: 1, sy: 1 };
+canvas.gameSize = view; // for the test tools (geje_test.js, probe.js, autopilot.js)
+{
+  const setT = ctx.setTransform.bind(ctx), getT = ctx.getTransform.bind(ctx);
+  ctx.__device = { setTransform: setT, getTransform: getT };
+  ctx.setTransform = function (a, b, c, d, e, f) {
+    if (typeof a === "object") ({ a = 1, b = 0, c = 0, d = 1, e = 0, f = 0 } = a);
+    setT(a * view.sx, b * view.sy, c * view.sx, d * view.sy, e * view.sx, f * view.sy);
+  };
+  ctx.resetTransform = () => ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.getTransform = function () {
+    const m = getT();
+    return new DOMMatrix([m.a / view.sx, m.b / view.sy, m.c / view.sx, m.d / view.sy, m.e / view.sx, m.f / view.sy]);
+  };
+}
+
+// The canvas fills the window keeping the game's shape (letterbox), with one
+// canvas pixel per screen pixel.
+function fitCanvas() {
+  const aspect = view.w / view.h;
+  let cw = window.innerWidth, ch = window.innerHeight;
+  if (cw / ch > aspect) cw = ch * aspect;
+  else ch = cw / aspect;
+  canvas.style.width = `${cw}px`;
+  canvas.style.height = `${ch}px`;
+  const dpr = window.devicePixelRatio || 1;
+  const pw = Math.max(1, Math.round(cw * dpr)), ph = Math.max(1, Math.round(ch * dpr));
+  if (canvas.width !== pw || canvas.height !== ph) {
+    canvas.width = pw; // also resets the context's state; each frame sets what it needs
+    canvas.height = ph;
+  }
+  view.sx = pw / view.w;
+  view.sy = ph / view.h;
+}
+window.addEventListener("resize", fitCanvas);
+document.addEventListener("fullscreenchange", fitCanvas);
+// the page moved to a screen with another pixel ratio (or the browser zoom changed)
+(function watchRatio() {
+  matchMedia(`(resolution: ${window.devicePixelRatio || 1}dppx)`).addEventListener("change", () => {
+    fitCanvas();
+    watchRatio();
+  }, { once: true });
+})();
 const params = new URLSearchParams(location.search);
 let game, esc, gameUI, menus;
 let mouse = null;
@@ -38,7 +90,7 @@ const ui = {
     const c = document.createElement("canvas");
     c.width = w;
     c.height = h;
-    c.getContext("2d").drawImage(canvas, 0, 0, w, h, 0, 0, w, h);
+    c.getContext("2d").drawImage(canvas, 0, 0, w * view.sx, h * view.sy, 0, 0, w, h); // w x h game units
     return c;
   },
   gameLoading() {
@@ -76,15 +128,16 @@ async function start() {
   const name = params.get("game") || (exports.includes("openquest-escoria") ? "openquest-escoria" : exports[0]);
   game = await GameData.load(`../geje-builds/${name}/`);
   document.title = game.json.name || name;
-  canvas.width = game.setting("display/window/size/viewport_width", 1152);
-  canvas.height = game.setting("display/window/size/viewport_height", 648);
+  view.w = game.setting("display/window/size/viewport_width", 1152);
+  view.h = game.setting("display/window/size/viewport_height", 648);
+  fitCanvas();
   if (game.setting("rendering/textures/canvas_textures/default_texture_filter", 1) !== 0) canvas.style.imageRendering = "auto";
   esc = new Escoria(game, { log, ui });
   clearColor = cssColor(game.setting("rendering/environment/defaults/default_clear_color", { type: "Color", args: [0.3, 0.3, 0.3, 1] }));
   await loadPorts(esc); // the game's own scripts in JS (geje-builds/<game>/js_ports/, made by tools/export.js), if any
-  gameUI = await createGameUI(esc, canvas.width, canvas.height);
+  gameUI = await createGameUI(esc, view.w, view.h);
   // the game's own menu scenes (translated scripts), else its ports' menus, else the engine's
-  menus = SceneMenus.create(esc, gameUI.scene) || (await Menus.create(esc, gameUI.scene, canvas.width, canvas.height));
+  menus = SceneMenus.create(esc, gameUI.scene) || (await Menus.create(esc, gameUI.scene, view.w, view.h));
   esc.menus = menus;
   esc.settings = menus.settings;
   // the language: the one the player chose in Options (saved), else the browser's
@@ -115,6 +168,8 @@ async function start() {
     }
     esc.changeScene(room);
   } else esc.runStartEvent("init");
+  // the Escoria Mobile addon's JS side, if the game has the addon: touch gestures
+  installMobile({ game, canvas, pointer: touchPointer, host: mobileHost });
   // window.__probe for tools/compare (an outside driver with the real mouse)
   installProbe({ esc, gameUI, canvas, cam: () => ({ x: -esc.camera[4] / esc.camera[0], y: -esc.camera[5] / esc.camera[3] }), ended: () => ended, waitingClick: () => clickWaiters.length > 0 });
   // the walkthrough test from the console: geje.run(); &debug=1: its panel (player/geje_test.js)
@@ -145,8 +200,8 @@ const driverInput = {
     if (esc.controls.move(s)) gameUI.pointerMove(null, null);
     else gameUI.pointerMove(s, roomPoint(s));
   },
-  // press, release and click there
-  click(s, button = 0) {
+  // press, release and click there (double: the second click of a double click)
+  click(s, button = 0, double = false) {
     if (ended) return;
     if (menus.open) {
       menus.pointerDown(s, button);
@@ -154,13 +209,13 @@ const driverInput = {
       return;
     }
     menuClick = false;
-    swallowed = press(s, button, false);
+    swallowed = press(s, button, double);
     release(s, button);
-    click({ __point: s }, button, false);
+    click({ __point: s }, button, double);
   },
   // the mouse wheel (dy > 0: down)
   wheel(dy) {
-    const s = mouse || { x: canvas.width / 2, y: canvas.height / 2 };
+    const s = mouse || { x: view.w / 2, y: view.h / 2 };
     if (menus.open) menus.wheel(dy, s);
     else if (esc.view) esc.controls.wheel(s, dy) || gameUI.wheel?.(dy);
   },
@@ -188,6 +243,9 @@ let clearColor = "#4d4d4d";
 // when a frame is done (the test's checks, player/checks.js)
 let lastDrawn = [];
 const afterFrame = [];
+// the Escoria Mobile addon's JS side: f(dt) before each frame (its layout),
+// f(ctx) after it is drawn, in game units (its tab and buttons)
+const beforeFrame = [], overlays = [];
 // manual: the frames come from a test driver (geje.record(): a fixed step of
 // game time per frame, whatever the real time), not from the browser's clock
 let manual = false;
@@ -217,6 +275,7 @@ function frame(t) {
 }
 /** One frame: the game advances dt seconds (scaled by its time scale), then it is drawn. */
 function step(dt) {
+  for (const f of beforeFrame) f(dt);
   lastDrawn = [];
   // the main menu doesn't pause the game (show_menu("main") + wait + hide_menu)
   if (!menus.paused && (!menus.open || esc.view)) {
@@ -228,20 +287,21 @@ function step(dt) {
   if (cursor !== lastCursor) canvas.style.cursor = lastCursor = cursor;
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.fillStyle = clearColor;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, view.w, view.h);
   if (ended) {
     // the window would close in Godot: an end screen, a click starts again
     ctx.fillStyle = "#aaa";
     ctx.font = "48px system-ui, sans-serif";
     ctx.textAlign = "center";
-    ctx.fillText("The End", canvas.width / 2, canvas.height / 2);
+    ctx.fillText("The End", view.w / 2, view.h / 2);
     ctx.font = "24px system-ui, sans-serif";
     ctx.fillStyle = "#666";
-    ctx.fillText("Click to play again", canvas.width / 2, canvas.height / 2 + 50);
+    ctx.fillText("Click to play again", view.w / 2, view.h / 2 + 50);
     ctx.textAlign = "start";
   } else if (menus.open) menus.draw(ctx, mouse);
   else if (esc.view) {
     ctx.imageSmoothingEnabled = canvas.style.imageRendering !== "pixelated";
+    ctx.imageSmoothingQuality = "high"; // HD sprites drawn smaller than their pictures
     const cam = roomTransform();
     esc.camera = cam;
     // the room; its CanvasLayers above the game UI's (layer 1) after the UI
@@ -254,18 +314,65 @@ function step(dt) {
     draw(ctx, game, screenItems.filter((it) => it.layer <= TRANSITION_LAYER));
     drawPopup(ctx); // an open OptionButton list
     lastDrawn = [...roomItems, ...screenItems];
-    esc.frameDrawn();
   }
   if (esc.view && !ended) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    esc.transitions.draw(ctx, canvas.width, canvas.height); // layers/curtain (layer 20)
+    esc.transitions.draw(ctx, view.w, view.h); // layers/curtain (layer 20)
     // CanvasLayers above the curtain (a game's end screen at layer 30)
     const above = screenItems.filter((it) => it.layer > TRANSITION_LAYER);
     if (above.length) draw(ctx, game, above);
   }
   screenItems = [];
+  if (overlays.length && !ended) {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    for (const f of overlays) f(ctx);
+  }
+  // RenderingServer.frame_post_draw: every frame, as in Godot, even with no
+  // room on screen (a game's start script can wait for it before its first room)
+  esc.frameDrawn();
   for (const f of afterFrame) f();
 }
+
+// What the Escoria Mobile addon's layout (src/compat/escoria_mobile/layout.js)
+// changes in the player: the game's view size (the room fills the screen),
+// and its hooks into each frame.
+const mobileHost = {
+  view,
+  get esc() { return esc; },
+  get gameUI() { return gameUI; },
+  get menus() { return menus; },
+  /** The game's view becomes w x h game units (the canvas keeps the window's shape). */
+  setView(w, h) {
+    view.w = w;
+    view.h = h;
+    fitCanvas();
+    if (gameUI) [gameUI.W, gameUI.H] = [w, h];
+    if (esc) [esc.cameraPlayer.W, esc.cameraPlayer.H] = [w, h];
+  },
+  onFrame: (f) => beforeFrame.push(f),
+  onDraw: (f) => overlays.push(f),
+  /** A key pressed and released, as from the keyboard (Escape: the game's scripts, then the pause menu). */
+  key: (k) => driverInput.key(k),
+};
+
+// The player's input for the Escoria Mobile addon's gestures
+// (src/compat/escoria_mobile/gestures.js), in game units.
+const touchPointer = {
+  toGame: (clientX, clientY) => screenPoint({ clientX, clientY }),
+  hover: (s) => driverInput.hover(s),
+  click(s, button = 0, double = false) {
+    if (ended) return location.reload(); // the end screen: a tap starts again
+    driverInput.click(s, button, double);
+  },
+  /** Does a tap there go to the GUI (or is the room not taking input), not to an item or the floor? */
+  isGui(s) {
+    if (ended || !esc || !esc.view || menus.open) return true;
+    if (clickWaiters.length || gameUI.chooser || gameUI.speech) return true;
+    if (esc.state !== "DEFAULT" || esc.inputMode !== "ALL") return true;
+    return !!(esc.controls.hit(s) || gameUI.overPanel?.(s.x, s.y));
+  },
+  item: () => (esc && esc.hoveredItem) || null,
+};
 
 // ------------------------------------------------------------------ input
 // A mouse button or a key goes first to the game scripts' _input
@@ -276,7 +383,7 @@ function step(dt) {
 function screenPoint(e) {
   if (e.__point) return e.__point;
   const r = canvas.getBoundingClientRect();
-  return { x: ((e.clientX - r.left) / r.width) * canvas.width, y: ((e.clientY - r.top) / r.height) * canvas.height };
+  return { x: ((e.clientX - r.left) / r.width) * view.w, y: ((e.clientY - r.top) / r.height) * view.h };
 }
 const roomPoint = (s) => {
   const m = esc.camera;

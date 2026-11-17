@@ -329,7 +329,13 @@ export class GameUI {
   clickPanel(x, y, button = 0) {
     if (!this.overPanel(x, y)) return false;
     const esc = this.esc, am = esc.actions;
-    const b = this.hoverButton;
+    // the verb button there (a touch has no hover before it: the last frame's
+    // hoverButton may be another one)
+    const b = this.verbs().find((v) => {
+      if (!this.visibleNode(v)) return false;
+      const r = this.rect(v);
+      return x >= r.x && y >= r.y && x < r.x + r.w && y < r.y + r.h;
+    }) || null;
     if (b && this.verbsMenu && b.parent === this.verbsMenu) {
       if (button === 0) this.onActionSelected(b.name);
       return true;

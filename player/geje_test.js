@@ -208,7 +208,8 @@ export function installGejeTest({ esc, gameUI, canvas, gameName, input, debug = 
 
   const toPage = (q) => {
     const r = canvas.getBoundingClientRect();
-    return { x: r.left + (q.x / canvas.width) * r.width, y: r.top + (q.y / canvas.height) * r.height };
+    const v = canvas.gameSize; // game units -> page
+    return { x: r.left + (q.x / v.w) * r.width, y: r.top + (q.y / v.h) * r.height };
   };
   let mouseAt = null, clickUntil = -1; // for the recorded frames (the ring is a page element)
   const moveRing = (q, clicking = false) => {
@@ -248,7 +249,7 @@ export function installGejeTest({ esc, gameUI, canvas, gameName, input, debug = 
     key: (k) => input.key(k),
     wait,
     now: () => clock,
-    size: { w: canvas.width, h: canvas.height },
+    size: { w: canvas.gameSize.w, h: canvas.gameSize.h },
     inInventory: (id) => esc.inventory.has(id),
     describe(id) {
       const o = esc.objects.get(id);
@@ -365,10 +366,10 @@ export function installGejeTest({ esc, gameUI, canvas, gameName, input, debug = 
   const yieldNow = () => new Promise((r) => { const c = new MessageChannel(); c.port1.onmessage = () => r(); c.port2.postMessage(0); });
   const shot = document.createElement("canvas");
   async function sendFrame() {
-    shot.width = canvas.width;
-    shot.height = canvas.height;
+    shot.width = canvas.gameSize.w; // frames in game units, whatever the screen
+    shot.height = canvas.gameSize.h;
     const g = shot.getContext("2d");
-    g.drawImage(canvas, 0, 0);
+    g.drawImage(canvas, 0, 0, shot.width, shot.height);
     if (mouseAt) {
       g.beginPath();
       g.arc(mouseAt.x, mouseAt.y, 11, 0, Math.PI * 2);

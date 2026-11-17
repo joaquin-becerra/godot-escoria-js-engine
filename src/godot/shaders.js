@@ -198,8 +198,10 @@ export function drawShaded(ctx, game, node, w, h, { picture = null } = {}) {
   if (!code || !context()) return false;
   const prog = compile(code);
   if (prog.error) return false;
-  // where it lands on the canvas, in pixels (grown by the vertex() margin, if any)
-  const m = ctx.getTransform();
+  // where it lands on the canvas, in its real pixels (grown by the vertex()
+  // margin, if any); ctx.__device: the player's canvas, whose transform is in game units
+  const dev = ctx.__device || ctx;
+  const m = dev.getTransform();
   const param = (name) => {
     const v = mat.props[`shader_parameter/${name}`];
     if (v !== undefined && v !== null) return v;
@@ -274,7 +276,7 @@ export function drawShaded(ctx, game, node, w, h, { picture = null } = {}) {
   texture.temp = [];
   // onto the canvas, in the material's blend mode
   ctx.save();
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  dev.setTransform(1, 0, 0, 1, 0, 0);
   ctx.globalCompositeOperation = prog.blend;
   ctx.drawImage(glCanvas, x0, y0, pw, ph);
   ctx.restore();
