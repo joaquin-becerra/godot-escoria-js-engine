@@ -1,6 +1,6 @@
 // Exports a Godot + Escoria project for the JS engine.
 //
-//   node tools/export.js <godot project dir> [out dir] [--keep-wav] [--webp[=quality]]
+//   node tools/export.js <godot project dir> [out dir] [--keep-wav] [--webp[=quality]] [--no-cache]
 //
 // Output (default geje-builds/<project dir name>/):
 //   game.json   settings, every scene/resource as JSON, the ASHES scripts,
@@ -20,6 +20,12 @@
 // lightmaps). A picture whose WebP isn't smaller stays a .png. The project
 // is never touched: only the build changes.
 //
+// Cache: each converted file (WebP, Ogg) is kept in ~/.cache/geje/convert/
+// ($GEJE_CACHE/convert/), named by a hash of the source file's bytes and the
+// conversion settings. A rebuild converts only new or changed files; the rest
+// are copied from the cache. --no-cache converts everything again (and
+// doesn't use or fill the cache). Deleting that folder is always safe.
+//
 // Ports (the game's own code in JS, see src/escoria/ports.js), in
 // geje-builds/<game>/js_ports/index.js, which game.json's `ports` points at: the
 // project's GDScript translated by tools/gd2js/translate.js (js_ports/gd/, its
@@ -37,6 +43,8 @@
 // plus whatever those files reference inside addons/ (scenes, images, fonts),
 // followed recursively. GDScript is never exported: the engine reimplements it.
 import fs from "node:fs";
+import os from "node:os";
+import crypto from "node:crypto";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { parseTextResource } from "../src/godot/text_resource.js";
@@ -47,6 +55,8 @@ const FORMAT = 1;
 const here = path.dirname(new URL(import.meta.url).pathname);
 const args = process.argv.slice(2);
 const keepWav = args.includes("--keep-wav");
+const CACHE = args.includes("--no-cache") ? null
+  : path.join(process.env.GEJE_CACHE || path.join(os.homedir(), ".cache", "geje"), "convert");
 const positional = args.filter((a) => !a.startsWith("--"));
 const root = path.resolve(positional[0] || ".");
 const name = path.basename(root);
@@ -384,6 +394,29 @@ function encodeWebp(src, dst, lossless) {
   const r = spawnSync(a[0], a[1], { encoding: "utf8" });
   return r.status === 0 && fs.existsSync(dst) ? null : (r.stderr || "").trim() || "failed";
 }
+// Runs make(dst) (a conversion of src; returns an error text or null), or
+// copies its earlier result from the cache. `recipe` names the conversion and
+// its settings: changing any of them makes a new cache entry.
+let cacheHits = 0, cacheMisses = 0;
+function convertCached(src, dst, recipe, make) {
+  if (!CACHE) return make(dst);
+  const key = crypto.createHash("sha256").update(recipe).update("\0").update(fs.readFileSync(src)).digest("hex");
+  const file = path.join(CACHE, key.slice(0, 2), key + path.extname(dst));
+  if (fs.existsSync(file)) {
+    fs.copyFileSync(file, dst);
+    cacheHits++;
+    return null;
+  }
+  const err = make(dst);
+  if (!err) {
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    const tmp = `${file}.${process.pid}.tmp`; // whole files only, even if interrupted
+    fs.copyFileSync(dst, tmp);
+    fs.renameSync(tmp, file);
+    cacheMisses++;
+  }
+  return err;
+}
 let pngBytes = 0, webpBytes = 0, webpCount = 0, webpLossless = 0, webpKept = 0;
 for (const r of assets) {
   let target = r;
@@ -392,7 +425,8 @@ for (const r of assets) {
     const webp = r.slice(0, -4) + ".webp";
     const dst = path.join(out, "res", webp.slice(6));
     fs.mkdirSync(path.dirname(dst), { recursive: true });
-    const err = encodeWebp(toAbs(r), dst, lossless);
+    const err = convertCached(toAbs(r), dst, `webp ${webpEncoder} ${lossless ? "lossless" : `q${WEBP_QUALITY}`} v1`,
+      (d) => encodeWebp(toAbs(r), d, lossless));
     const before = fs.statSync(toAbs(r)).size;
     if (err || fs.statSync(dst).size >= before) {
       if (err) console.log(`  couldn't convert ${r} to webp: ${err}; the png goes as is`);
@@ -412,9 +446,12 @@ for (const r of assets) {
   const dst = path.join(out, "res", target.slice(6));
   fs.mkdirSync(path.dirname(dst), { recursive: true });
   if (target !== r) {
-    const enc = spawnSync("ffmpeg", ["-y", "-loglevel", "error", "-i", toAbs(r), "-c:a", "libvorbis", "-q:a", String(VORBIS_QUALITY), dst], { encoding: "utf8" });
-    if (enc.status !== 0) {
-      console.log(`  couldn't convert ${r} to ogg: ${enc.stderr.trim()}; the wav goes as is`);
+    const err = convertCached(toAbs(r), dst, `ogg vorbis q${VORBIS_QUALITY} v1`, (d) => {
+      const enc = spawnSync("ffmpeg", ["-y", "-loglevel", "error", "-i", toAbs(r), "-c:a", "libvorbis", "-q:a", String(VORBIS_QUALITY), d], { encoding: "utf8" });
+      return enc.status === 0 && fs.existsSync(d) ? null : (enc.stderr || "").trim() || "failed";
+    });
+    if (err) {
+      console.log(`  couldn't convert ${r} to ogg: ${err}; the wav goes as is`);
       target = r;
       fs.copyFileSync(toAbs(r), path.join(out, "res", r.slice(6)));
     } else {
@@ -545,6 +582,7 @@ if (uncovered.length) {
   for (const r of uncovered) console.log(`    ${r}`);
 }
 if (Object.keys(translations).length) console.log(`  traducciones: ${Object.entries(translations).map(([l, t]) => `${l} ${Object.keys(t).length}`).join(", ")}`);
+if (CACHE && cacheHits + cacheMisses) console.log(`  conversion cache: ${cacheHits} reused, ${cacheMisses} converted (${CACHE})`);
 if (webpArg && !webpEncoder) console.log("  --webp: no cwebp nor ffmpeg with libwebp, the pngs go as they are");
 if (webpCount) console.log(`  imágenes: ${webpCount} png a webp (q ${WEBP_QUALITY}; ${webpLossless} sin pérdida), ${(pngBytes / 1024).toFixed(0)} KB -> ${(webpBytes / 1024).toFixed(0)} KB${webpKept ? `; ${webpKept} quedan png (no achicaban)` : ""}`);
 if (wavBytes) console.log(`  sonidos: ${Object.keys(remap).filter((r) => extOf(r) === "wav").length} wav a ogg, ${(wavBytes / 1024).toFixed(0)} KB -> ${(oggBytes / 1024).toFixed(0)} KB`);
