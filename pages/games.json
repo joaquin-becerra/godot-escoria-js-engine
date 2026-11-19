@@ -17,7 +17,7 @@
     {
       "game": "openquest-escoria-enhanced",
       "title": "OpenQuest Enhanced",
-      "blurb": "OpenQuest converted by scumm2escoria and then improved by hand: HD art switchable with the original pixel art (F10), five languages, music, new menus, an animated title screen, a new ending, and touch controls for phones and tablets.",
+      "blurb": "OpenQuest converted by scumm2escoria and then improved by hand: HD art switchable with the original pixel art (F10), six languages, music, new menus, an animated title screen, a new ending, and touch controls for phones and tablets.",
       "credits": [
         ["Game, art and story", "Michael Sheail", "https://www.adventuregamestudio.co.uk/"],
         ["Official repository", "JenniBee/openquest", "https://github.com/JenniBee/openquest"],
