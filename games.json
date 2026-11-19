@@ -1,0 +1,65 @@
+{
+  "comment": "The demos on the GitHub Pages site (tools/publish_pages.js). game: its folder in geje-builds/; img: pages/img/<game>.jpg.",
+  "games": [
+    {
+      "game": "openquest-escoria",
+      "title": "OpenQuest",
+      "blurb": "Michael Sheail's demo adventure, from its ScummC port, converted to Godot + Escoria by scumm2escoria. Nine verbs, an office, a secret room and Commander Zif.",
+      "credits": [
+        ["Game, art and story", "Michael Sheail", "https://www.adventuregamestudio.co.uk/"],
+        ["ScummC port", "the ScummC authors", "https://github.com/AlbanBedel/scummc"],
+        ["Official repository", "JenniBee/openquest", "https://github.com/JenniBee/openquest"],
+        ["Godot project", "scumm2escoria/examples", "https://github.com/joaquin-becerra/scumm2escoria/tree/main/examples/openquest-escoria"],
+        ["Godot + Escoria conversion", "scumm2escoria", "https://github.com/joaquin-becerra/scumm2escoria"]
+      ],
+      "license": ["CC BY 4.0", "https://creativecommons.org/licenses/by/4.0/"]
+    },
+    {
+      "game": "openquest-escoria-enhanced",
+      "title": "OpenQuest Enhanced",
+      "blurb": "OpenQuest converted by scumm2escoria and then improved by hand: HD art switchable with the original pixel art (F10), six languages, music, new menus, an animated title screen, a new ending, and touch controls for phones and tablets.",
+      "credits": [
+        ["Game, art and story", "Michael Sheail", "https://www.adventuregamestudio.co.uk/"],
+        ["Official repository", "JenniBee/openquest", "https://github.com/JenniBee/openquest"],
+        ["Enhancements and HD art", "Joaquin A. Becerra", "https://github.com/joaquin-becerra"],
+        ["Godot project", "joaquin-becerra/openquest-enhanced", "https://github.com/joaquin-becerra/openquest-enhanced"]
+      ],
+      "license": ["CC BY 4.0", "https://creativecommons.org/licenses/by/4.0/"]
+    },
+    {
+      "game": "road-escoria",
+      "title": "Road",
+      "blurb": "ScummC's example game: one road, an axe, a devil and Santa Claus. Converted to Godot + Escoria by scumm2escoria.",
+      "credits": [
+        ["Example game", "Alban Bedel and the ScummC authors", "https://github.com/AlbanBedel/scummc/tree/master/examples/road"],
+        ["Godot project", "scumm2escoria/examples", "https://github.com/joaquin-becerra/scumm2escoria/tree/main/examples/road-escoria"],
+        ["Godot + Escoria conversion", "scumm2escoria", "https://github.com/joaquin-becerra/scumm2escoria"]
+      ],
+      "license": ["GPL v2 or later", "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"]
+    },
+    {
+      "game": "escoria-demo-game",
+      "title": "Escoria demo",
+      "blurb": "Escoria's own showcase, room by room: inventory, dialogs, camera, transitions, sounds, menus and puzzles, with the simple-mouse UI.",
+      "credits": [
+        ["Game", "the Godot Escoria team", "https://github.com/godot-escoria"],
+        ["Official repository", "godot-escoria/escoria-demo-game", "https://github.com/godot-escoria/escoria-demo-game"],
+        ["Characters", "Marco Giorgini (CC0), edited by Julian Murgia", "https://opengameart.org/content/mark-2d-adventure-game-sprite"],
+        ["Items and footsteps", "Kenney (CC0)", "https://www.kenney.nl/"],
+        ["Music", "Eric Matyas (CC BY 4.0)", "https://soundimage.org/"]
+      ],
+      "license": ["MIT (code), CC0 / CC BY 4.0 (assets)", "https://github.com/godot-escoria/escoria-demo-game/blob/main/LICENSE"]
+    },
+    {
+      "game": "superfluous-returnz-demo",
+      "title": "Superfluous Returnz (demo)",
+      "blurb": "The first chapter of Gee's Superfluous Returnz, ported from the Sosage engine to Godot + Escoria. Please support the original game.",
+      "credits": [
+        ["Story, art, music and texts", "Gee", "https://studios.ptilouk.net/superfluous-returnz/"],
+        ["Original engine", "Sosage", "https://github.com/sgiraudot/sosage"],
+        ["Godot + Escoria port", "superfluous-returnz-demo", "https://github.com/godot-escoria/superfluous-returnz-demo"]
+      ],
+      "license": ["CC BY-SA 4.0", "https://creativecommons.org/licenses/by-sa/4.0/"]
+    }
+  ]
+}

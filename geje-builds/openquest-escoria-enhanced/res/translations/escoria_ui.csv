@@ -1,0 +1,29 @@
+keys,en,es,fr,de,it,pt
+NEW_GAME,New game,Nueva partida,Nouvelle partie,Neues Spiel,Nuova partita,Novo jogo
+CONTINUE_GAME,Continue game,Continuar,Continuer la partie,Weiterspielen,Continua,Continuar
+LOAD_GAME,Load game,Cargar partida,Charger,Spiel laden,Carica partita,Carregar jogo
+SAVE_GAME,Save game,Guardar partida,Sauvegarder,Spiel speichern,Salva partita,Salvar jogo
+OPTIONS,Options,Opciones,Options,Einstellungen,Opzioni,Opções
+QUIT,Quit,Salir,Quitter,Beenden,Esci,Sair
+OPTIONS_BACK,Back,Volver,Retour,Zurück,Indietro,Voltar
+OPTIONS_LANGUAGE,Language,Idioma,Langue,Sprache,Lingua,Idioma
+GENERAL_VOLUME,General,General,Général,Allgemein,Generale,Geral
+MUSIC_VOLUME,Music,Música,Musique,Musik,Musica,Música
+EFFECTS_VOLUME,Effects,Efectos,Effets,Effekte,Effetti,Efeitos
+SOUND_VOLUME,Sound effects,Efectos de sonido,Effets sonores,Soundeffekte,Effetti sonori,Efeitos sonoros
+SPEECH_VOLUME,Speech,Voz,Voix,Sprachausgabe,Voce,Voz
+AMBIENT_VOLUME,Ambient,Ambiente,Ambiance,Atmosphäre,Ambiente,Ambiente
+FULLSCREEN,Fullscreen,Pantalla completa,Plein écran,Vollbild,Schermo intero,Tela cheia
+CANCEL,Cancel,Cancelar,Annuler,Abbrechen,Annulla,Cancelar
+OK,OK,Ok,Ok,Ok,OK,OK
+ENTER_SAVE_NAME,Enter the save name:,Introduce el nombre de la partida:,Entrez un nom de sauvegarde,Bitte gib einen Namen für das Spiel ein:,Inserisci il nome del salvataggio:,Digite o nome do jogo salvo:
+APPLY,Apply,Aplicar,Appliquer,Anwenden,Applica,Aplicar
+CONFIRM_OVERWRITE,Overwrite the savegame?, ¿Sobreescribir la partida?,Écraser la sauvegarde ?,Soll das Spiel überschrieben werden?,Sovrascrivere il salvataggio?,Sobrescrever o jogo salvo?
+YES,Yes,Sí,Oui,Ja,Sì,Sim
+NO,No,No,Non,Nein,No,Não
+VOLUME,Volume,Volumen,Volume,Lautstärke,Volume,Volume
+GRAPHICS,Graphics,Gráficos,Graphismes,Grafik,Grafica,Gráficos
+GRAPHICS_ORIGINAL,Original,Originales,Originaux,Original,Originale,Originais
+GRAPHICS_HD,Enhanced,Avanzados,Améliorés,Verbessert,Migliorata,Melhorados
+SCREEN,Screen,Pantalla,Écran,Bildschirm,Schermo,Tela
+SCREEN_WINDOW,Window,Ventana,Fenêtre,Fenster,Finestra,Janela

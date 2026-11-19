@@ -1,0 +1,17 @@
+Compatibility with the JS engine: PLAYABLE WITH GAPS
+(Escoria, 2026-11-13; tools/compat.js)
+
+△ .esc scripts that don't compile (not in Escoria either: they have no events) (2)
+    res://game/rooms/room13/esc/room13.esc: line 2 at '\n': Expected block after event declaration for 'setup'. Code blocks require tab(s) at the start of a line.
+    res://game/rooms/room13/esc/room13.esc: line 6 at '\n': Expected block after event declaration for 'ready'. Code blocks require tab(s) at the start of a line.
+
+△ Partly supported (1)
+    GPUParticles2D: on the CPU: no turbulence, attractors or collisions  — 3 places: game/items/escitems/button.tscn (GPUParticles2D), game/rooms/room03/room03.tscn (GPUParticles2D), game/rooms/room05/room05.tscn (GPUParticles2D)
+
+△ Referenced files that don't exist (in the project) (6)
+    addons/escoria-core/ui_library/dialogs/floating_dialog_player.tscn  — project.godot
+    addons/escoria-core/ui_library/dialogs/text_dialog_chooser.tscn  — project.godot
+    game/rooms/room6/esc/left_exit.esc  — game/rooms/room06/l_exit.tscn
+    game/rooms/room6/esc/r6_door.esc  — game/rooms/room06/r_door.tscn
+    game/rooms/room6/esc/worker.esc  — game/characters/worker/worker.tscn
+    game/rooms/room9/esc/r9_door.esc  — game/rooms/room09/r_door.tscn

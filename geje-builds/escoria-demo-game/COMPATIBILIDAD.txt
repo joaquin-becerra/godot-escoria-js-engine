@@ -1,0 +1,22 @@
+Compatibilidad con el motor JS: JUGABLE CON FALTANTES
+(Escoria, 2026-11-02; tools/compat.js)
+
+△ Scripts .esc que no compilan (tampoco en Escoria: quedan sin eventos) (2)
+    res://game/rooms/room13/esc/room13.esc: línea 2 en '\n': Expected block after event declaration for 'setup'. Code blocks require tab(s) at the start of a line.
+    res://game/rooms/room13/esc/room13.esc: línea 6 en '\n': Expected block after event declaration for 'ready'. Code blocks require tab(s) at the start of a line.
+
+△ Recursos que el motor no usa (1)
+    AnimatedTexture  — game/dialog_avatars/player.tres
+
+△ Soportado en parte (3)
+    Polygon2D: sin textura (solo color)  — 17 lugares: game/items/escitems/button.tscn (Polygon2D), game/rooms/intro/intro_room.tscn (Polygon2D), game/rooms/room02/room02.tscn (Polygon2D), game/rooms/room03/room03.tscn (Polygon2D), game/rooms/room05/room05.tscn (background_for_text), game/rooms/room06/r_door.tscn (r_door_closed), game/rooms/room06/r_door.tscn (r_door_opened), game/rooms/room06/room06.tscn (Polygon2D), game/rooms/room07/room07.tscn (lift_shaft), game/rooms/room08/room08.tscn (door_background), game/rooms/room09/r_door.tscn (r_door_closed), game/rooms/room09/r_door.tscn (r_door_opened), game/rooms/room09/room09.tscn (open_doorway_graphic), game/rooms/room10/room10.tscn (Polygon2D), game/rooms/room11/room11.tscn (Polygon2D), game/rooms/room18/room18.tscn (Polygon2D), game/rooms/room19/room19.tscn (Polygon2D)
+    Line2D: sin textura ni gradiente  — 20 lugares: game/items/escitems/button.tscn (lines), game/rooms/room05/item_wall.tscn (square), game/rooms/room05/item_wall.tscn (round), game/rooms/room06/r_door.tscn (Line2D), game/rooms/room10/button/button.tscn (Line2D), game/rooms/room11/room11.tscn (l_platform), game/rooms/room11/room11.tscn (l_door), game/rooms/room11/room11.tscn (r_door), game/rooms/room13/room13.tscn (l_platform), game/rooms/room13/room13.tscn (l_door), game/rooms/room13/room13.tscn (r_door), game/rooms/room14/room14.tscn (l_platform), game/rooms/room14/room14.tscn (l_door), game/rooms/room14/room14.tscn (r_door), game/rooms/room16/room16.tscn (l_platform), game/rooms/room16/room16.tscn (l_door), game/rooms/room16/room16.tscn (r_door), game/rooms/room17/room17.tscn (l_platform), game/rooms/room17/room17.tscn (l_door), game/rooms/room17/room17.tscn (r_door)
+    GPUParticles2D: en CPU: sin turbulencia, atractores ni colisiones  — 3 lugares: game/items/escitems/button.tscn (GPUParticles2D), game/rooms/room03/room03.tscn (GPUParticles2D), game/rooms/room05/room05.tscn (GPUParticles2D)
+
+△ Archivos referenciados que no existen (del proyecto) (6)
+    addons/escoria-core/ui_library/dialogs/floating_dialog_player.tscn  — project.godot
+    addons/escoria-core/ui_library/dialogs/text_dialog_chooser.tscn  — project.godot
+    game/rooms/room6/esc/left_exit.esc  — game/rooms/room06/l_exit.tscn
+    game/rooms/room6/esc/r6_door.esc  — game/rooms/room06/r_door.tscn
+    game/rooms/room6/esc/worker.esc  — game/characters/worker/worker.tscn
+    game/rooms/room9/esc/r9_door.esc  — game/rooms/room09/r_door.tscn

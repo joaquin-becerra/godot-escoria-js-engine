@@ -1,0 +1,2 @@
+Compatibility with the JS engine: PLAYABLE
+(road-bundle, 2026-11-13; tools/compat.js)

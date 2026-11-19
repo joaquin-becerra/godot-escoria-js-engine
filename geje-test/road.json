@@ -1,0 +1,96 @@
+{
+  "comment": "road (road-escoria, from ScummC's examples/road via scumm2escoria): one room, no ending. Covers the intro, every object's verbs that do something, the axe in the inventory and Santa's dialog. Many SCUMM lines are TODO in the conversion, so some steps change no globals: until false.",
+  "steps": [
+    {
+      "wait": 3,
+      "busy": true
+    },
+    {
+      "waitInput": true
+    },
+    {
+      "verb": "look",
+      "object": "obj_19"
+    },
+    {
+      "verb": "pickup",
+      "object": "obj_19",
+      "until": {
+        "inventory": "inv_obj_19"
+      }
+    },
+    {
+      "verb": "look",
+      "object": "inv_obj_19",
+      "until": false
+    },
+    {
+      "verb": "use",
+      "item": "inv_obj_19",
+      "object": "obj_22",
+      "until": false
+    },
+    {
+      "verb": "use",
+      "item": "inv_obj_19",
+      "object": "obj_20",
+      "until": false
+    },
+    {
+      "verb": "look",
+      "object": "obj_22",
+      "until": false
+    },
+    {
+      "verb": "pickup",
+      "object": "obj_22",
+      "until": false
+    },
+    {
+      "verb": "open",
+      "object": "obj_20",
+      "until": false
+    },
+    {
+      "verb": "walk",
+      "object": "obj_20",
+      "until": false
+    },
+    {
+      "verb": "talk",
+      "object": "actor_1",
+      "until": "chooser"
+    },
+    {
+      "choose": "Beasty, from the Kingdom Der Evil."
+    },
+    {
+      "choose": "That's the place, anything against Ks?"
+    },
+    {
+      "choose": "What is this place?"
+    },
+    {
+      "choose": "Are you really Santa, or just some guy in a red coat?"
+    },
+    {
+      "choose": "Have a nice day."
+    },
+    {
+      "waitGlobal": {
+        "b4": 1
+      }
+    },
+    {
+      "verb": "look",
+      "object": "actor_1",
+      "until": false
+    },
+    {
+      "verb": "use",
+      "item": "inv_obj_19",
+      "object": "actor_1",
+      "until": false
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+18 scripts translated to geje-builds/superfluous-returnz-demo/js_ports/gd/
+complete: 18, complete but waiting for another game class (◇): 0, with gaps (△): 0
+
+✓ res://game/characters/sosage_idle.gd (node)
+
+✓ res://game/commands/action.gd (command)
+
+✓ res://game/commands/crouch.gd (command)
+
+✓ res://game/commands/face.gd (command)
+
+✓ res://game/commands/open_phone.gd (command)
+
+✓ res://game/commands/shake.gd (command)
+
+✓ res://game/commands/show_code.gd (command)
+
+✓ res://game/commands/show_end_text.gd (command)
+
+✓ res://game/commands/show_item.gd (command)
+
+✓ res://game/commands/show_window.gd (command)
+
+✓ res://game/ui/game.gd (node)
+
+✓ res://game/ui/inventory/inventory_ui.gd (node)
+
+✓ res://game/ui/phone/phone_menu.gd (node)
+
+✓ res://game/ui/sosage/sosage_interface.gd (node)
+
+✓ res://game/ui/sosage/sosage_label.gd (class)
+
+✓ res://game/ui/sosage/sosage_window.gd (class)
+
+✓ res://game/ui/sosage_chooser.gd (node)
+
+✓ res://game/ui/sosage_say.gd (node)
+
+Modified Escoria (compared with ../escoria-demo-game):
+  △ res://addons/escoria-core/game/core-scripts/behaviors/esc_movable.gd:set_direction  <- no JS side in GEJE (src/compat/)
+  △ res://addons/escoria-core/game/core-scripts/esc_location.gd:_ready  <- no JS side in GEJE (src/compat/)
+  △ res://addons/escoria-core/game/core-scripts/esc_location.gd:_exit_tree  <- no JS side in GEJE (src/compat/)
+  △ res://addons/escoria-core/game/core-scripts/esc_location.gd:_is_gizmo_visible  <- no JS side in GEJE (src/compat/)
+  △ res://addons/escoria-core/game/core-scripts/save_data/esc_save_manager.gd:_load_object  <- no JS side in GEJE (src/compat/)

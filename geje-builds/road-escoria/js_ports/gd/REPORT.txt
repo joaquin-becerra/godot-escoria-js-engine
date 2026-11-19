@@ -1,0 +1,54 @@
+18 scripts translated to geje-builds/road-escoria/js_ports/gd/
+complete: 18, complete but waiting for another game class (◇): 0, with gaps (△): 0
+
+✓ res://commands/scumm_anim.gd (command)
+
+✓ res://commands/scumm_elevation.gd (command)
+
+✓ res://commands/scumm_fade_in.gd (command)
+
+✓ res://commands/scumm_fade_out.gd (command)
+
+✓ res://commands/scumm_quit.gd (command)
+
+✓ res://commands/scumm_restore_names.gd (command)
+
+✓ res://commands/scumm_room_intensity.gd (command)
+
+✓ res://commands/scumm_screen_effect.gd (command)
+
+✓ res://commands/scumm_set_name.gd (command)
+
+✓ res://commands/scumm_sound.gd (command)
+
+✓ res://commands/scumm_state_var.gd (command)
+
+✓ res://commands/scumm_wait_click.gd (command)
+
+✓ res://ui/inventory_scroll.gd (node)
+
+✓ res://ui/scumm_defaults.gd (class)
+
+✓ res://ui/scumm_dialog_chooser.gd (node)
+
+✓ res://ui/scumm_say.gd (node)
+
+✓ res://ui/scumm_screen.gd (class)
+
+✓ res://ui/sentence_line.gd (node)
+
+Modified Escoria (compared with ../escoria-demo-game):
+  ✓ res://addons/escoria-core/game/core-scripts/esc/esc_action_manager.gd:_get_event_to_queue
+  ✓ res://addons/escoria-core/game/core-scripts/esc/esc_object_manager.gd:has
+  ✓ res://addons/escoria-core/game/core-scripts/esc_animation_player.gd:_on_animation_finished
+  ✓ res://addons/escoria-core/game/core-scripts/esc_location.gd:_ready
+  ✓ res://addons/escoria-core/game/core-scripts/esc_location.gd:_exit_tree
+  ✓ res://addons/escoria-core/game/core-scripts/esc_location.gd:_is_gizmo_visible
+  ✓ res://addons/escoria-core/game/scenes/sound/esc_speech_player.gd:set_state
+  ✓ res://addons/escoria-ui-keyboard-9verbs/game.gd:left_click_on_inventory_item
+  ✓ res://addons/escoria-ui-keyboard-9verbs/game.gd:unpause_game
+  ✓ res://addons/escoria-ui-keyboard-9verbs/game.gd:pause_game
+  ✓ res://addons/escoria-ui-keyboard-9verbs/verbs_menu.gd:_ready
+  ✓ res://addons/escoria-ui-keyboard-9verbs/verbs_menu.gd:on_action_selected
+  ✓ res://addons/escoria-ui-keyboard-9verbs/verbs_menu.gd:unselect_actions
+  ✓ res://addons/escoria-ui-keyboard-9verbs/verbs_menu.gd:set_by_name

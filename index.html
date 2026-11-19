@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base target="_blank"><!-- every link in a new tab (games, credits, licenses) -->
+<title>Godot Escoria JS Engine</title>
+<meta name="description" content="Point & click adventures made with Godot 4 + Escoria, played in the browser by a small JavaScript engine.">
+<style>
+  :root {
+    --bg: #f6f4ef; --card: #ffffff; --text: #1f1d1a; --muted: #6b665d; --line: #e2ddd2;
+    --accent: #b8471b; --accent-text: #ffffff; --shadow: 0 1px 2px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #15140f; --card: #1f1d18; --text: #ece8df; --muted: #a39d90; --line: #34312a;
+      --accent: #e0703f; --accent-text: #15140f; --shadow: 0 1px 2px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #15140f; --card: #1f1d18; --text: #ece8df; --muted: #a39d90; --line: #34312a;
+    --accent: #e0703f; --accent-text: #15140f; --shadow: 0 1px 2px rgba(0,0,0,.4);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  a { color: var(--accent); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding-inline: 16px; }
+  header { padding-block: 48px 28px; }
+  h1 { font-size: clamp(1.7rem, 4vw, 2.4rem); line-height: 1.15; margin: 0 0 10px; letter-spacing: -.01em; }
+  .lead { color: var(--muted); max-width: 46em; margin: 0; }
+  .lead a { white-space: nowrap; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr)); gap: 20px; padding-bottom: 40px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; }
+  .shot { display: block; aspect-ratio: 16 / 9; background: #000; overflow: hidden; }
+  .shot img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .25s; }
+  .shot:hover img { transform: scale(1.03); }
+  .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  h2 { font-size: 1.2rem; margin: 0; }
+  .blurb { margin: 0; color: var(--muted); }
+  dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 2px 12px; font-size: .88rem; }
+  dt { color: var(--muted); }
+  dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 6px; flex-wrap: wrap; }
+  .play { background: var(--accent); color: var(--accent-text); text-decoration: none; font-weight: 600; padding: 8px 18px; border-radius: 6px; }
+  .play:hover { filter: brightness(1.08); }
+  .lic { font-size: .85rem; color: var(--muted); }
+  footer { border-top: 1px solid var(--line); padding-block: 20px 40px; color: var(--muted); font-size: .9rem; }
+  footer p { margin: 4px 0; }
+</style>
+</head>
+<body>
+<header class="wrap">
+  <h1>Godot Escoria JS Engine</h1>
+  <p class="lead">Point &amp; click adventures made with <a href="https://godotengine.org">Godot 4</a> + <a href="https://github.com/godot-escoria">Escoria</a>, played in the browser by a small JavaScript engine instead of Godot's WebAssembly runtime. Each demo below is the game's own project, exported to JSON and assets. Source: <a href="https://github.com/joaquin-becerra/godot-escoria-js-engine">godot-escoria-js-engine</a>.</p>
+</header>
+<main class="wrap">
+  <div class="grid" id="games"><noscript>The list of demos needs JavaScript.</noscript></div>
+</main>
+<footer class="wrap">
+  <p>The engine is MIT licensed (see <a href="LICENSE">LICENSE</a> and <a href="THIRD_PARTY_NOTICES.md">third-party notices</a>). Each game keeps its own license and credits, shown on its card.</p>
+  <p>Mouse to play; Esc opens the menu. Works best in a desktop browser.</p>
+</footer>
+<script>
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const link = (text, url) => (url ? `<a href="${esc(url)}">${esc(text)}</a>` : esc(text));
+fetch("games.json")
+  .then((r) => r.json())
+  .then(({ games }) => {
+    document.getElementById("games").innerHTML = games.map((g) => {
+      const play = `player/?game=${encodeURIComponent(g.game)}`;
+      return `<article class="card">
+        <a class="shot" href="${play}" target="_blank" rel="noopener"><img src="img/${esc(g.game)}.jpg" alt="${esc(g.title)}" loading="lazy"></a>
+        <div class="body">
+          <h2>${esc(g.title)}</h2>
+          <p class="blurb">${esc(g.blurb)}</p>
+          <dl>${g.credits.map(([role, who, url]) => `<dt>${esc(role)}</dt><dd>${link(who, url)}</dd>`).join("")}</dl>
+          <div class="row"><a class="play" href="${play}" target="_blank" rel="noopener">Play</a><span class="lic">License: ${link(g.license[0], g.license[1])}</span></div>
+        </div>
+      </article>`;
+    }).join("");
+  })
+  .catch(() => { document.getElementById("games").textContent = "Couldn't load the list of demos."; });
+</script>
+</body>
+</html>

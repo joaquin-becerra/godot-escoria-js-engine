@@ -1,0 +1,6779 @@
+{
+ "static": {
+  "verdict": "PLAYABLE WITH GAPS",
+  "issues": [
+   "error esc res://game/rooms/room13/esc/room13.esc res://game/rooms/room13/esc/room13.esc: line 2 at '\n': Expected block after event declaration for 'setup'. Code blocks require tab(s) at the start of a line.",
+   "error esc res://game/rooms/room13/esc/room13.esc res://game/rooms/room13/esc/room13.esc: line 6 at '\n': Expected block after event declaration for 'ready'. Code blocks require tab(s) at the start of a line.",
+   "warn compat  .esc scripts that don't compile (not in Escoria either: they have no events) (2): res://game/rooms/room13/esc/room13.esc: line 2 at '\\n': Expected bl…, res://game/rooms/room13/esc/room13.esc: line 6 at '\\n': Expected bl…",
+   "warn compat  Partly supported (1): GPUParticles2D: on the CPU: no turbulence, attractors or collisions",
+   "warn compat  Referenced files that don't exist (in the project) (6): addons/escoria-core/ui_library/dialogs/text_dialog_chooser.tscn, addons/escoria-core/ui_library/dialogs/floating_dialog_player.tscn, game/rooms/room6/esc/worker.esc, game/rooms/room6/esc/left_exit.esc, game/rooms/room6/esc/r6_door.esc, game/rooms/room9/esc/r9_door.esc"
+  ]
+ },
+ "ended": false,
+ "gameSeconds": 744,
+ "steps": [
+  {
+   "n": 1,
+   "seconds": 8,
+   "state": {
+    "room": "intro_cutscene",
+    "inventory": [],
+    "globals": {},
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 2,
+   "seconds": 12.37,
+   "state": {
+    "room": "room1",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 0,
+     "dialog_popup_advance": 0,
+     "room1_visited": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:walk_right",
+    "player:idle_right",
+    "player:idle_down_right",
+    "player:idle_down",
+    "player:idle_down_left",
+    "player:walk_right",
+    "player:idle_up",
+    "player:idle_right"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 3,
+   "seconds": 0.8,
+   "state": {
+    "room": "room1",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 0,
+     "dialog_popup_advance": 0,
+     "room1_visited": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 4,
+   "seconds": 1.5,
+   "state": {
+    "room": "room1",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 0,
+     "dialog_popup_advance": 0,
+     "room1_visited": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 5,
+   "seconds": 5.33,
+   "state": {
+    "room": "room1",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 1,
+     "dialog_popup_advance": 0,
+     "room1_visited": true,
+     "enable_tk": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_up",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: I don't know what that stuff is."
+   ],
+   "error": null
+  },
+  {
+   "n": 6,
+   "seconds": 5.5,
+   "state": {
+    "room": "room1",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 0,
+     "room1_visited": true,
+     "enable_tk": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: I REALLY don't know what that stuff is."
+   ],
+   "error": null
+  },
+  {
+   "n": 7,
+   "seconds": 7,
+   "state": {
+    "room": "room1",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 0,
+     "room1_visited": true,
+     "enable_tk": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_up",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: No, SERIOUSLY, I have no idea what that is!",
+    "player: Please stop asking me that!"
+   ],
+   "error": null
+  },
+  {
+   "n": 8,
+   "seconds": 8.87,
+   "state": {
+    "room": "room1",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 0,
+     "room1_visited": true,
+     "enable_tk": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_up",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: I'm not picking this up. I don't even want to SEE that object anymore!",
+    "player: Ta-da. Let's look at the other one so this one reappears."
+   ],
+   "error": null
+  },
+  {
+   "n": 9,
+   "seconds": 6.2,
+   "state": {
+    "room": "room1",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 1,
+     "room1_visited": true,
+     "enable_tk": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: I don't know what that stuff is."
+   ],
+   "error": null
+  },
+  {
+   "n": 10,
+   "seconds": 5.6,
+   "state": {
+    "room": "room1",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: I REALLY don't know what that stuff is."
+   ],
+   "error": null
+  },
+  {
+   "n": 11,
+   "seconds": 7,
+   "state": {
+    "room": "room1",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_up",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: No, SERIOUSLY, I have no idea what that is!",
+    "player: Please stop asking me that!"
+   ],
+   "error": null
+  },
+  {
+   "n": 12,
+   "seconds": 5.27,
+   "state": {
+    "room": "room2",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:idle_down"
+   ],
+   "said": [
+    "player: I'm near the door."
+   ],
+   "error": null
+  },
+  {
+   "n": 13,
+   "seconds": 0.8,
+   "state": {
+    "room": "room2",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 14,
+   "seconds": 6.13,
+   "state": {
+    "room": "room2",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": false,
+     "r2_look_dialog_advance": 1
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: That button must activate the bridge."
+   ],
+   "error": null
+  },
+  {
+   "n": 15,
+   "seconds": 6.5,
+   "state": {
+    "room": "room2",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": false,
+     "r2_look_dialog_advance": 2
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: I already said that this button must activate the bridge."
+   ],
+   "error": null
+  },
+  {
+   "n": 16,
+   "seconds": 9.7,
+   "state": {
+    "room": "room2",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": false,
+     "r2_look_dialog_advance": 3
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_down",
+    "player:idle_down",
+    "player:speak_down",
+    "player:idle_down",
+    "player:speak_down",
+    "player:idle_down",
+    "player:speak_down",
+    "player:idle_down"
+   ],
+   "said": [
+    "player: Listen closely.",
+    "player: This",
+    "player: button",
+    "player: must",
+    "player: activate",
+    "player: the bridge."
+   ],
+   "error": null
+  },
+  {
+   "n": 17,
+   "seconds": 5.1,
+   "state": {
+    "room": "room2",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": false,
+     "r2_look_dialog_advance": 3
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_down",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: That's the other side."
+   ],
+   "error": null
+  },
+  {
+   "n": 18,
+   "seconds": 3.83,
+   "state": {
+    "room": "room2",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_up",
+    "player:idle_up",
+    "r2_bridge:bridge_close"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 19,
+   "seconds": 5.27,
+   "state": {
+    "room": "room3",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": false,
+     "r3_button_broken": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:idle_down",
+    "r3_button:button_broken"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 20,
+   "seconds": 0.8,
+   "state": {
+    "room": "room3",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": false,
+     "r3_button_broken": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 21,
+   "seconds": 8.43,
+   "state": {
+    "room": "room3",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": false,
+     "r3_button_broken": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: That button must activate the bridge, but it is broken.",
+    "player: r3_button_broken status: true"
+   ],
+   "error": null
+  },
+  {
+   "n": 22,
+   "seconds": 5.23,
+   "state": {
+    "room": "room3",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": false,
+     "r3_button_broken": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: The button is broken!"
+   ],
+   "error": null
+  },
+  {
+   "n": 23,
+   "seconds": 9.7,
+   "state": {
+    "room": "room3",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": false,
+     "r3_button_broken": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_up",
+    "player:idle_up",
+    "r3_button:button_repaired",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: Please, will you repair yourself?",
+    "player: Oh, it worked!"
+   ],
+   "error": null
+  },
+  {
+   "n": 24,
+   "seconds": 3.83,
+   "state": {
+    "room": "room3",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "r3_bridge:bridge_close"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 25,
+   "seconds": 5.37,
+   "state": {
+    "room": "room4",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 0
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:idle_down"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 26,
+   "seconds": 0.8,
+   "state": {
+    "room": "room4",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 0
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 27,
+   "seconds": 5.6,
+   "state": {
+    "room": "room4",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: You have looked at the doorway 1 times"
+   ],
+   "error": null
+  },
+  {
+   "n": 28,
+   "seconds": 17.47,
+   "state": {
+    "room": "room5",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 0,
+     "pen_and_paper_used": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:walk_up",
+    "player:walk_right",
+    "player:walk_down",
+    "player:walk_right",
+    "player:idle_up",
+    "r5_pipe:start_water",
+    "player:idle_down"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 29,
+   "seconds": 0.8,
+   "state": {
+    "room": "room5",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 0,
+     "pen_and_paper_used": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 30,
+   "seconds": 6.83,
+   "state": {
+    "room": "room5",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 1,
+     "pen_and_paper_used": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: It's a leaking pipe."
+   ],
+   "error": null
+  },
+  {
+   "n": 31,
+   "seconds": 6,
+   "state": {
+    "room": "room5",
+    "inventory": [],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 1,
+     "pen_and_paper_used": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: I don't think I can turn off the water with my hands."
+   ],
+   "error": null
+  },
+  {
+   "n": 32,
+   "seconds": 4.37,
+   "state": {
+    "room": "room5",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 1,
+     "pen_and_paper_used": false,
+     "i/r5_wrench": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 33,
+   "seconds": 5.27,
+   "state": {
+    "room": "room5",
+    "inventory": [
+     "r5_pen",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 1,
+     "pen_and_paper_used": false,
+     "i/r5_wrench": true,
+     "i/r5_pen": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_right"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 34,
+   "seconds": 6,
+   "state": {
+    "room": "room5",
+    "inventory": [
+     "r5_pen",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 1,
+     "pen_and_paper_used": false,
+     "i/r5_wrench": true,
+     "i/r5_pen": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_right",
+    "player:speak_right",
+    "player:idle_right"
+   ],
+   "said": [
+    "player: It's an application form for a job as an adventurer."
+   ],
+   "error": null
+  },
+  {
+   "n": 35,
+   "seconds": 3.77,
+   "state": {
+    "room": "room5",
+    "inventory": [
+     "r5_empty_sheet",
+     "r5_pen",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 1,
+     "pen_and_paper_used": false,
+     "i/r5_wrench": true,
+     "i/r5_pen": true,
+     "i/r5_empty_sheet": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 36,
+   "seconds": 7.9,
+   "state": {
+    "room": "room5",
+    "inventory": [
+     "r5_filled_sheet",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 1,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_right",
+    "player:idle_right",
+    "player:speak_right",
+    "player:idle_right"
+   ],
+   "said": [
+    "player: Hmmm...",
+    "player: Name...",
+    "player: Address..."
+   ],
+   "error": null
+  },
+  {
+   "n": 37,
+   "seconds": 7.4,
+   "state": {
+    "room": "room5",
+    "inventory": [
+     "r5_filled_sheet",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "r5_pipe:stop_water",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: The leak's now fixed."
+   ],
+   "error": null
+  },
+  {
+   "n": 38,
+   "seconds": 4.47,
+   "state": {
+    "room": "room6",
+    "inventory": [
+     "r5_filled_sheet",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": true,
+     "room6_visited": true,
+     "r6_r_exit_locked": true,
+     "talked_once": false,
+     "loom_conversation_done": false,
+     "name_known": false,
+     "fun_game_asked": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "r6_r_exit:close_door"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 39,
+   "seconds": 0.8,
+   "state": {
+    "room": "room6",
+    "inventory": [
+     "r5_filled_sheet",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": true,
+     "room6_visited": true,
+     "r6_r_exit_locked": true,
+     "talked_once": false,
+     "loom_conversation_done": false,
+     "name_known": false,
+     "fun_game_asked": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 40,
+   "seconds": 6.93,
+   "state": {
+    "room": "room6",
+    "inventory": [
+     "r5_filled_sheet",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": true,
+     "room6_visited": true,
+     "r6_r_exit_locked": true,
+     "talked_once": false,
+     "loom_conversation_done": false,
+     "name_known": false,
+     "fun_game_asked": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_right",
+    "player:speak_right",
+    "player:idle_right"
+   ],
+   "said": [
+    "player: He's wearing a badge that says \"Careers Officer\"."
+   ],
+   "error": null
+  },
+  {
+   "n": 41,
+   "seconds": 10.5,
+   "state": {
+    "room": "room6",
+    "inventory": [
+     "r5_filled_sheet",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": true,
+     "room6_visited": true,
+     "r6_r_exit_locked": true,
+     "talked_once": true,
+     "loom_conversation_done": false,
+     "name_known": false,
+     "fun_game_asked": false
+    },
+    "chooser": true,
+    "ended": false
+   },
+   "anims": [
+    "worker:speak_right",
+    "worker:idle_right",
+    "worker:speak_right",
+    "worker:idle_right",
+    "worker:speak_right",
+    "worker:idle_right"
+   ],
+   "said": [
+    "worker: If you talk to me again",
+    "worker: I will not say this opening sentence.",
+    "worker: Also, if you take too long, the game will decide which question to ask me!"
+   ],
+   "error": null
+  },
+  {
+   "n": 42,
+   "seconds": 4.97,
+   "state": {
+    "room": "room6",
+    "inventory": [
+     "r5_filled_sheet",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": true,
+     "room6_visited": true,
+     "r6_r_exit_locked": true,
+     "talked_once": true,
+     "loom_conversation_done": false,
+     "name_known": true,
+     "fun_game_asked": false
+    },
+    "chooser": true,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_right",
+    "player:idle_right",
+    "worker:speak_right",
+    "worker:idle_right"
+   ],
+   "said": [
+    "player: Who are you?",
+    "worker: I'm the worker"
+   ],
+   "error": null
+  },
+  {
+   "n": 43,
+   "seconds": 6.87,
+   "state": {
+    "room": "room6",
+    "inventory": [
+     "r5_filled_sheet",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": true,
+     "room6_visited": true,
+     "r6_r_exit_locked": true,
+     "talked_once": true,
+     "loom_conversation_done": false,
+     "name_known": true,
+     "fun_game_asked": false
+    },
+    "chooser": true,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_right",
+    "player:idle_right",
+    "worker:speak_right",
+    "worker:idle_right",
+    "worker:speak_right",
+    "worker:idle_right"
+   ],
+   "said": [
+    "player: Why are you here?",
+    "worker: I'm waiting for you to give me the",
+    "worker: filled form from room 5."
+   ],
+   "error": null
+  },
+  {
+   "n": 44,
+   "seconds": 4.97,
+   "state": {
+    "room": "room6",
+    "inventory": [
+     "r5_filled_sheet",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": true,
+     "room6_visited": true,
+     "r6_r_exit_locked": true,
+     "talked_once": true,
+     "loom_conversation_done": false,
+     "name_known": true,
+     "fun_game_asked": false
+    },
+    "chooser": true,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_right",
+    "player:idle_right",
+    "worker:speak_right",
+    "worker:idle_right"
+   ],
+   "said": [
+    "player: What do you know about Loom?",
+    "worker: What do you want to know about Loom?"
+   ],
+   "error": null
+  },
+  {
+   "n": 45,
+   "seconds": 3.57,
+   "state": {
+    "room": "room6",
+    "inventory": [
+     "r5_filled_sheet",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": true,
+     "room6_visited": true,
+     "r6_r_exit_locked": true,
+     "talked_once": true,
+     "loom_conversation_done": false,
+     "name_known": true,
+     "fun_game_asked": true
+    },
+    "chooser": true,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_right",
+    "player:idle_right",
+    "worker:speak_right",
+    "worker:idle_right"
+   ],
+   "said": [
+    "player: Is Loom a fun game?",
+    "worker: Yes!"
+   ],
+   "error": null
+  },
+  {
+   "n": 46,
+   "seconds": 4.57,
+   "state": {
+    "room": "room6",
+    "inventory": [
+     "r5_filled_sheet",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": true,
+     "room6_visited": true,
+     "r6_r_exit_locked": true,
+     "talked_once": true,
+     "loom_conversation_done": false,
+     "name_known": true,
+     "fun_game_asked": true
+    },
+    "chooser": true,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_right",
+    "player:idle_right",
+    "worker:speak_right",
+    "worker:idle_right"
+   ],
+   "said": [
+    "player: Is the game as old as you are?",
+    "worker: You'd better be kidding..."
+   ],
+   "error": null
+  },
+  {
+   "n": 47,
+   "seconds": 2.87,
+   "state": {
+    "room": "room6",
+    "inventory": [
+     "r5_filled_sheet",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": true,
+     "room6_visited": true,
+     "r6_r_exit_locked": true,
+     "talked_once": true,
+     "loom_conversation_done": false,
+     "name_known": true,
+     "fun_game_asked": true
+    },
+    "chooser": true,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_right",
+    "player:idle_right"
+   ],
+   "said": [
+    "player: I am. Sorry."
+   ],
+   "error": null
+  },
+  {
+   "n": 48,
+   "seconds": 1.17,
+   "state": {
+    "room": "room6",
+    "inventory": [
+     "r5_filled_sheet",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": true,
+     "room6_visited": true,
+     "r6_r_exit_locked": true,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true
+    },
+    "chooser": true,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 49,
+   "seconds": 3.37,
+   "state": {
+    "room": "room6",
+    "inventory": [
+     "r5_filled_sheet",
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": true,
+     "room6_visited": true,
+     "r6_r_exit_locked": true,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_right",
+    "worker:idle_down",
+    "player:idle_right"
+   ],
+   "said": [
+    "player: Bye!",
+    "player: That discussion was exhausting!"
+   ],
+   "error": null
+  },
+  {
+   "n": 50,
+   "seconds": 8.7,
+   "state": {
+    "room": "room6",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "worker:speak_down",
+    "worker:idle_down",
+    "worker:walk_right",
+    "r6_r_exit:open_door",
+    "worker:idle_up"
+   ],
+   "said": [
+    "worker: I've unlocked the door, in you go!",
+    "worker: I will see you again... MUAHAHAHAHA!"
+   ],
+   "error": null
+  },
+  {
+   "n": 51,
+   "seconds": 1.5,
+   "state": {
+    "room": "room6",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 52,
+   "seconds": 3.07,
+   "state": {
+    "room": "room7",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:idle_down"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 53,
+   "seconds": 0.8,
+   "state": {
+    "room": "room7",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 54,
+   "seconds": 7.83,
+   "state": {
+    "room": "room7",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_down",
+    "player:walk_right",
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 55,
+   "seconds": 5.93,
+   "state": {
+    "room": "room7",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 56,
+   "seconds": 4.93,
+   "state": {
+    "room": "room7",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 57,
+   "seconds": 6.83,
+   "state": {
+    "room": "room7",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 58,
+   "seconds": 9.03,
+   "state": {
+    "room": "room7",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_left"
+   ],
+   "said": [
+    "player: movin up"
+   ],
+   "error": null
+  },
+  {
+   "n": 59,
+   "seconds": 5.13,
+   "state": {
+    "room": "room7",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_left"
+   ],
+   "said": [
+    "player: movin down"
+   ],
+   "error": null
+  },
+  {
+   "n": 60,
+   "seconds": 10.43,
+   "state": {
+    "room": "room7",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 2
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "r7_lift:lift_floor_1_to_2_with_player",
+    "player:idle_down"
+   ],
+   "said": [
+    "r7_lift_door_floor_2: Ding!"
+   ],
+   "error": null
+  },
+  {
+   "n": 61,
+   "seconds": 0.8,
+   "state": {
+    "room": "room7",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 2
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 62,
+   "seconds": 8.93,
+   "state": {
+    "room": "room7",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:idle_up",
+    "r7_lift:lift_floor_2_to_1_with_player",
+    "player:idle_down"
+   ],
+   "said": [
+    "r7_lift_door_floor_1: Ding!"
+   ],
+   "error": null
+  },
+  {
+   "n": 63,
+   "seconds": 0.8,
+   "state": {
+    "room": "room7",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 64,
+   "seconds": 4.87,
+   "state": {
+    "room": "room8",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:idle_right"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 65,
+   "seconds": 0.8,
+   "state": {
+    "room": "room8",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 66,
+   "seconds": 6.6,
+   "state": {
+    "room": "room8",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: That's the door to room 9"
+   ],
+   "error": null
+  },
+  {
+   "n": 67,
+   "seconds": 2.83,
+   "state": {
+    "room": "room8",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 68,
+   "seconds": 2.17,
+   "state": {
+    "room": "room8",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 69,
+   "seconds": 0.67,
+   "state": {
+    "room": "room8",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 70,
+   "seconds": 0.67,
+   "state": {
+    "room": "room8",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 71,
+   "seconds": 0.67,
+   "state": {
+    "room": "room8",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 72,
+   "seconds": 0.67,
+   "state": {
+    "room": "room8",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 73,
+   "seconds": 0.67,
+   "state": {
+    "room": "room8",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 74,
+   "seconds": 0.67,
+   "state": {
+    "room": "room8",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 75,
+   "seconds": 0.67,
+   "state": {
+    "room": "room8",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 76,
+   "seconds": 0.67,
+   "state": {
+    "room": "room8",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 77,
+   "seconds": 1.17,
+   "state": {
+    "room": "room8",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 78,
+   "seconds": 2,
+   "state": {
+    "room": "room8",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "r8_m_door:door_open"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 79,
+   "seconds": 3,
+   "state": {
+    "room": "room8",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 80,
+   "seconds": 3.07,
+   "state": {
+    "room": "room9",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": false,
+     "middle_closet_open": false,
+     "right_closet_open": false,
+     "open_closets": 0,
+     "r9_puzzle_complete": false,
+     "r9_bottle_closet": 0
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "r9_stand:remove_bottle",
+    "r9_closet_left:close_door",
+    "r9_closet_middle:close_door",
+    "r9_closet_right:close_door",
+    "player:idle_down"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 81,
+   "seconds": 0.8,
+   "state": {
+    "room": "room9",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": false,
+     "middle_closet_open": false,
+     "right_closet_open": false,
+     "open_closets": 0,
+     "r9_puzzle_complete": false,
+     "r9_bottle_closet": 0
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 82,
+   "seconds": 8.93,
+   "state": {
+    "room": "room9",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": false,
+     "middle_closet_open": false,
+     "right_closet_open": false,
+     "open_closets": 0,
+     "r9_puzzle_complete": false,
+     "r9_bottle_closet": 0
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:walk_up",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: That stand looks like the perfect place",
+    "player: to put a bottle."
+   ],
+   "error": null
+  },
+  {
+   "n": 83,
+   "seconds": 4.43,
+   "state": {
+    "room": "room9",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": false,
+     "right_closet_open": false,
+     "open_closets": 1,
+     "r9_puzzle_complete": false,
+     "r9_bottle_closet": 0
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_down",
+    "player:walk_right",
+    "player:idle_up",
+    "r9_closet_left:open_door"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 84,
+   "seconds": 3.83,
+   "state": {
+    "room": "room9",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": false,
+     "open_closets": 2,
+     "r9_puzzle_complete": false,
+     "r9_bottle_closet": 0
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "r9_closet_middle:open_door"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 85,
+   "seconds": 3.83,
+   "state": {
+    "room": "room9",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": false,
+     "r9_bottle_closet": 3
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "r9_closet_right:open_door"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 86,
+   "seconds": 3.77,
+   "state": {
+    "room": "room9",
+    "inventory": [
+     "r5_wrench",
+     "r9_bottle"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": false,
+     "r9_bottle_closet": 3,
+     "i/r9_bottle": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 87,
+   "seconds": 7.3,
+   "state": {
+    "room": "room9",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:walk_up",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up",
+    "r9_stand:set_bottle",
+    "r9_r_exit:open_door"
+   ],
+   "said": [
+    "player: This appears to be a magical bottle that unlocks doors."
+   ],
+   "error": null
+  },
+  {
+   "n": 88,
+   "seconds": 3.47,
+   "state": {
+    "room": "room10",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:idle_down"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 89,
+   "seconds": 0.8,
+   "state": {
+    "room": "room10",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 90,
+   "seconds": 5.63,
+   "state": {
+    "room": "room10",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 91,
+   "seconds": 3.93,
+   "state": {
+    "room": "room10",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 92,
+   "seconds": 3.13,
+   "state": {
+    "room": "room10",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 93,
+   "seconds": 5.63,
+   "state": {
+    "room": "room10",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "player:speak_right",
+    "player:idle_left",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: Huh?",
+    "player: Nothing."
+   ],
+   "error": null
+  },
+  {
+   "n": 94,
+   "seconds": 21.63,
+   "state": {
+    "room": "room10",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:idle_right",
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up",
+    "player:walk_right",
+    "player:idle_up",
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: Hello. I will now walk a bit and won't listen at what you say!",
+    "player: Ha! Now you can't even skip this text!",
+    "player: Okay, you can skip this text, but still not move me until 3 seconds have passed."
+   ],
+   "error": null
+  },
+  {
+   "n": 95,
+   "seconds": 1.5,
+   "state": {
+    "room": "room10",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 96,
+   "seconds": 2.63,
+   "state": {
+    "room": "room10",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_up",
+    "player:idle_up",
+    "player:speak_up"
+   ],
+   "said": [
+    "player: UUUuugh. I'm not feeling so well..."
+   ],
+   "error": null
+  },
+  {
+   "n": 97,
+   "seconds": 18,
+   "state": {
+    "room": "room10",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: Ugh!",
+    "player: Scheduling event button_slide->:slide_back in 15!",
+    "player: Scheduled!",
+    "player: Heeeeeeeelp!"
+   ],
+   "error": null
+  },
+  {
+   "n": 98,
+   "seconds": 15.7,
+   "state": {
+    "room": "room10",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_up",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: In 5 seconds...",
+    "player: Go!",
+    "player: That's better."
+   ],
+   "error": null
+  },
+  {
+   "n": 99,
+   "seconds": 3.47,
+   "state": {
+    "room": "room11",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:idle_down"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 100,
+   "seconds": 0.8,
+   "state": {
+    "room": "room11",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 101,
+   "seconds": 3.13,
+   "state": {
+    "room": "room11",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:speak_down",
+    "player:idle_down"
+   ],
+   "said": [
+    "player: TK"
+   ],
+   "error": null
+  },
+  {
+   "n": 102,
+   "seconds": 4.83,
+   "state": {
+    "room": "room11",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: NO_TT."
+   ],
+   "error": null
+  },
+  {
+   "n": 103,
+   "seconds": 4.33,
+   "state": {
+    "room": "room11",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: NO_UI"
+   ],
+   "error": null
+  },
+  {
+   "n": 104,
+   "seconds": 4.33,
+   "state": {
+    "room": "room11",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: NO_SAVE"
+   ],
+   "error": null
+  },
+  {
+   "n": 105,
+   "seconds": 7.83,
+   "state": {
+    "room": "room11",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 106,
+   "seconds": 5.57,
+   "state": {
+    "room": "room12",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:idle_down"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 107,
+   "seconds": 0.8,
+   "state": {
+    "room": "room12",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 108,
+   "seconds": 6.23,
+   "state": {
+    "room": "room12",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:walk_up",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: Default"
+   ],
+   "error": null
+  },
+  {
+   "n": 109,
+   "seconds": 7.63,
+   "state": {
+    "room": "room12",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_up",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: Fade black"
+   ],
+   "error": null
+  },
+  {
+   "n": 110,
+   "seconds": 7.63,
+   "state": {
+    "room": "room12",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: Fade white"
+   ],
+   "error": null
+  },
+  {
+   "n": 111,
+   "seconds": 7.03,
+   "state": {
+    "room": "room12",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_down",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: Shards"
+   ],
+   "error": null
+  },
+  {
+   "n": 112,
+   "seconds": 7.73,
+   "state": {
+    "room": "room12",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_down",
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: From Center"
+   ],
+   "error": null
+  },
+  {
+   "n": 113,
+   "seconds": 5.13,
+   "state": {
+    "room": "room12",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: Blackout"
+   ],
+   "error": null
+  },
+  {
+   "n": 114,
+   "seconds": 2.97,
+   "state": {
+    "room": "room13",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 115,
+   "seconds": 0.8,
+   "state": {
+    "room": "room13",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 116,
+   "seconds": 3.13,
+   "state": {
+    "room": "room13",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 117,
+   "seconds": 3.13,
+   "state": {
+    "room": "room13",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 118,
+   "seconds": 3.13,
+   "state": {
+    "room": "room13",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 119,
+   "seconds": 3.13,
+   "state": {
+    "room": "room13",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 120,
+   "seconds": 4.97,
+   "state": {
+    "room": "room14",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:idle_right",
+    "player:speak_right",
+    "player:idle_right",
+    "worker:walk_right",
+    "player:speak_right",
+    "player:idle_right",
+    "worker2:walk_down"
+   ],
+   "said": [
+    "player: Get ready!",
+    "player: Blocking"
+   ],
+   "error": null
+  },
+  {
+   "n": 121,
+   "seconds": 0.8,
+   "state": {
+    "room": "room14",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "worker2:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 122,
+   "seconds": 5.53,
+   "state": {
+    "room": "room14",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "worker:idle_up",
+    "player:walk_right",
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 123,
+   "seconds": 3.5,
+   "state": {
+    "room": "room14",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 124,
+   "seconds": 2.63,
+   "state": {
+    "room": "room14",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 125,
+   "seconds": 3.87,
+   "state": {
+    "room": "room14",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 126,
+   "seconds": 3.5,
+   "state": {
+    "room": "room14",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 127,
+   "seconds": 4.47,
+   "state": {
+    "room": "room15",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 128,
+   "seconds": 0.8,
+   "state": {
+    "room": "room15",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 129,
+   "seconds": 9.23,
+   "state": {
+    "room": "room15",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_down",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: This is a very long text: it will most likely span over the border of the screen if not handled well. Let's see"
+   ],
+   "error": null
+  },
+  {
+   "n": 130,
+   "seconds": 6.13,
+   "state": {
+    "room": "room15",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false,
+     "is_jester": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_up",
+    "player:idle_up",
+    "player:idle_up_jester"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 131,
+   "seconds": 3.33,
+   "state": {
+    "room": "room15",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false,
+     "is_jester": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 132,
+   "seconds": 6.17,
+   "state": {
+    "room": "room16",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false,
+     "is_jester": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_down",
+    "player:walk_right",
+    "player:idle_up",
+    "player:idle_down",
+    "player:idle_right"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 133,
+   "seconds": 0.8,
+   "state": {
+    "room": "room16",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false,
+     "is_jester": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 134,
+   "seconds": 5.53,
+   "state": {
+    "room": "room16",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false,
+     "is_jester": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: This sure looks like room 16."
+   ],
+   "error": null
+  },
+  {
+   "n": 135,
+   "seconds": 5.23,
+   "state": {
+    "room": "room16",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false,
+     "is_jester": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "worker1:walk_right",
+    "worker2:walk_right",
+    "player:walk_right",
+    "player:idle_up",
+    "player:speak_up",
+    "worker1:idle_up",
+    "worker2:idle_up",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: No, current room is not room15."
+   ],
+   "error": null
+  },
+  {
+   "n": 136,
+   "seconds": 4.67,
+   "state": {
+    "room": "room17",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false,
+     "is_jester": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up",
+    "player:idle_down"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 137,
+   "seconds": 0.8,
+   "state": {
+    "room": "room17",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false,
+     "is_jester": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 138,
+   "seconds": 5.67,
+   "state": {
+    "room": "room18",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false,
+     "is_jester": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 139,
+   "seconds": 0.8,
+   "state": {
+    "room": "room18",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false,
+     "is_jester": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 140,
+   "seconds": 3.13,
+   "state": {
+    "room": "room18",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false,
+     "is_jester": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "upper_item:folded"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 141,
+   "seconds": 3.13,
+   "state": {
+    "room": "room18",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false,
+     "is_jester": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "middle_item:folded"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 142,
+   "seconds": 3.63,
+   "state": {
+    "room": "room19",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false,
+     "is_jester": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 143,
+   "seconds": 3.13,
+   "state": {
+    "room": "room19",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false,
+     "is_jester": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "upper_item:folded"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 144,
+   "seconds": 3.13,
+   "state": {
+    "room": "room19",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false,
+     "is_jester": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "middle_item:folded"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 145,
+   "seconds": 3.13,
+   "state": {
+    "room": "room19",
+    "inventory": [
+     "r5_wrench"
+    ],
+    "globals": {
+     "dialog_advance": 2,
+     "dialog_popup_advance": 2,
+     "room1_visited": true,
+     "enable_tk": false,
+     "r2_bridge_closed": true,
+     "r2_look_dialog_advance": 3,
+     "room3_visited": true,
+     "r3_bridge_closed": true,
+     "r3_button_broken": false,
+     "r4_door_look_count": 1,
+     "room5_visited": true,
+     "r5_pipe_broken": true,
+     "r5_dialog_advance": 2,
+     "pen_and_paper_used": true,
+     "i/r5_wrench": true,
+     "i/r5_pen": false,
+     "i/r5_empty_sheet": false,
+     "i/r5_filled_sheet": false,
+     "room6_visited": true,
+     "r6_r_exit_locked": false,
+     "talked_once": true,
+     "loom_conversation_done": true,
+     "name_known": true,
+     "fun_game_asked": true,
+     "lift_floor": 1,
+     "room8_visited": true,
+     "r8_m_door_open": true,
+     "room09_visited": false,
+     "left_closet_open": true,
+     "middle_closet_open": true,
+     "right_closet_open": true,
+     "open_closets": 3,
+     "r9_puzzle_complete": true,
+     "r9_bottle_closet": 0,
+     "i/r9_bottle": false,
+     "transition_manual": false,
+     "is_jester": false
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "bottom_item:folded"
+   ],
+   "said": [],
+   "error": null
+  }
+ ]
+}

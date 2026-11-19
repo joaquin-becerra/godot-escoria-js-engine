@@ -1,0 +1,761 @@
+{
+ "static": {
+  "verdict": "PLAYABLE",
+  "issues": []
+ },
+ "ended": false,
+ "gameSeconds": 155.6,
+ "steps": [
+  {
+   "n": 1,
+   "seconds": 3,
+   "state": {
+    "room": "room2",
+    "inventory": [],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 0,
+     "b1": 0,
+     "b2": 0,
+     "b3": 0,
+     "b4": 0,
+     "obj_19_state": 0,
+     "obj_20_state": 0,
+     "scumm_random": 0,
+     "selected_sentence": 0,
+     "scumm_effect_code": 5
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:idle_down"
+   ],
+   "said": [
+    "player: Hello mortal.",
+    "player: Welcome to the first GPL Scumm game !!!"
+   ],
+   "error": null
+  },
+  {
+   "n": 2,
+   "seconds": 2.5,
+   "state": {
+    "room": "room2",
+    "inventory": [],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 0,
+     "b3": 0,
+     "b4": 0,
+     "obj_19_state": 0,
+     "obj_20_state": 0,
+     "scumm_random": 0,
+     "selected_sentence": 0,
+     "scumm_effect_code": 5
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 3,
+   "seconds": 6.5,
+   "state": {
+    "room": "room2",
+    "inventory": [],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 0,
+     "b3": 0,
+     "b4": 0,
+     "obj_19_state": 0,
+     "obj_20_state": 0,
+     "scumm_random": 0,
+     "selected_sentence": 0,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": ""
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_left",
+    "player:walk_up",
+    "player:idle_right"
+   ],
+   "said": [
+    "player: Look nice !"
+   ],
+   "error": null
+  },
+  {
+   "n": 4,
+   "seconds": 4.1,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 0,
+     "b3": 0,
+     "b4": 0,
+     "obj_19_state": 1,
+     "obj_20_state": 0,
+     "scumm_random": 0,
+     "selected_sentence": 0,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [
+    "player: Cool"
+   ],
+   "error": null
+  },
+  {
+   "n": 5,
+   "seconds": 4.3,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 0,
+     "b3": 0,
+     "b4": 0,
+     "obj_19_state": 1,
+     "obj_20_state": 0,
+     "scumm_random": 0,
+     "selected_sentence": 0,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [
+    "player: It's really sharp."
+   ],
+   "error": null
+  },
+  {
+   "n": 6,
+   "seconds": 9.77,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 0,
+     "b3": 0,
+     "b4": 0,
+     "obj_19_state": 1,
+     "obj_20_state": 0,
+     "scumm_random": 0,
+     "selected_sentence": 0,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_down",
+    "player:walk_left",
+    "player:walk_right",
+    "player:walk_left",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: A axe is not that great to fish."
+   ],
+   "error": null
+  },
+  {
+   "n": 7,
+   "seconds": 6.87,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 0,
+     "b3": 0,
+     "b4": 0,
+     "obj_19_state": 1,
+     "obj_20_state": 0,
+     "scumm_random": 0,
+     "selected_sentence": 0,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": true,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: I don't want to destroy this door."
+   ],
+   "error": null
+  },
+  {
+   "n": 8,
+   "seconds": 8.5,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 0,
+     "b3": 0,
+     "b4": 0,
+     "obj_19_state": 1,
+     "obj_20_state": 0,
+     "scumm_random": 0,
+     "selected_sentence": 0,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_left",
+    "player:idle_up"
+   ],
+   "said": [
+    "player: Wa _ Water ??",
+    "player: I hate that stuff.",
+    "player: Don't even think about it."
+   ],
+   "error": null
+  },
+  {
+   "n": 9,
+   "seconds": 4.6,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 0,
+     "b3": 0,
+     "b4": 0,
+     "obj_19_state": 1,
+     "obj_20_state": 0,
+     "scumm_random": 0,
+     "selected_sentence": 0,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [
+    "player: I need something to put the water in."
+   ],
+   "error": null
+  },
+  {
+   "n": 10,
+   "seconds": 5.4,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 0,
+     "b3": 0,
+     "b4": 0,
+     "obj_19_state": 1,
+     "obj_20_state": 1,
+     "scumm_random": 0,
+     "selected_sentence": 0,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_right",
+    "player:idle_up"
+   ],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 11,
+   "seconds": 3.97,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 0,
+     "b3": 0,
+     "b4": 0,
+     "obj_19_state": 1,
+     "obj_20_state": 1,
+     "scumm_random": 0,
+     "selected_sentence": 0,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [
+    "player: Even open, this door is way too small for me."
+   ],
+   "error": null
+  },
+  {
+   "n": 12,
+   "seconds": 6.8,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 1,
+     "b3": 0,
+     "b4": 0,
+     "obj_19_state": 1,
+     "obj_20_state": 1,
+     "scumm_random": 0,
+     "selected_sentence": 0,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": true,
+    "ended": false
+   },
+   "anims": [
+    "player:walk_left",
+    "player:idle_left"
+   ],
+   "said": [
+    "player: Hey Santa!",
+    "actor_1: Yes, and you are ?"
+   ],
+   "error": null
+  },
+  {
+   "n": 13,
+   "seconds": 3.17,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 1,
+     "b3": 0,
+     "b4": 0,
+     "obj_19_state": 1,
+     "obj_20_state": 1,
+     "scumm_random": 0,
+     "selected_sentence": 1,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": true,
+    "ended": false
+   },
+   "anims": [],
+   "said": [
+    "player: Beasty, from the Kingdom Der Evil.",
+    "actor_1: Isn't that the place where everything is named K-something?"
+   ],
+   "error": null
+  },
+  {
+   "n": 14,
+   "seconds": 5.17,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 1,
+     "b3": 0,
+     "b4": 0,
+     "obj_19_state": 1,
+     "obj_20_state": 1,
+     "scumm_random": 0,
+     "selected_sentence": 1,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": true,
+    "ended": false
+   },
+   "anims": [],
+   "said": [
+    "player: That's the place, anything against Ks?",
+    "actor_1: Not really.",
+    "actor_1: I just tend to prefer Gs.",
+    "actor_1: What do you want?"
+   ],
+   "error": null
+  },
+  {
+   "n": 15,
+   "seconds": 3.17,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 1,
+     "b3": 1,
+     "b4": 0,
+     "obj_19_state": 1,
+     "obj_20_state": 1,
+     "scumm_random": 0,
+     "selected_sentence": 1,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": true,
+    "ended": false
+   },
+   "anims": [],
+   "said": [
+    "player: What is this place?",
+    "actor_1: It's the Grand Nation Of Maximum Eccentricity."
+   ],
+   "error": null
+  },
+  {
+   "n": 16,
+   "seconds": 4.17,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 1,
+     "b3": 1,
+     "b4": 1,
+     "obj_19_state": 1,
+     "obj_20_state": 1,
+     "scumm_random": 0,
+     "selected_sentence": 1,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": true,
+    "ended": false
+   },
+   "anims": [],
+   "said": [
+    "player: Are you really Santa, or just some guy in a red coat?",
+    "actor_1: I'am the real Santa.",
+    "actor_1: But not on duty so don't expect presents or anything."
+   ],
+   "error": null
+  },
+  {
+   "n": 17,
+   "seconds": 2.67,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 1,
+     "b3": 1,
+     "b4": 1,
+     "obj_19_state": 1,
+     "obj_20_state": 1,
+     "scumm_random": 0,
+     "selected_sentence": 1,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [
+    "player: Have a nice day.",
+    "actor_1: Bye."
+   ],
+   "error": null
+  },
+  {
+   "n": 18,
+   "seconds": 0.8,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 1,
+     "b3": 1,
+     "b4": 1,
+     "obj_19_state": 1,
+     "obj_20_state": 1,
+     "scumm_random": 0,
+     "selected_sentence": 1,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [],
+   "error": null
+  },
+  {
+   "n": 19,
+   "seconds": 4.6,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 1,
+     "b3": 1,
+     "b4": 1,
+     "obj_19_state": 1,
+     "obj_20_state": 1,
+     "scumm_random": 0,
+     "selected_sentence": 1,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": false,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [
+    "player: There is nothing special about him."
+   ],
+   "error": null
+  },
+  {
+   "n": 20,
+   "seconds": 4.97,
+   "state": {
+    "room": "room2",
+    "inventory": [
+     "inv_obj_19"
+    ],
+    "globals": {
+     "actor_1_room": "Room2",
+     "actor_2_room": "Room2",
+     "b0": 1,
+     "b1": 0,
+     "b2": 1,
+     "b3": 1,
+     "b4": 1,
+     "obj_19_state": 1,
+     "obj_20_state": 1,
+     "scumm_random": 0,
+     "selected_sentence": 1,
+     "scumm_effect_code": 5,
+     "scumm_b_state": 0,
+     "scumm_b_actor": true,
+     "scumm_b_class1": false,
+     "scumm_b_class2": false,
+     "scumm_inventory_a": "",
+     "i/inv_obj_19": true
+    },
+    "chooser": false,
+    "ended": false
+   },
+   "anims": [],
+   "said": [
+    "player: Killing him won't help us."
+   ],
+   "error": null
+  }
+ ]
+}

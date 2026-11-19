@@ -1,0 +1,10 @@
+{
+  "comment": "The regression suite: each game GEJE has to keep playing. game: its folder in geje-builds/; src: its Godot project (for --export); walk: its walkthrough here.",
+  "games": [
+    { "short": "oq", "game": "openquest-escoria", "src": "../openquest-escoria", "walk": "openquest.json" },
+    { "short": "oqe", "game": "openquest-escoria-enhanced", "src": "../openquest-escoria-enhanced", "walk": "openquest_enhanced.json" },
+    { "short": "road", "game": "road-escoria", "src": "../road-escoria", "walk": "road.json" },
+    { "short": "sr", "game": "superfluous-returnz-demo", "src": "../superfluous-returnz-demo", "walk": "superfluous_returnz_demo.json" },
+    { "short": "demo", "game": "escoria-demo-game", "src": "../escoria-demo-game", "walk": "escoria_demo_game.json" }
+  ]
+}

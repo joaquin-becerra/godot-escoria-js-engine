@@ -1,0 +1,21 @@
+6 scripts traducidos a out/escoria-demo-game/js_ports/gd/
+completos: 5, completos pero esperando otra clase del juego (◇): 0, con faltantes (△): 1
+
+✓ res://game/rooms/no_escoria/player.gd (node)
+
+✓ res://game/rooms/room06/scenery.gd (node)
+
+✓ res://game/rooms/room08/puzzle/10_buttons_puzzle.gd (node)
+
+✓ res://game/rooms/room17/r_17_laptop_type.gd (node)
+
+△ res://game/testing/room01_tests.gd (class)
+    falta en el puente: classes: ESCRoom
+    falta en el puente: classes: GdUnitTestSuite (extends)
+    falta en el puente: inherited: scene_runner()
+    falta en el puente: inherited: assert_object()
+    falta en el puente: members: scene()
+    falta en el puente: members: simulate_frames()
+    falta en el puente: members: is_equal()
+
+✓ res://game/rooms/room03/room03.tscn::15 (node)
